@@ -8,6 +8,7 @@
 #include "CollisionManager/CollisionManager.h"
 #include "Camera/Camera.h"
 #include "Camera/FirstPersonCamera.h"
+#include "Camera/ThirdPersonCamera.h"
 #include "Mouse/Mouse.h"
 #include <memory>
 namespace Engine
@@ -36,8 +37,7 @@ namespace Engine
 		//Shape* GetShapeByName(std::string Name);
 		CollisionManager* GetCollisionManager();
 		bool running = true;
-		FirstPersonCamera* firstPersonCamera;
-		
+		FirstPersonCamera* camera;
 	private:
 		CollisionManager* collisionManager = new CollisionManager();
 		int width;
