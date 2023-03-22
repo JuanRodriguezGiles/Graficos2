@@ -1,6 +1,8 @@
 #include "Game.h"
 void main()
 {
-	Game* game = new Game();
+	int Width = 1920;
+	int Height = 1280;
+	Game* game = new Game(Width, Height);
 	delete game;
 }

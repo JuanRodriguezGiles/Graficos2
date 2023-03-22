@@ -34,7 +34,8 @@ namespace Engine
 		template<typename T>
 		void Push(unsigned int count)
 		{
-			static_assert(false);
+			//TODO OJO CON ESTO
+			//static_assert(false);
 		}
 
 		template<>

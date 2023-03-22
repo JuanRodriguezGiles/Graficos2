@@ -61,6 +61,9 @@
     <Filter Include="src\Frame">
       <UniqueIdentifier>{77228f9d-da1e-470d-bd66-5cf37606482f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Camera">
+      <UniqueIdentifier>{32526d6a-e101-4906-a85b-d0fef2b3745b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\Window\_window.cpp">
@@ -107,6 +110,9 @@
     </ClCompile>
     <ClCompile Include="..\src\Frame\Frame.cpp">
       <Filter>src\Frame</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Camera\Camera.cpp">
+      <Filter>src\Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -166,6 +172,9 @@
     </ClInclude>
     <ClInclude Include="..\src\Frame\Frame.h">
       <Filter>src\Frame</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Camera\Camera.h">
+      <Filter>src\Camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

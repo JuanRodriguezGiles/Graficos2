@@ -20,19 +20,28 @@
 
 #include "glm.hpp"
 #include "gtc/matrix_transform.hpp"
+
+
+
 namespace Engine
 {
-	Engine::base_game::base_game()
-		: m_Proj(glm::ortho(0.0f, 960.0f, 0.0f, 540.0f, -1.0f, 1.0f)),
-		m_View(glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0)))
+	glm::vec3 newCameraFront;
+	Mouse* mouse;
+
+	Engine::base_game::base_game(int Width, int Height)
+		: m_Proj(glm::perspective(glm::radians(45.0f), (float)Width / (float)Height, 0.1f, 5000.0f)),
+		m_View(glm::lookAt(glm::vec3(-300, -100, -800), glm::vec3(-300, -100, -800) + glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(0.0f, 1.0f, 0.0f)))
 	{
-		std::cout << "umu" << std::endl;
+		firstPersonCamera = new FirstPersonCamera(glm::vec3(-300, -100, -800), m_Proj, m_View);
+
+		width = Width;
+		height = Height;
+		mouse = new Mouse((float)width / 2, (float)height / 2);
 	}
+
 	void base_game::Init(int Width, int Height, const char* name)
 	{
 		/* Initialize the library */
-		width = Width;
-		height = Height;
 		if (!glfwInit())
 			glfwTerminate();
 
@@ -58,13 +67,16 @@ namespace Engine
 		GLCall(glEnable(GL_BLEND));
 		GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 		//-----------------------------------------------------------------
-		
+
 		m_Shader = std::make_unique<Shader>("../res/shaders/Basic.shader");
 
 		for (std::list<Shape*>::iterator it = shapeList.begin(); it != shapeList.end(); ++it)
 		{
 			(*it)->SetTexturePath();
 		}
+
+		glfwSetInputMode(myWindow->get(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+		glfwSetCursorPosCallback(myWindow->get(), mouse_callback);
 	}
 	void base_game::Draw()
 	{
@@ -77,7 +89,7 @@ namespace Engine
 			for (std::list<Shape*>::iterator it = shapeList.begin(); it != shapeList.end(); ++it)
 			{
 				(*it)->Draw();
-				glm::mat4 mvp = m_Proj * m_View * (*it)->GetModel();
+				glm::mat4 mvp = firstPersonCamera->perspective * firstPersonCamera->view * (*it)->GetModel();
 				m_Shader->Bind();
 				m_Shader->SetUniformMat4f("u_MVP", mvp);
 				renderer.Draw(*(*it)->m_VAO, *(*it)->m_IndexBuffer, *m_Shader);
@@ -86,8 +98,8 @@ namespace Engine
 	}
 	void base_game::CreateShape(std::string Path)
 	{
-		Shape* shape = new Shape(-50,-50,50,50);
-		shape->SetPos(glm::vec3(200,200,0));
+		Shape* shape = new Shape(-50, -50, 50, 50);
+		shape->SetPos(glm::vec3(200, 200, 0));
 		shape->SetPath(Path);
 		shape->SetTexturePath();
 		shape->SetRigidBody(false);
@@ -101,7 +113,7 @@ namespace Engine
 		shape->SetTexturePath();
 		shapeList.push_back(shape);
 	}
-	void base_game::CreateShape(std::string Path, float minX, float minY, float maxX, float maxY,bool RigidBody)
+	void base_game::CreateShape(std::string Path, float minX, float minY, float maxX, float maxY, bool RigidBody)
 	{
 		Shape* shape = new Shape(minX, minY, maxX, maxY);
 		shape->SetRigidBody(RigidBody);
@@ -110,7 +122,7 @@ namespace Engine
 		shape->SetTexturePath();
 		shapeList.push_back(shape);
 	}
-	void base_game::CreateShape(std::string Path, glm::vec3 m_Translation,bool RigidBody)
+	void base_game::CreateShape(std::string Path, glm::vec3 m_Translation, bool RigidBody)
 	{
 		Shape* shape = new Shape(-50, -50, 50, 50);
 		shape->SetRigidBody(RigidBody);
@@ -119,7 +131,7 @@ namespace Engine
 		shape->SetTexturePath();
 		shapeList.push_back(shape);
 	}
-	void base_game::CreateShape(std::string Path, glm::vec3 m_Translation, float minXAtlas,float maxXAtlas,float minYAtlas,float maxYAtlas)
+	void base_game::CreateShape(std::string Path, glm::vec3 m_Translation, float minXAtlas, float maxXAtlas, float minYAtlas, float maxYAtlas)
 	{
 		Shape* shape = new Shape(-50, -50, 50, 50);
 		shape->SetPos(m_Translation);
@@ -156,7 +168,7 @@ namespace Engine
 		std::list<Shape*>::iterator it = shapeList.begin();
 		std::advance(it, index);
 		if (!collisionManager->CheckCollisions(*it, m_Translation))
-		(*it)->SetPos(m_Translation);
+			(*it)->SetPos(m_Translation);
 	}
 	Shape* base_game::GetShapeByIndex(int index)
 	{
@@ -164,15 +176,6 @@ namespace Engine
 		std::advance(it, index);
 		return *it;
 	}
-	/*Shape* base_game::GetShapeByName(std::string name)
-	{
-		std::list<Shape*>::iterator it = shapeList.begin();
-		for (it; it != shapeList.end; it++) {
-			if ((*it)->GetPath().find(name)) {
-				return *it;
-			}
-		}
-	}*/
 	CollisionManager* base_game::GetCollisionManager()
 	{
 		return collisionManager;
@@ -185,11 +188,46 @@ namespace Engine
 		{
 			GLCall(glClearColor(0.0f, 0.0f, 0.0f, 1.0f));
 			myRenderer.Clear();
+			firstPersonCamera->SetFront(newCameraFront);
 			Update();
 			Draw();
 			glfwSwapBuffers(myWindow->get());
 			glfwPollEvents();
 		}
 		glfwTerminate();
+	}
+
+	void base_game::mouse_callback(GLFWwindow* window, double xpos, double ypos)
+	{
+		if (mouse->firstMouse)
+		{
+			mouse->lastX = xpos;
+			mouse->lastY = ypos;
+			mouse->firstMouse = false;
+		}
+
+		float xoffset = xpos - mouse->lastX;
+		float yoffset = mouse->lastY - ypos;
+		mouse->lastX = xpos;
+		mouse->lastY = ypos;
+
+		float sensitivity = 0.1f;
+		xoffset *= sensitivity;
+		yoffset *= sensitivity;
+
+		mouse->yaw += xoffset;
+		mouse->pitch += yoffset;
+
+		if (mouse->pitch > 89.0f)
+			mouse->pitch = 89.0f;
+		if (mouse->pitch < -89.0f)
+			mouse->pitch = -89.0f;
+
+		glm::vec3 direction;
+		direction.x = cos(glm::radians(mouse->yaw)) * cos(glm::radians(mouse->pitch));
+		direction.y = sin(glm::radians(mouse->pitch));
+		direction.z = sin(glm::radians(mouse->yaw)) * cos(glm::radians(mouse->pitch));
+
+		newCameraFront = glm::normalize(direction);
 	}
 }

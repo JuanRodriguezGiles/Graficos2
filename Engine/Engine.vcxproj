@@ -21,6 +21,8 @@
   <ItemGroup>
     <ClCompile Include="..\src\Animation\Animation.cpp" />
     <ClCompile Include="..\src\BaseGame\BaseGame.cpp" />
+    <ClCompile Include="..\src\Camera\Camera.cpp" />
+    <ClCompile Include="..\src\Camera\FirstPersonCamera.cpp" />
     <ClCompile Include="..\src\CollisionManager\CollisionManager.cpp" />
     <ClCompile Include="..\src\Entity\Entity.cpp" />
     <ClCompile Include="..\src\Frame\Frame.cpp" />
@@ -38,11 +40,14 @@
   <ItemGroup>
     <ClInclude Include="..\src\Animation\Animation.h" />
     <ClInclude Include="..\src\BaseGame\BaseGame.h" />
+    <ClInclude Include="..\src\Camera\Camera.h" />
+    <ClInclude Include="..\src\Camera\FirstPersonCamera.h" />
     <ClInclude Include="..\src\CollisionManager\CollisionManager.h" />
     <ClInclude Include="..\src\Entity\Entity.h" />
     <ClInclude Include="..\src\Export.h" />
     <ClInclude Include="..\src\Frame\Frame.h" />
     <ClInclude Include="..\src\IndexBuffer\IndexBuffer.h" />
+    <ClInclude Include="..\src\Mouse\Mouse.h" />
     <ClInclude Include="..\src\Renderer\Renderer.h" />
     <ClInclude Include="..\src\Shader\Shader.h" />
     <ClInclude Include="..\src\Shape\Shape.h" />
@@ -70,26 +75,26 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
