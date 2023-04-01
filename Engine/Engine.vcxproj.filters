@@ -1,185 +1,176 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="src">
-      <UniqueIdentifier>{9a7fc754-b384-4fba-8c3e-8489084353ff}</UniqueIdentifier>
+    <Filter Include="Archivos de origen">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="src\Window">
-      <UniqueIdentifier>{ca9f2f9b-9db8-4583-852f-a2a0e31231ec}</UniqueIdentifier>
+    <Filter Include="Archivos de encabezado">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
-    <Filter Include="src\Renderer">
-      <UniqueIdentifier>{fe578513-6815-470f-a6a4-32e678d50124}</UniqueIdentifier>
+    <Filter Include="Archivos de recursos">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="src\Shape">
-      <UniqueIdentifier>{763129cc-7a34-4c7b-96e1-a4be3be1a05f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Entity">
-      <UniqueIdentifier>{639b526f-c2e0-41d7-93c6-745adfc51104}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="res">
-      <UniqueIdentifier>{02d7a584-a787-4e98-8b53-32b6e9f9b878}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="res\shaders">
-      <UniqueIdentifier>{49e6cccd-919e-4940-bb8f-b06edff4f953}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\BaseGame">
-      <UniqueIdentifier>{5918ad2e-c9f5-41e3-b1ba-38b4a5d86be1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Shader">
-      <UniqueIdentifier>{d35bb01d-c11d-4f87-b5c3-bf0b47365ccf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\VertexArray">
-      <UniqueIdentifier>{475b21b8-668e-4229-b747-ab456bdc410c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\VertexBuffer">
-      <UniqueIdentifier>{2ed371e0-9e2c-4cc6-85c4-01daa8a65971}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\VertexBufferLayout">
-      <UniqueIdentifier>{3fdd653e-efec-4638-af38-ccb7a4d0c757}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\IndexBuffer">
-      <UniqueIdentifier>{6161fd15-ecd0-4073-9cff-4808b8b79d4d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="res\textures">
-      <UniqueIdentifier>{01a0edb7-0b8c-495b-b4de-81888e0ab64c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Texture">
-      <UniqueIdentifier>{9995ed3a-9e4c-4d41-81a4-5b2ad0bfe84b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\StbImage">
-      <UniqueIdentifier>{97f4bc92-b8d4-430a-9233-7922794023fe}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\CollisionManager">
-      <UniqueIdentifier>{d6d2bd3a-71af-4aa5-9d88-de137f831d6e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Animation">
-      <UniqueIdentifier>{f08f2d1b-b814-4f2c-9da5-67aaa018a9a8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Timer">
-      <UniqueIdentifier>{382868fe-428b-421d-b3dc-aec0a22fb27b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Frame">
-      <UniqueIdentifier>{77228f9d-da1e-470d-bd66-5cf37606482f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Camera">
-      <UniqueIdentifier>{32526d6a-e101-4906-a85b-d0fef2b3745b}</UniqueIdentifier>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{8ae40fc4-02a5-4c30-b941-8021b0db7626}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\Window\_window.cpp">
-      <Filter>src\Window</Filter>
+    <ClCompile Include="..\src\Engine\animation.cpp">
+      <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Renderer\Renderer.cpp">
-      <Filter>src\Renderer</Filter>
+    <ClCompile Include="..\src\Engine\baseGame.cpp">
+      <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Entity\Entity.cpp">
-      <Filter>src\Entity</Filter>
+    <ClCompile Include="..\src\Engine\camera.cpp">
+      <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\BaseGame\BaseGame.cpp">
-      <Filter>src\BaseGame</Filter>
+    <ClCompile Include="..\src\Engine\collisionManager.cpp">
+      <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Shader\Shader.cpp">
-      <Filter>src\Shader</Filter>
+    <ClCompile Include="..\src\Engine\entity.cpp">
+      <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\VertexArray\VertexArray.cpp">
-      <Filter>src\VertexArray</Filter>
+    <ClCompile Include="..\src\Engine\entity2D.cpp">
+      <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\VertexBuffer\VertexBuffer.cpp">
-      <Filter>src\VertexBuffer</Filter>
+    <ClCompile Include="..\src\Engine\firstPersonCamera.cpp">
+      <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\IndexBuffer\IndexBuffer.cpp">
-      <Filter>src\IndexBuffer</Filter>
+    <ClCompile Include="..\src\Engine\input.cpp">
+      <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Texture\Texture.cpp">
-      <Filter>src\Texture</Filter>
+    <ClCompile Include="..\src\Engine\light.cpp">
+      <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\StbImage\stb_image.cpp">
-      <Filter>src\StbImage</Filter>
+    <ClCompile Include="..\src\Engine\renderer.cpp">
+      <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\CollisionManager\CollisionManager.cpp">
-      <Filter>src\CollisionManager</Filter>
+    <ClCompile Include="..\src\Engine\shader.cpp">
+      <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Shape\Shape.cpp">
-      <Filter>src\Shape</Filter>
+    <ClCompile Include="..\src\Engine\shape.cpp">
+      <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Animation\Animation.cpp">
-      <Filter>src\Animation</Filter>
+    <ClCompile Include="..\src\Engine\sprite.cpp">
+      <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Timer\Timer.cpp">
-      <Filter>src\Timer</Filter>
+    <ClCompile Include="..\src\Engine\stb_image.cpp">
+      <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Frame\Frame.cpp">
-      <Filter>src\Frame</Filter>
+    <ClCompile Include="..\src\Engine\textureImporter.cpp">
+      <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Camera\Camera.cpp">
-      <Filter>src\Camera</Filter>
+    <ClCompile Include="..\src\Engine\thirdPersonCamera.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Engine\tile.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Engine\tileMap.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Engine\time.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Engine\tinyxml2.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Engine\window.cpp">
+      <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\src\Window\_window.h">
-      <Filter>src\Window</Filter>
+    <ClInclude Include="..\src\Engine\animation.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\Renderer\Renderer.h">
-      <Filter>src\Renderer</Filter>
+    <ClInclude Include="..\src\Engine\atlasConfig.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\Entity\Entity.h">
-      <Filter>src\Entity</Filter>
+    <ClInclude Include="..\src\Engine\baseGame.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\Export.h">
-      <Filter>src</Filter>
+    <ClInclude Include="..\src\Engine\camera.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\BaseGame\BaseGame.h">
-      <Filter>src\BaseGame</Filter>
+    <ClInclude Include="..\src\Engine\collisionManager.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\Shader\Shader.h">
-      <Filter>src\Shader</Filter>
+    <ClInclude Include="..\src\Engine\entity.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\VertexArray\VertexArray.h">
-      <Filter>src\VertexArray</Filter>
+    <ClInclude Include="..\src\Engine\entity2D.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\VertexBuffer\VertexBuffer.h">
-      <Filter>src\VertexBuffer</Filter>
+    <ClInclude Include="..\src\Engine\exports.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\VertexBufferLayout\VertexBufferLayout.h">
-      <Filter>src\VertexBufferLayout</Filter>
+    <ClInclude Include="..\src\Engine\firstPersonCamera.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\IndexBuffer\IndexBuffer.h">
-      <Filter>src\IndexBuffer</Filter>
+    <ClInclude Include="..\src\Engine\input.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\Texture\Texture.h">
-      <Filter>src\Texture</Filter>
+    <ClInclude Include="..\src\Engine\keycodes.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\StbImage\stb_rect_pack.h">
-      <Filter>src\StbImage</Filter>
+    <ClInclude Include="..\src\Engine\light.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\StbImage\stb_textedit.h">
-      <Filter>src\StbImage</Filter>
+    <ClInclude Include="..\src\Engine\renderer.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\StbImage\stb_truetype.h">
-      <Filter>src\StbImage</Filter>
+    <ClInclude Include="..\src\Engine\shader.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\CollisionManager\CollisionManager.h">
-      <Filter>src\CollisionManager</Filter>
+    <ClInclude Include="..\src\Engine\shape.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\Shape\Shape.h">
-      <Filter>src\Shape</Filter>
+    <ClInclude Include="..\src\Engine\sprite.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\Animation\Animation.h">
-      <Filter>src\Animation</Filter>
+    <ClInclude Include="..\src\Engine\stb_image.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\Timer\Timer.h">
-      <Filter>src\Timer</Filter>
+    <ClInclude Include="..\src\Engine\textureImporter.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\Frame\Frame.h">
-      <Filter>src\Frame</Filter>
+    <ClInclude Include="..\src\Engine\thirdPersonCamera.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\Camera\Camera.h">
-      <Filter>src\Camera</Filter>
+    <ClInclude Include="..\src\Engine\tile.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Engine\tileMap.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Engine\time.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Engine\tinyxml2.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Engine\window.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\res\shaders\Basic.shader">
-      <Filter>res\shaders</Filter>
+    <None Include="..\src\Engine\Shaders\SolidFragment.shader">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\src\Engine\Shaders\SolidFragmentVariant.shader">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\src\Engine\Shaders\SolidVertex.shader">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\src\Engine\Shaders\TextureFragment.shader">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\src\Engine\Shaders\TextureVertex.shader">
+      <Filter>Shaders</Filter>
     </None>
   </ItemGroup>
 </Project>

@@ -19,59 +19,67 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\Animation\Animation.cpp" />
-    <ClCompile Include="..\src\BaseGame\BaseGame.cpp" />
-    <ClCompile Include="..\src\Camera\Camera.cpp" />
-    <ClCompile Include="..\src\Camera\FirstPersonCamera.cpp" />
-    <ClCompile Include="..\src\Camera\ThirdPersonCamera.cpp" />
-    <ClCompile Include="..\src\CollisionManager\CollisionManager.cpp" />
-    <ClCompile Include="..\src\Entity\Entity.cpp" />
-    <ClCompile Include="..\src\Frame\Frame.cpp" />
-    <ClCompile Include="..\src\IndexBuffer\IndexBuffer.cpp" />
-    <ClCompile Include="..\src\Renderer\Renderer.cpp" />
-    <ClCompile Include="..\src\Shader\Shader.cpp" />
-    <ClCompile Include="..\src\Shape\Shape.cpp" />
-    <ClCompile Include="..\src\StbImage\stb_image.cpp" />
-    <ClCompile Include="..\src\Texture\Texture.cpp" />
-    <ClCompile Include="..\src\Timer\Timer.cpp" />
-    <ClCompile Include="..\src\VertexArray\VertexArray.cpp" />
-    <ClCompile Include="..\src\VertexBuffer\VertexBuffer.cpp" />
-    <ClCompile Include="..\src\Window\_window.cpp" />
+    <ClInclude Include="..\src\Engine\animation.h" />
+    <ClInclude Include="..\src\Engine\atlasConfig.h" />
+    <ClInclude Include="..\src\Engine\baseGame.h" />
+    <ClInclude Include="..\src\Engine\camera.h" />
+    <ClInclude Include="..\src\Engine\collisionManager.h" />
+    <ClInclude Include="..\src\Engine\entity.h" />
+    <ClInclude Include="..\src\Engine\entity2D.h" />
+    <ClInclude Include="..\src\Engine\exports.h" />
+    <ClInclude Include="..\src\Engine\firstPersonCamera.h" />
+    <ClInclude Include="..\src\Engine\input.h" />
+    <ClInclude Include="..\src\Engine\keycodes.h" />
+    <ClInclude Include="..\src\Engine\light.h" />
+    <ClInclude Include="..\src\Engine\renderer.h" />
+    <ClInclude Include="..\src\Engine\shader.h" />
+    <ClInclude Include="..\src\Engine\shape.h" />
+    <ClInclude Include="..\src\Engine\sprite.h" />
+    <ClInclude Include="..\src\Engine\stb_image.h" />
+    <ClInclude Include="..\src\Engine\textureImporter.h" />
+    <ClInclude Include="..\src\Engine\thirdPersonCamera.h" />
+    <ClInclude Include="..\src\Engine\tile.h" />
+    <ClInclude Include="..\src\Engine\tileMap.h" />
+    <ClInclude Include="..\src\Engine\time.h" />
+    <ClInclude Include="..\src\Engine\tinyxml2.h" />
+    <ClInclude Include="..\src\Engine\window.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\src\Animation\Animation.h" />
-    <ClInclude Include="..\src\BaseGame\BaseGame.h" />
-    <ClInclude Include="..\src\Camera\Camera.h" />
-    <ClInclude Include="..\src\Camera\FirstPersonCamera.h" />
-    <ClInclude Include="..\src\Camera\ThirdPersonCamera.h" />
-    <ClInclude Include="..\src\CollisionManager\CollisionManager.h" />
-    <ClInclude Include="..\src\Entity\Entity.h" />
-    <ClInclude Include="..\src\Export.h" />
-    <ClInclude Include="..\src\Frame\Frame.h" />
-    <ClInclude Include="..\src\IndexBuffer\IndexBuffer.h" />
-    <ClInclude Include="..\src\Mouse\Mouse.h" />
-    <ClInclude Include="..\src\Renderer\Renderer.h" />
-    <ClInclude Include="..\src\Shader\Shader.h" />
-    <ClInclude Include="..\src\Shape\Shape.h" />
-    <ClInclude Include="..\src\StbImage\stb_rect_pack.h" />
-    <ClInclude Include="..\src\StbImage\stb_textedit.h" />
-    <ClInclude Include="..\src\StbImage\stb_truetype.h" />
-    <ClInclude Include="..\src\Texture\Texture.h" />
-    <ClInclude Include="..\src\Timer\Timer.h" />
-    <ClInclude Include="..\src\VertexArray\VertexArray.h" />
-    <ClInclude Include="..\src\VertexBufferLayout\VertexBufferLayout.h" />
-    <ClInclude Include="..\src\VertexBuffer\VertexBuffer.h" />
-    <ClInclude Include="..\src\Window\_window.h" />
+    <ClCompile Include="..\src\Engine\animation.cpp" />
+    <ClCompile Include="..\src\Engine\baseGame.cpp" />
+    <ClCompile Include="..\src\Engine\camera.cpp" />
+    <ClCompile Include="..\src\Engine\collisionManager.cpp" />
+    <ClCompile Include="..\src\Engine\entity.cpp" />
+    <ClCompile Include="..\src\Engine\entity2D.cpp" />
+    <ClCompile Include="..\src\Engine\firstPersonCamera.cpp" />
+    <ClCompile Include="..\src\Engine\input.cpp" />
+    <ClCompile Include="..\src\Engine\light.cpp" />
+    <ClCompile Include="..\src\Engine\renderer.cpp" />
+    <ClCompile Include="..\src\Engine\shader.cpp" />
+    <ClCompile Include="..\src\Engine\shape.cpp" />
+    <ClCompile Include="..\src\Engine\sprite.cpp" />
+    <ClCompile Include="..\src\Engine\stb_image.cpp" />
+    <ClCompile Include="..\src\Engine\textureImporter.cpp" />
+    <ClCompile Include="..\src\Engine\thirdPersonCamera.cpp" />
+    <ClCompile Include="..\src\Engine\tile.cpp" />
+    <ClCompile Include="..\src\Engine\tileMap.cpp" />
+    <ClCompile Include="..\src\Engine\time.cpp" />
+    <ClCompile Include="..\src\Engine\tinyxml2.cpp" />
+    <ClCompile Include="..\src\Engine\window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\res\shaders\Basic.shader" />
+    <None Include="..\src\Engine\Shaders\SolidFragment.shader" />
+    <None Include="..\src\Engine\Shaders\SolidFragmentVariant.shader" />
+    <None Include="..\src\Engine\Shaders\SolidVertex.shader" />
+    <None Include="..\src\Engine\Shaders\TextureFragment.shader" />
+    <None Include="..\src\Engine\Shaders\TextureVertex.shader" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
-    <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{398dd1ae-bf4c-434f-b154-6461adbde701}</ProjectGuid>
-    <RootNamespace>Engine</RootNamespace>
+    <ProjectGuid>{0483F58A-B701-401B-AEC2-16600D6F2CCC}</ProjectGuid>
+    <RootNamespace>Motor</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>Engine</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -88,13 +96,13 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -120,38 +128,58 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IntDir>$(SolutionDir)obj\$(Configuration)\</IntDir>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <LinkIncremental>false</LinkIncremental>
-    <IntDir>$(SolutionDir)obj\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)bin\$(ProjectName)\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)obj\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IntDir>$(SolutionDir)obj\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)bin\$(ProjectName)\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)obj\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)bin\$(ProjectName)\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)obj\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IntDir>$(SolutionDir)obj\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)bin\$(ProjectName)\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)obj\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>ENGINE_EXPORTS;WIN32;GLEW_STATIC;_DEBUG;_CONSOLE;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>DEBUG;ENGINE_EXPORTS;GLEW_STATIC;_MBCS;</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)lib\GLFW\include;$(SolutionDir)lib\GLEW\include;$(SolutionDir)lib\GLM;$(SolutionDir)src;$(SolutionDir)lib\STB;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)lib\glm;$(SolutionDir)lib\GLFW\include;$(SolutionDir)lib\GLEW\include;$(SolutionDir)src</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)lib\GLFW\lib;$(SolutionDir)lib\GLEW\lib\Release\Win32</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3dll.lib;opengl32.lib;glew32s.lib;User32.lib;Gdi32.lib;Shell32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)lib\GLFW\lib;$(SolutionDir)lib\GLEW\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glew32s.lib;glfw3.lib;opengl32.lib;User32.lib;Gdi32.lib;Shell32.lib;</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>/DEFAULTLIB:LIBCMT;/DEFAULTLIB:MSVCRT;</IgnoreSpecificDefaultLibraries>
     </Link>
     <PostBuildEvent>
-      <Command>
-      </Command>
+      <Command>XCOPY "$(SolutionDir)bin\Engine\$(Platform)\$(Configuration)\Engine.dll" "$(SolutionDir)bin\Game\$(Platform)\$(Configuration)\" /e /h /y /s</Command>
     </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>GLEW_STATIC;_MBCS;</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)lib\GLFW\include;$(SolutionDir)lib\GLEW\include;$(SolutionDir)src</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(SolutionDir)lib\GLFW\lib;$(SolutionDir)lib\GLEW\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glew32s.lib;glfw3.lib;opengl32.lib;User32.lib;Gdi32.lib;Shell32.lib;</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>/DEFAULTLIB:LIBCMT;/DEFAULTLIB:MSVCRT;</IgnoreSpecificDefaultLibraries>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -159,33 +187,22 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;GLEW_STATIC;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>ENGINE_EXPORTS;GLEW_STATIC;_MBCS;</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)lib\GLFW\include;$(SolutionDir)lib\GLEW\include;$(SolutionDir)lib\GLM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)lib\glm;$(SolutionDir)lib\GLFW\include;$(SolutionDir)lib\GLEW\include;$(SolutionDir)src</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)lib\GLFW\lib;$(SolutionDir)lib\GLEW\lib\Release\Win32</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3dll.lib;opengl32.lib;glew32s.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)lib\GLFW\lib;$(SolutionDir)lib\GLEW\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glew32s.lib;glfw3.lib;opengl32.lib;User32.lib;Gdi32.lib;Shell32.lib;</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>/DEFAULTLIB:LIBCMT;/DEFAULTLIB:MSVCRT;</IgnoreSpecificDefaultLibraries>
     </Link>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
-      <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)lib\GLFW\include;$(SolutionDir)lib\GLEW\include;$(SolutionDir)lib\GLM</AdditionalIncludeDirectories>
-    </ClCompile>
-    <Link>
-      <SubSystem>Console</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)lib\GLFW\lib;</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3dll.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-    </Link>
+    <PostBuildEvent>
+      <Command>XCOPY "$(SolutionDir)bin\Motor\$(Platform)\$(Configuration)\Motor.dll" "$(SolutionDir)bin\Juego\$(Platform)\$(Configuration)\" /e /h /y /s</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -193,17 +210,18 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>GLEW_STATIC;_MBCS;</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)lib\GLFW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)lib\GLFW\include;$(SolutionDir)lib\GLEW\include;$(SolutionDir)src</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)lib\GLFW\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3dll.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)lib\GLFW\lib;$(SolutionDir)lib\GLEW\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glew32s.lib;glfw3.lib;opengl32.lib;User32.lib;Gdi32.lib;Shell32.lib;</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>/DEFAULTLIB:LIBCMT;/DEFAULTLIB:MSVCRT;</IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
