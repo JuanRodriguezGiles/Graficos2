@@ -6,15 +6,15 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\Main.cpp">
+    <ClCompile Include="..\src\Game\game.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Game.cpp">
+    <ClCompile Include="..\src\Game\main.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\src\Game.h">
+    <ClInclude Include="..\src\Game\game.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>

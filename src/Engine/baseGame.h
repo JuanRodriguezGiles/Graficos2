@@ -27,7 +27,7 @@ namespace engine
 	{
 	public:
 		baseGame();
-		~baseGame();
+		virtual ~baseGame();
 		// ~ ENGINE ~ Initializes the engine loops, being init(), update(), draw(), deInit(). 
 		void play(int windowSizeX, int windowSizeY, const char* windowName);
 
@@ -38,6 +38,8 @@ namespace engine
 		virtual void init() = 0;
 
 		virtual void deInit() = 0;
+
+		void close();
 
 		// Input
 		// ~ ENGINE ~  Returns true every frame the engine key is pressed. 
