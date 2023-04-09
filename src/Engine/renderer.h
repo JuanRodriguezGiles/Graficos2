@@ -30,7 +30,6 @@ namespace engine
 		void setProjectionMatrix(glm::mat4 projectionMatrix);
 		window* getCurrentWindow();
 
-		//TODO Pensar mejor implementacion, probablemente materiales
 		Shader textureShader = Shader("../src/Engine/Shaders/TextureVertex.shader", "../src/Engine/Shaders/TextureFragment.shader");
 		Shader solidShader = Shader("../src/Engine/Shaders/SolidVertex.shader", "../src/Engine/Shaders/SolidFragment.shader");
 

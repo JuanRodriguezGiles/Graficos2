@@ -48,6 +48,8 @@ namespace engine
 		case engine::MOVEMENT_DIRECTION::BACK:
 			pos -= movementAmount * glm::normalize(look);
 			break;
+
+			//Right hand rule, resulting vector is perpendicular to look and up vectors
 		case engine::MOVEMENT_DIRECTION::RIGHT:
 			pos += glm::normalize(glm::cross(glm::normalize(look), glm::normalize(up))) * movementAmount;
 			break;
@@ -57,7 +59,8 @@ namespace engine
 		default:
 			break;
 		}
-		
+
+		//Update camera transform matrix
 		setCameraTransform(pos, look, up);
 	}
 	//void camera::setCameraType(MOVEMENT_TYPE movementType)
@@ -70,7 +73,9 @@ namespace engine
 	//}
 	glm::vec3 camera::getDirectionByMovement(glm::vec2 mouseMovement)
 	{
+		//horizontal rotation of the camera around the y-axis
 		yaw += mouseMovement.x;
+		//vertical rotation of the camera around the x-axis
 		pitch += mouseMovement.y;
 
 		if (pitch > 89.0f)
@@ -115,7 +120,6 @@ namespace engine
 			projectionMatrix = glm::ortho(-2.0f, +2.0f, -1.5f, +1.5f, 0.1f, 500.0f);
 			break;
 		case engine::PROJECTION::PERSPECTIVE:
-			//fov - aspect ratio - near != 0 (porque si no genera problemas) - far
 			projectionMatrix = glm::perspective(glm::radians(45.0f), (float)currentRenderer->getCurrentWindow()->getWidth() / (float)currentRenderer->getCurrentWindow()->getHeight(), 0.1f, 500.0f);
 			break;
 		default:

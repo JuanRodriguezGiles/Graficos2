@@ -165,7 +165,7 @@ void game::init()
 	container->setScale(glm::vec3(10, 10, 10));
 	container->setPos(glm::vec3(-15, 0, 0));*/
 
-	awesomeface = new engine::sprite(currentRenderer, "../res/assets/textures/awesomeface.png", true);
+	awesomeface = new engine::sprite(currentRenderer, "../res/assets/textures/maxwell.png", true);
 	awesomeface->setScale(glm::vec3(10, 10, 10));
 
 	for (short i = 0; i < 6; i++)

@@ -4,7 +4,7 @@ int main()
 {
 	game* gameVariable = new game();
 
-	gameVariable->play(800, 600, "Test Game");
+	gameVariable->play(1600, 1200, "Test Game");
 
 	delete gameVariable;
 }
