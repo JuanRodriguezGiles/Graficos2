@@ -17,7 +17,7 @@ private:
 
 	engine::sprite* floor;
 	engine::sprite* container[6];
-	engine::sprite* awesomeface;
+	//engine::sprite* awesomeface;
 	
 	engine::camera* actualCam;
 	engine::firstPersonCamera* firstPersonCam;

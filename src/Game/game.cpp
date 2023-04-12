@@ -8,7 +8,7 @@ game::game()
 		container[i] = nullptr;
 	}
 
-	awesomeface = nullptr;
+	//awesomeface = nullptr;
 	floor = nullptr;
 	actualCam = nullptr;
 }
@@ -24,7 +24,7 @@ void game::draw()
 	{
 		container[i]->draw();
 	}
-	awesomeface->draw();
+	//awesomeface->draw();
 	floor->draw();
 }
 
@@ -67,7 +67,7 @@ void game::update()
 		container[i]->setPos(container[i]->getPos() + movement);
 	}
 
-	awesomeface->setPos(awesomeface->getPos() + movement);
+	//awesomeface->setPos(awesomeface->getPos() + movement);
 
 	boxPos += movement;
 
@@ -126,7 +126,7 @@ void game::init()
 
 	firstPersonCam = new engine::firstPersonCamera(currentRenderer, camPos, camView, camUp, engine::PROJECTION::PERSPECTIVE);
 	thirdPersonCam = new engine::thirdPersonCamera(currentRenderer, camPos, camView, camUp, engine::PROJECTION::PERSPECTIVE);
-	actualCam = thirdPersonCam;
+	actualCam = firstPersonCam;
 
 	/*if (tileMap->importTileMap("../res/assets/tilemapreal.tmx"))
 	{
@@ -165,19 +165,19 @@ void game::init()
 	container->setScale(glm::vec3(10, 10, 10));
 	container->setPos(glm::vec3(-15, 0, 0));*/
 
-	awesomeface = new engine::sprite(currentRenderer, "../res/assets/textures/maxwell.png", true);
-	awesomeface->setScale(glm::vec3(10, 10, 10));
+	//awesomeface = new engine::sprite(currentRenderer, "../res/assets/textures/maxwell.png", true);
+	//awesomeface->setScale(glm::vec3(10, 10, 10));
 
 	for (short i = 0; i < 6; i++)
 	{
-		container[i] = new engine::sprite(currentRenderer, "../res/assets/textures/container.jpg", true);
+		container[i] = new engine::sprite(currentRenderer, "../res/assets/textures/maxwell.png", true);
 		container[i]->setScale(glm::vec3(10, 10, 10));
 	}
 
 	container[0]->setPos(glm::vec3(0, 0, 5));
 	container[0]->setRot(glm::vec3(0, 0, 0));
-	awesomeface->setPos(glm::vec3(0, 0, 5.5f));
-	awesomeface->setRot(glm::vec3(0, 0, 0));
+	//awesomeface->setPos(glm::vec3(0, 0, 5.5f));
+	//->setRot(glm::vec3(0, 0, 0));
 
 	container[1]->setPos(glm::vec3(5, 0, 0));
 	container[1]->setRot(glm::vec3(0, glm::radians(90.0f), 0));
@@ -217,8 +217,8 @@ void game::deInit()
 		
 	}
 
-	awesomeface->deinit();
-	delete awesomeface;
+	//awesomeface->deinit();
+	//delete awesomeface;
 
 	floor->deinit();
 	delete floor;

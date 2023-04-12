@@ -1,21 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="src">
-      <UniqueIdentifier>{3b48cde1-bde1-4431-8629-af0726690689}</UniqueIdentifier>
+    <Filter Include="Archivos de origen">
+      <UniqueIdentifier>{4ec46187-7056-4b08-ab97-22856aca475f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado">
+      <UniqueIdentifier>{aefe2251-e6f0-4a8d-b06d-ef4636d3f5f1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\Game\game.cpp">
-      <Filter>src</Filter>
+      <Filter>Archivos de encabezado</Filter>
     </ClCompile>
     <ClCompile Include="..\src\Game\main.cpp">
-      <Filter>src</Filter>
+      <Filter>Archivos de encabezado</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\Game\game.h">
-      <Filter>src</Filter>
+      <Filter>Archivos de origen</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

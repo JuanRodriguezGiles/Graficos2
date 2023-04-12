@@ -24,7 +24,6 @@ namespace engine
 		glm::vec3 getFront();
 		glm::vec3 getUp();
 		glm::vec3 getPos();
-		
 		~camera();
 	protected:
 		void setProjectionMatrix();
