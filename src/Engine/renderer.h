@@ -27,6 +27,7 @@ namespace engine
 		void deleteExtraBuffer(unsigned int& buffer, int size);
 		void startDraw();
 		void endDraw();
+		void setAmbientLight(float ambient);
 		void setClearColor(glm::vec4 color);
 		void setViewMatrix(glm::mat4 viewMatrix);
 		void setProjectionMatrix(glm::mat4 projectionMatrix);
@@ -36,6 +37,7 @@ namespace engine
 
 	private:
 		float lastTime = 0;
+		float ambientLight = 0.25f;
 		window* currentWindow;
 		glm::vec4 clearColor;
 		glm::mat4 viewMatrix;

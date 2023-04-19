@@ -9,6 +9,7 @@ uniform float a = 1.0f;
 uniform sampler2D ourTexture;
 uniform bool affectedByLight = true;
 uniform bool usesTex = false;
+uniform float ambientStrength = 0.1;
 
 void main()
 {
@@ -31,7 +32,8 @@ void main()
 
     if (affectedByLight)
     {
-        resultColor *= vec4(lightColor, a);
+        vec3 ambient = ambientStrength * lightColor;
+        resultColor *= vec4(ambient, a);
     }
 
     FragColor = resultColor;
