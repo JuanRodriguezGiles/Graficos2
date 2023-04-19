@@ -6,6 +6,7 @@ namespace engine
 {
 	struct textureData;
 	class animation;
+	class renderer;
 
 	class ENGINE_API light : public entity
 	{
@@ -16,8 +17,6 @@ namespace engine
 		void draw();
 		void deinit();
 	private:
-		renderer* _render;
 		unsigned int VAO;
-		glm::vec3 color;
 	};
 }

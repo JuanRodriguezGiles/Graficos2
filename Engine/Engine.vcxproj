@@ -69,7 +69,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\src\Engine\Shaders\SolidFragment.shader" />
-    <None Include="..\src\Engine\Shaders\SolidFragmentVariant.shader" />
     <None Include="..\src\Engine\Shaders\SolidVertex.shader" />
     <None Include="..\src\Engine\Shaders\TextureFragment.shader" />
     <None Include="..\src\Engine\Shaders\TextureVertex.shader" />

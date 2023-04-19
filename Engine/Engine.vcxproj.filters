@@ -160,9 +160,6 @@
     <None Include="..\src\Engine\Shaders\SolidFragment.shader">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="..\src\Engine\Shaders\SolidFragmentVariant.shader">
-      <Filter>Shaders</Filter>
-    </None>
     <None Include="..\src\Engine\Shaders\SolidVertex.shader">
       <Filter>Shaders</Filter>
     </None>

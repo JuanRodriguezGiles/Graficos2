@@ -14,8 +14,10 @@ game::game()
 
 	for (short i = 0; i < 6; i++)
 	{
-		lightSource[i] = nullptr;
+		lightCube[i] = nullptr;
 	}
+
+	lightSource = nullptr;
 }
 
 game::~game()
@@ -34,8 +36,10 @@ void game::draw()
 
 	for (short i = 0; i < 6; i++)
 	{
-		lightSource[i]->draw();
+		lightCube[i]->draw();
 	}
+
+	lightSource->draw();
 }
 
 void game::update()
@@ -111,21 +115,8 @@ void game::update()
 	{
 		thirdPersonCam->updateTargetPos(boxPos);
 	}
-		
-	/* 
-	
-	PARA METER ROTACIÒN DE CAMARA PROXIMAMENTE
 
-	if (isKeyPressed(ENGINE_KEY_K))
-	{
-		glm::vec3 rotation = { 0, 0, engine::time::getDeltaTime() * cameraSpeed };
-	}
-	else if (isKeyPressed(ENGINE_KEY_L))
-	{
-		glm::vec3 rotation = { 0, 0, engine::time::getDeltaTime() * -cameraSpeed };
-	}
-	
-	*/
+	lightSource->setPos(lightCubePos);
 }
 
 void game::init()
@@ -147,22 +138,22 @@ void game::init()
 		std::cout << "tilemap failed to load";
 	}*/
 
-	/*triangle = new engine::lightSource(currentRenderer, 3);
+	/*triangle = new engine::lightCube(currentRenderer, 3);
 	triangle->setScale(3, 3, 3);
 	triangle->setPos(-14, -10, 0);
 	triangle->setColor(1, 1, 0, 1);
 
-	triangle2 = new engine::lightSource(currentRenderer, 3);
+	triangle2 = new engine::lightCube(currentRenderer, 3);
 	triangle2->setScale(3, 3, 3);
 	triangle2->setPos(-17, -10, 0);
 	triangle2->setColor(1, 1, 0, 1);
 
-	triangle3 = new engine::lightSource(currentRenderer, 3);
+	triangle3 = new engine::lightCube(currentRenderer, 3);
 	triangle3->setScale(3, 3, 3);
 	triangle3->setPos(-15.5, -7, 0);
 	triangle3->setColor(1, 1, 0, 1);
 
-	quad = new engine::lightSource(currentRenderer, 4);
+	quad = new engine::lightCube(currentRenderer, 4);
 	quad->setScale(5, 5, 5);
 	quad->setPos(15, -10, 0);
 	quad->setColor(0, 1, 1, 1);
@@ -183,9 +174,9 @@ void game::init()
 		container[i] = new engine::sprite(currentRenderer, "../res/assets/textures/maxwell.png", true, true);
 		container[i]->setScale(glm::vec3(10, 10, 10));
 
-		lightSource[i] = new engine::shape(currentRenderer, 4, false);
-		lightSource[i]->setScale(glm::vec3(5, 5, 5));
-		lightSource[i]->setColor(glm::vec4(1, 0.1f, 0.1f, 1));
+		lightCube[i] = new engine::shape(currentRenderer, 4, false);
+		lightCube[i]->setScale(glm::vec3(5, 5, 5));
+		lightCube[i]->setColor(glm::vec4(0, 0, .5, .5));
 	}
 
 	container[0]->setPos(glm::vec3(0, 0, 5));
@@ -217,26 +208,29 @@ void game::init()
 
 
 
-	lightSourcePos = glm::vec3(12, 5, -5);
+	lightCubePos = glm::vec3(12, 5, -5);
 
 
-	lightSource[0]->setPos(glm::vec3(0, 0, 2.5f) + lightSourcePos);
-	lightSource[0]->setRot(glm::vec3(0, 0, 0));
+	lightCube[0]->setPos(glm::vec3(0, 0, 2.5f) + lightCubePos);
+	lightCube[0]->setRot(glm::vec3(0, 0, 0));
 
-	lightSource[1]->setPos(glm::vec3(2.5f, 0, 0) + lightSourcePos);
-	lightSource[1]->setRot(glm::vec3(0, glm::radians(90.0f), 0));
+	lightCube[1]->setPos(glm::vec3(2.5f, 0, 0) + lightCubePos);
+	lightCube[1]->setRot(glm::vec3(0, glm::radians(90.0f), 0));
 
-	lightSource[2]->setPos(glm::vec3(0, 0, -2.5f) + lightSourcePos);
-	lightSource[2]->setRot(glm::vec3(0, glm::radians(180.0f), 0));
+	lightCube[2]->setPos(glm::vec3(0, 0, -2.5f) + lightCubePos);
+	lightCube[2]->setRot(glm::vec3(0, glm::radians(180.0f), 0));
 
-	lightSource[3]->setPos(glm::vec3(-2.5f, 0, 0) + lightSourcePos);
-	lightSource[3]->setRot(glm::vec3(0, glm::radians(-90.0f), 0));
+	lightCube[3]->setPos(glm::vec3(-2.5f, 0, 0) + lightCubePos);
+	lightCube[3]->setRot(glm::vec3(0, glm::radians(-90.0f), 0));
 
-	lightSource[4]->setPos(glm::vec3(0, 2.5f, 0) + lightSourcePos);
-	lightSource[4]->setRot(glm::vec3(glm::radians(-90.0f), 0, 0));
+	lightCube[4]->setPos(glm::vec3(0, 2.5f, 0) + lightCubePos);
+	lightCube[4]->setRot(glm::vec3(glm::radians(-90.0f), 0, 0));
 
-	lightSource[5]->setPos(glm::vec3(0, -2.5f, 0) + lightSourcePos);
-	lightSource[5]->setRot(glm::vec3(glm::radians(90.0f), 0, 0));
+	lightCube[5]->setPos(glm::vec3(0, -2.5f, 0) + lightCubePos);
+	lightCube[5]->setRot(glm::vec3(glm::radians(90.0f), 0, 0));
+
+	lightSource = new engine::light(currentRenderer);
+	lightSource->setColor(glm::vec4(1,1, 1, 1));
 
 	changeClearColor(glm::vec4(0, 0, 0, 0));
 }
@@ -250,7 +244,7 @@ void game::deInit()
 	{
 		container[i]->deinit();
 		delete container[i];
-		delete lightSource[i];
+		delete lightCube[i];
 	}
 
 	//awesomeface->deinit();

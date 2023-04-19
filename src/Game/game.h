@@ -17,14 +17,15 @@ private:
 
 	engine::sprite* floor;
 	engine::sprite* container[6];
-	engine::shape* lightSource[6];
-	
+	engine::shape* lightCube[6];
+	engine::light* lightSource;
+
 	engine::camera* actualCam;
 	engine::firstPersonCamera* firstPersonCam;
 	engine::thirdPersonCamera* thirdPersonCam;
 
 	float cameraSpeed = 30.f;
 	glm::vec3 boxPos = glm::vec3(0, 0, 0);
-	glm::vec3 lightSourcePos = glm::vec3(0, 0, 0);
+	glm::vec3 lightCubePos = glm::vec3(0, 0, 0);
 
 };

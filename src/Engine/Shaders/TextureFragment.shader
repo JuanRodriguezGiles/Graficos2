@@ -8,7 +8,7 @@ uniform vec3 lightColor = vec3(1.0f, 1.0f, 1.0f);
 uniform float a = 1.0f;
 uniform sampler2D ourTexture;
 uniform bool affectedByLight = true;
-
+uniform bool usesTex = false;
 
 void main()
 {
@@ -18,7 +18,16 @@ void main()
         discard;
     }
 
-    vec4 resultColor = texColor * vec4(ourColor.x * color.x, ourColor.y * color.y, ourColor.z * color.z, a);
+    vec4 resultColor = vec4(1.0);
+
+    if (usesTex)
+    {
+        resultColor = texColor * vec4(ourColor.x * color.x, ourColor.y * color.y, ourColor.z * color.z, a);
+    }
+    else
+    {
+        resultColor = vec4(ourColor.x * color.x, ourColor.y * color.y, ourColor.z * color.z, a);
+    }
 
     if (affectedByLight)
     {
