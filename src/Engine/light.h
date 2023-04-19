@@ -18,5 +18,6 @@ namespace engine
 	private:
 		renderer* _render;
 		unsigned int VAO;
+		glm::vec3 color;
 	};
 }

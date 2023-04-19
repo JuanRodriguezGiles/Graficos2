@@ -20,13 +20,14 @@ namespace engine
 		baseUVCoords[2] = { 0.0f, 0.0f };
 		baseUVCoords[3] = { 0.0f, 1.0f };
 	}
-	sprite::sprite(renderer* render, const char* filePathImage, bool invertImage)
+	sprite::sprite(renderer* render, const char* filePathImage, bool invertImage, bool affectedByLight)
 	{
 		VAO = 0;
 		VBO = 0;
 		EBO = 0;
 		_vertices = 0;
 		_renderer = render;
+		this->affectedByLight = affectedByLight;
 
 		baseUVCoords[0] = { 1.0f, 1.0f };
 		baseUVCoords[1] = { 1.0f, 0.0f };
@@ -40,11 +41,12 @@ namespace engine
 	}
 	void sprite::draw()
 	{
-		_renderer->textureShader.use();
+		_renderer->shaderPro.use();
 		unsigned int texture = getCurrentTextureIDToDraw();
 		glBindTexture(GL_TEXTURE_2D, texture);
-		setShader(texture);
-		_renderer->drawRequest(model, VAO, _vertices, _renderer->textureShader.ID);
+		//setShader(texture);
+		_renderer->SetShaderInfo(color, true, affectedByLight, texture);
+		_renderer->drawRequest(model, VAO, _vertices);
 	}
 	void sprite::modifyBaseTextureCoords(atlasCutConfig config)
 	{
@@ -79,25 +81,25 @@ namespace engine
 		};
 		_renderer->bindExtraBuffer(bufferPosUVs, UVs, sizeof(UVs), GL_DYNAMIC_DRAW);
 	}
-	void sprite::setShader(unsigned int texture)
-	{
-		glm::vec3 newColor = glm::vec3(color.r, color.g, color.b);
-		unsigned int colorLoc = glGetUniformLocation(_renderer->textureShader.ID, "color");
-		glUniform3fv(colorLoc, 1, glm::value_ptr(newColor));
-
-		unsigned int alphaLoc = glGetUniformLocation(_renderer->textureShader.ID, "a");
-		glUniform1fv(alphaLoc, 1, &(color.a));
-
-		unsigned int textureLoc = glGetUniformLocation(_renderer->textureShader.ID, "ourTexture");
-		glUniform1f(textureLoc, (GLfloat)texture);
-	}
+	//void sprite::setShader(unsigned int texture)
+	//{
+	//	glm::vec3 newColor = glm::vec3(color.r, color.g, color.b);
+	//	unsigned int colorLoc = glGetUniformLocation(_renderer->shaderPro.ID, "color");
+	//	glUniform3fv(colorLoc, 1, glm::value_ptr(newColor));
+	//
+	//	unsigned int alphaLoc = glGetUniformLocation(_renderer->shaderPro.ID, "a");
+	//	glUniform1fv(alphaLoc, 1, &(color.a));
+	//
+	//	unsigned int textureLoc = glGetUniformLocation(_renderer->shaderPro.ID, "ourTexture");
+	//	glUniform1f(textureLoc, (GLfloat)texture);
+	//}
 	unsigned int sprite::getCurrentTextureIDToDraw()
 	{
 		for (unsigned int i = 0; i < animations.size(); i++)
 		{
-			if(animations[i]->isPlaying())
+			if (animations[i]->isPlaying())
 			{
-				if(animations[i]->update())
+				if (animations[i]->update())
 				{
 					bindCustomUVCoords(i);
 					lastCoordIndex = i;

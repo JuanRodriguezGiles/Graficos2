@@ -5,24 +5,25 @@
 
 namespace engine
 {
-	shape::shape(renderer* render, unsigned int vert)
+	shape::shape(renderer* render, unsigned int vert, bool affectedByLight)
 	{
 		VAO = 0;
 		VBO = 0;
 		EBO = 0;
 		_vertices = 0;
 		_renderer = render;
+		this->affectedByLight = affectedByLight;
 
 		float* vertex;
 		unsigned int* indices;
 
-		if(vert == 3) //Triangle
+		if (vert == 3)
 		{
 			vertex = new float[18]
 			{
 				-0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 1.0f,
-				 0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 1.0f,
-				 0.0f,  0.5f, 0.0f, 1.0f, 1.0f, 1.0f
+					0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 1.0f,
+					0.0f, 0.5f, 0.0f, 1.0f, 1.0f, 1.0f
 			};
 			indices = new unsigned int[3]
 			{
@@ -35,27 +36,21 @@ namespace engine
 			delete[] vertex;
 			delete[] indices;
 		}
-		else if(vert == 4) 	//Square
+		else if (vert == 4)
 		{
-
-			//Alloc memory, first 3 values pos - last 3 color
-			//Arranged counter clockwise
 			vertex = new float[24]
 			{
-				 0.5f,  0.5f, 0.0f, 1.0f, 1.0f, 1.0f,
-				 0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 1.0f,
-				-0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 1.0f,
-				-0.5f,  0.5f, 0.0f, 1.0f, 1.0f, 1.0f
+				0.5f, 0.5f, 0.0f, 1.0f, 1.0f, 1.0f,
+					0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 1.0f,
+					-0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 1.0f,
+					-0.5f, 0.5f, 0.0f, 1.0f, 1.0f, 1.0f
 			};
-			//indices of the vertices to be used to draw two triangles that form the square
 			indices = new unsigned int[6]
 			{
 				0, 1, 3,
-				1, 2, 3
+					1, 2, 3
 			};
-			//Creates VAO VBO and EBO
 			_renderer->createBaseBuffer(VAO, VBO, EBO);
-			//Binds to openGL context and set vertex/index data
 			_renderer->bindBaseBufferRequest(VAO, VBO, EBO, vertex, sizeof(vertex) * 24, indices, sizeof(indices) * 6);
 			_vertices = 6;
 
@@ -68,11 +63,9 @@ namespace engine
 			return;
 		}
 
-		//specifies the layout of a vertex attribute in a vertex buffer object
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
 		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
 
-		//tells openGL to use the previously configured attribute 
 		glEnableVertexAttribArray(0);
 		glEnableVertexAttribArray(1);
 
@@ -85,19 +78,25 @@ namespace engine
 
 	void shape::draw()
 	{
-		_renderer->solidShader.use();
-		setShader();
-		_renderer->drawRequest(model, VAO, _vertices, _renderer->solidShader.ID);
+		_renderer->shaderPro.use();
+		//setShader();
+		_renderer->SetShaderInfo(color, false, affectedByLight, 0);
+		_renderer->drawRequest(model, VAO, _vertices);
 	}
 
-	void shape::setShader()
-	{
-		glm::vec3 newColor = glm::vec3(color.r, color.g, color.b);
-		unsigned int colorLoc = glGetUniformLocation(_renderer->solidShader.ID, "color");
-		//Set color variable in SolidFragment shader
-		glUniform3fv(colorLoc, 1, glm::value_ptr(newColor));
-		//Set alpha variable in SolidFragment shader
-		unsigned int alphaLoc = glGetUniformLocation(_renderer->solidShader.ID, "a");
-		glUniform1fv(alphaLoc, 1, &(color.a));
-	}
+	//void shape::setShader()
+	//{
+	//	glm::vec3 newColor = glm::vec3(color.r, color.g, color.b);
+	//	unsigned int colorLoc = glGetUniformLocation(_renderer->shaderPro.ID, "color");
+	//	glUniform3fv(colorLoc, 1, glm::value_ptr(newColor));
+	//
+	//	unsigned int alphaLoc = glGetUniformLocation(_renderer->shaderPro.ID, "a");
+	//	glUniform1fv(alphaLoc, 1, &(color.a));
+	//
+	//	unsigned int affectedByLightLoc = glGetUniformLocation(_renderer->shaderPro.ID, "affectedByLight");
+	//	glUniform1i(affectedByLightLoc, affectedByLight);
+	//
+	//	unsigned int usesTextureLoc = glGetUniformLocation(_renderer->shaderPro.ID, "usesTexture");
+	//	glUniform1i(usesTextureLoc, false);
+	//}
 }

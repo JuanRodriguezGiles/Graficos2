@@ -15,6 +15,7 @@ namespace engine
 	{
 	public:
 		camera();
+		camera(renderer* currentRenderer, glm::vec3 position, glm::vec3 lookPosition, glm::vec3 upVector, PROJECTION projectionType);
 		virtual void setCameraTransform(glm::vec3 startingPosition, glm::vec3 lookPosition, glm::vec3 upVector) = 0;
 		virtual void rotateCamera(glm::vec2 mouseMovement) = 0;
 		void moveCamera(glm::vec3 movePosition);

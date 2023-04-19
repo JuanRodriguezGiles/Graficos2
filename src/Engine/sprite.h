@@ -13,7 +13,7 @@ namespace engine
 	{
 	public:
 		sprite();
-		sprite(renderer* render, const char* filePathImage, bool invertImage);
+		sprite(renderer* render, const char* filePathImage, bool invertImage, bool affectedByLight);
 		~sprite();
 		void draw() override;
 		void modifyBaseTextureCoords(atlasCutConfig config);
@@ -34,7 +34,7 @@ namespace engine
 		void setTexture(renderer* render, const char* filePathImage, bool invertImage);
 		void deinit();
 	private:
-		void setShader(unsigned int texture);
+		//void setShader(unsigned int texture);
 		unsigned int getCurrentTextureIDToDraw();
 		unsigned int bufferPosUVs = 0;
 		int lastCoordIndex = 0;

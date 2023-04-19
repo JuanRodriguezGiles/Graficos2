@@ -17,7 +17,7 @@ private:
 
 	engine::sprite* floor;
 	engine::sprite* container[6];
-	//engine::sprite* awesomeface;
+	engine::shape* lightSource[6];
 	
 	engine::camera* actualCam;
 	engine::firstPersonCamera* firstPersonCam;
@@ -25,6 +25,6 @@ private:
 
 	float cameraSpeed = 30.f;
 	glm::vec3 boxPos = glm::vec3(0, 0, 0);
-
+	glm::vec3 lightSourcePos = glm::vec3(0, 0, 0);
 
 };

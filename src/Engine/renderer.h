@@ -20,7 +20,8 @@ namespace engine
 		void createExtraBuffer(unsigned int& buffer, int size);
 		void bindBaseBufferRequest(unsigned int VAO, unsigned int VBO, unsigned int EBO, float* vertices, unsigned int sizeOfVertices, unsigned int* indices, unsigned int sizeOfIndices);
 		void bindExtraBuffer(unsigned int buffer, float* data, unsigned int sizeOfData, unsigned int bufferType);
-		void drawRequest(glm::mat4 model, unsigned int VAO, unsigned int vertices, unsigned int usedShaderID);
+		void SetShaderInfo(glm::vec4 color, bool usesTexture, bool affectedByLight, unsigned int texture);
+		void drawRequest(glm::mat4 model, unsigned int VAO, unsigned int vertices);
 		void deleteBaseBuffer(unsigned int& VAO, unsigned int& VBO, unsigned int& EBO);
 		void deleteExtraBuffer(unsigned int& buffer, int size);
 		void startDraw();
@@ -30,8 +31,7 @@ namespace engine
 		void setProjectionMatrix(glm::mat4 projectionMatrix);
 		window* getCurrentWindow();
 
-		Shader textureShader = Shader("../src/Engine/Shaders/TextureVertex.shader", "../src/Engine/Shaders/TextureFragment.shader");
-		Shader solidShader = Shader("../src/Engine/Shaders/SolidVertex.shader", "../src/Engine/Shaders/SolidFragment.shader");
+		Shader shaderPro = Shader("../src/Engine/Shaders/TextureVertex.shader", "../src/Engine/Shaders/TextureFragment.shader");
 
 	private:
 		float lastTime = 0;

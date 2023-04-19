@@ -7,6 +7,7 @@ namespace engine
 	light::light()
 	{
 		VAO = 0;
+		_render = NULL;
 	}
 	light::light(renderer* render)
 	{

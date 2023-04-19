@@ -16,6 +16,9 @@ namespace engine
 		void setCollisionManager(collisionManager* colManager);
 		collisionType checkCollision(entity2D& target, float& xOverlap, float& yOverlap);
 		void applyCollisionRestrictions(collisionType colType, float xOverlap, float yOverlap, bool halfOverlap);
+		void setLightAffect(bool lightAffects);
+	protected:
+		bool affectedByLight;
 	private:
 		collisionManager* colManager;
 	};

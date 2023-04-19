@@ -11,6 +11,11 @@ game::game()
 	//awesomeface = nullptr;
 	floor = nullptr;
 	actualCam = nullptr;
+
+	for (short i = 0; i < 6; i++)
+	{
+		lightSource[i] = nullptr;
+	}
 }
 
 game::~game()
@@ -26,6 +31,11 @@ void game::draw()
 	}
 	//awesomeface->draw();
 	floor->draw();
+
+	for (short i = 0; i < 6; i++)
+	{
+		lightSource[i]->draw();
+	}
 }
 
 void game::update()
@@ -71,7 +81,7 @@ void game::update()
 
 	boxPos += movement;
 
-	std::cout << "x: " << movement.x << " - y: " << movement.y << " - z: " << movement.z<< std::endl;
+	//std::cout << "x: " << movement.x << " - y: " << movement.y << " - z: " << movement.z<< std::endl;
 
 	//camera movement
 
@@ -137,22 +147,22 @@ void game::init()
 		std::cout << "tilemap failed to load";
 	}*/
 
-	/*triangle = new engine::shape(currentRenderer, 3);
+	/*triangle = new engine::lightSource(currentRenderer, 3);
 	triangle->setScale(3, 3, 3);
 	triangle->setPos(-14, -10, 0);
 	triangle->setColor(1, 1, 0, 1);
 
-	triangle2 = new engine::shape(currentRenderer, 3);
+	triangle2 = new engine::lightSource(currentRenderer, 3);
 	triangle2->setScale(3, 3, 3);
 	triangle2->setPos(-17, -10, 0);
 	triangle2->setColor(1, 1, 0, 1);
 
-	triangle3 = new engine::shape(currentRenderer, 3);
+	triangle3 = new engine::lightSource(currentRenderer, 3);
 	triangle3->setScale(3, 3, 3);
 	triangle3->setPos(-15.5, -7, 0);
 	triangle3->setColor(1, 1, 0, 1);
 
-	quad = new engine::shape(currentRenderer, 4);
+	quad = new engine::lightSource(currentRenderer, 4);
 	quad->setScale(5, 5, 5);
 	quad->setPos(15, -10, 0);
 	quad->setColor(0, 1, 1, 1);
@@ -170,8 +180,12 @@ void game::init()
 
 	for (short i = 0; i < 6; i++)
 	{
-		container[i] = new engine::sprite(currentRenderer, "../res/assets/textures/maxwell.png", true);
+		container[i] = new engine::sprite(currentRenderer, "../res/assets/textures/maxwell.png", true, true);
 		container[i]->setScale(glm::vec3(10, 10, 10));
+
+		lightSource[i] = new engine::shape(currentRenderer, 4, false);
+		lightSource[i]->setScale(glm::vec3(5, 5, 5));
+		lightSource[i]->setColor(glm::vec4(1, 0.1f, 0.1f, 1));
 	}
 
 	container[0]->setPos(glm::vec3(0, 0, 5));
@@ -196,11 +210,33 @@ void game::init()
 
 	boxPos = glm::vec3(0, 0, 0);
 
-	floor = new engine::sprite(currentRenderer, "../res/assets/textures/StoneFloorTexture.png", true);
+	floor = new engine::sprite(currentRenderer, "../res/assets/textures/StoneFloorTexture.png", true, true);
 	floor->setScale(glm::vec3(500, 500, 1));
 	floor->setRot(glm::vec3(glm::radians(-90.0f), 0, 0));
 	floor->setPos(glm::vec3(0,-5,0));
 
+
+
+	lightSourcePos = glm::vec3(12, 5, -5);
+
+
+	lightSource[0]->setPos(glm::vec3(0, 0, 2.5f) + lightSourcePos);
+	lightSource[0]->setRot(glm::vec3(0, 0, 0));
+
+	lightSource[1]->setPos(glm::vec3(2.5f, 0, 0) + lightSourcePos);
+	lightSource[1]->setRot(glm::vec3(0, glm::radians(90.0f), 0));
+
+	lightSource[2]->setPos(glm::vec3(0, 0, -2.5f) + lightSourcePos);
+	lightSource[2]->setRot(glm::vec3(0, glm::radians(180.0f), 0));
+
+	lightSource[3]->setPos(glm::vec3(-2.5f, 0, 0) + lightSourcePos);
+	lightSource[3]->setRot(glm::vec3(0, glm::radians(-90.0f), 0));
+
+	lightSource[4]->setPos(glm::vec3(0, 2.5f, 0) + lightSourcePos);
+	lightSource[4]->setRot(glm::vec3(glm::radians(-90.0f), 0, 0));
+
+	lightSource[5]->setPos(glm::vec3(0, -2.5f, 0) + lightSourcePos);
+	lightSource[5]->setRot(glm::vec3(glm::radians(90.0f), 0, 0));
 
 	changeClearColor(glm::vec4(0, 0, 0, 0));
 }
@@ -214,7 +250,7 @@ void game::deInit()
 	{
 		container[i]->deinit();
 		delete container[i];
-		
+		delete lightSource[i];
 	}
 
 	//awesomeface->deinit();
