@@ -155,6 +155,9 @@
     <ClInclude Include="..\src\Engine\window.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\Engine\vertexs.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\src\Engine\Shaders\SolidFragment.shader">

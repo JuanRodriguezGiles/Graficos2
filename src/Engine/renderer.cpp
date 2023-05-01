@@ -49,7 +49,7 @@ namespace engine
 	{
 		ambientLight = ambient;
 	}
-	void renderer::SetShaderInfo(glm::vec4 color, bool usesTexture, bool affectedByLight, unsigned int texture)
+	void renderer::setShaderInfo(glm::vec4 color, bool usesTexture, bool affectedByLight, unsigned int texture)
 	{
 		glm::vec3 newColor = glm::vec3(color.r, color.g, color.b);
 		unsigned int colorLoc = glGetUniformLocation(shaderPro.ID, "color");
@@ -95,13 +95,16 @@ namespace engine
 		//render geometric primitives by specifying a list of indices that reference vertex data stored in VBO
 		glDrawElements(GL_TRIANGLES, vertices, GL_UNSIGNED_INT, 0);
 	}
-	void renderer::processLight(glm::vec3 lightColor)
+	void renderer::processLight(glm::vec3 lightColor, glm::vec3 lightPos)
 	{
 		unsigned int lightColorLoc = glGetUniformLocation(shaderPro.ID, "lightColor");
 		glUniform3fv(lightColorLoc, 1, glm::value_ptr(lightColor));
 
 		unsigned int ambientStengthLoc = glGetUniformLocation(shaderPro.ID, "ambientStrength");
 		glUniform1fv(ambientStengthLoc, 1, &(ambientLight));
+
+		unsigned int lightPosLoc = glGetUniformLocation(shaderPro.ID, "lightPos");
+		glUniform3fv(lightPosLoc, 1, glm::value_ptr(lightPos));
 	}
 	void renderer::createBaseBuffer(unsigned int& VAO, unsigned int& VBO, unsigned int& EBO)
 	{

@@ -34,7 +34,7 @@ namespace engine
 	void light::draw()
 	{
 		_renderer->shaderPro.use();
-		_renderer->processLight(color);
+		_renderer->processLight(color, v3pos);
 	}
 	void light::deinit()
 	{

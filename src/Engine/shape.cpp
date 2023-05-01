@@ -2,6 +2,7 @@
 #include "renderer.h"
 #include "glew.h"
 #include "glfw3.h"
+#include "vertexs.h"
 
 namespace engine
 {
@@ -14,48 +15,23 @@ namespace engine
 		_renderer = render;
 		this->affectedByLight = affectedByLight;
 
-		float* vertex;
-		unsigned int* indices;
-
 		if (vert == 3)
 		{
-			vertex = new float[18]
-			{
-				-0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 1.0f,
-					0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 1.0f,
-					0.0f, 0.5f, 0.0f, 1.0f, 1.0f, 1.0f
-			};
-			indices = new unsigned int[3]
-			{
-				0, 1, 2
-			};
 			_renderer->createBaseBuffer(VAO, VBO, EBO);
-			_renderer->bindBaseBufferRequest(VAO, VBO, EBO, vertex, sizeof(vertex) * 18, indices, sizeof(indices) * 3);
-			_vertices = 3;
-
-			delete[] vertex;
-			delete[] indices;
+			_renderer->bindBaseBufferRequest(VAO, VBO, EBO, GL::triangVertex, sizeof(GL::triangVertex) * GL::triangVertTam, GL::triangIndexes, sizeof(GL::triangIndexes) * GL::triangIndexTam);
+			_vertices = GL::triangIndexTam;
 		}
 		else if (vert == 4)
 		{
-			vertex = new float[24]
-			{
-				0.5f, 0.5f, 0.0f, 1.0f, 1.0f, 1.0f,
-					0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 1.0f,
-					-0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 1.0f,
-					-0.5f, 0.5f, 0.0f, 1.0f, 1.0f, 1.0f
-			};
-			indices = new unsigned int[6]
-			{
-				0, 1, 3,
-					1, 2, 3
-			};
 			_renderer->createBaseBuffer(VAO, VBO, EBO);
-			_renderer->bindBaseBufferRequest(VAO, VBO, EBO, vertex, sizeof(vertex) * 24, indices, sizeof(indices) * 6);
+			_renderer->bindBaseBufferRequest(VAO, VBO, EBO, GL::quadVertex, sizeof(GL::quadVertex) * GL::triangVertTam, GL::quadIndexes, sizeof(GL::quadIndexes) * GL::quadIndexTam);
 			_vertices = 6;
-
-			delete[] vertex;
-			delete[] indices;
+		}
+		else if (vert == 8)
+		{
+			_renderer->createBaseBuffer(VAO, VBO, EBO);
+			_renderer->bindBaseBufferRequest(VAO, VBO, EBO, GL::cubeVertex, sizeof(GL::cubeVertex) * GL::cubeVertTam, GL::cubeIndexes, sizeof(GL::cubeIndexes) * GL::cubeIndexTam);
+			_vertices = GL::cubeIndexTam;
 		}
 		else
 		{
@@ -80,7 +56,7 @@ namespace engine
 	{
 		_renderer->shaderPro.use();
 		//setShader();
-		_renderer->SetShaderInfo(color, false, affectedByLight, 0);
+		_renderer->setShaderInfo(color, false, affectedByLight, 0);
 		_renderer->drawRequest(model, VAO, _vertices);
 	}
 

@@ -45,7 +45,7 @@ namespace engine
 		unsigned int texture = getCurrentTextureIDToDraw();
 		glBindTexture(GL_TEXTURE_2D, texture);
 		//setShader(texture);
-		_renderer->SetShaderInfo(color, true, affectedByLight, texture);
+		_renderer->setShaderInfo(color, true, affectedByLight, texture);
 		_renderer->drawRequest(model, VAO, _vertices);
 	}
 	void sprite::modifyBaseTextureCoords(atlasCutConfig config)
@@ -217,12 +217,12 @@ namespace engine
 	void sprite::setTexture(renderer* render, const char* filePathImage, bool invertImage)
 	{
 		_renderer = render;
-		float vertex[24] =
+		float vertex[36] =
 		{
-			 0.5f,  0.5f, 0.0f,		1.0f, 1.0f, 1.0f,
-			 0.5f, -0.5f, 0.0f,		1.0f, 1.0f, 1.0f,
-			-0.5f, -0.5f, 0.0f,		1.0f, 1.0f, 1.0f,
-			-0.5f,  0.5f, 0.0f,		1.0f, 1.0f, 1.0f
+			 0.5f,  0.5f, 0.0f,		1.0f, 1.0f, 1.0f,	  0.0f, 1.0f, 0.0f,
+			 0.5f, -0.5f, 0.0f,		1.0f, 1.0f, 1.0f,	  0.0f, 1.0f, 0.0f,
+			-0.5f, -0.5f, 0.0f,		1.0f, 1.0f, 1.0f,	  0.0f, 1.0f, 0.0f,
+			-0.5f,  0.5f, 0.0f,		1.0f, 1.0f, 1.0f,	  0.0f, 1.0f, 0.0f
 		};
 		unsigned int indices[6] =
 		{
@@ -233,10 +233,13 @@ namespace engine
 		_renderer->bindBaseBufferRequest(VAO, VBO, EBO, vertex, sizeof(vertex), indices, sizeof(indices));
 		_vertices = 6;
 
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (void*)0);
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (void*)(3 * sizeof(float)));
+		glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (void*)(6 * sizeof(float)));
+
 		glEnableVertexAttribArray(0);
 		glEnableVertexAttribArray(1);
+		glEnableVertexAttribArray(2);
 
 		float UVs[8] =
 		{
@@ -247,8 +250,8 @@ namespace engine
 		};
 		_renderer->createExtraBuffer(bufferPosUVs, 1);
 		_renderer->bindExtraBuffer(bufferPosUVs, UVs, sizeof(UVs), GL_DYNAMIC_DRAW);
-		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
-		glEnableVertexAttribArray(2);
+		glVertexAttribPointer(3, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
+		glEnableVertexAttribArray(3);
 
 		baseTexture = new textureData(textureImporter::loadTexture(filePathImage, invertImage));
 	}

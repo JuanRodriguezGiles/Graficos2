@@ -42,6 +42,7 @@
     <ClInclude Include="..\src\Engine\tileMap.h" />
     <ClInclude Include="..\src\Engine\time.h" />
     <ClInclude Include="..\src\Engine\tinyxml2.h" />
+    <ClInclude Include="..\src\Engine\vertexs.h" />
     <ClInclude Include="..\src\Engine\window.h" />
   </ItemGroup>
   <ItemGroup>

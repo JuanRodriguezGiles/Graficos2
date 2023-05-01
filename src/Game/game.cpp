@@ -78,12 +78,15 @@ void game::update()
 
 	for (short i = 0; i < boxFaces; i++)
 	{
-		container[i]->setPos(container[i]->getPos() + movement);
+		//container[i]->setPos(container[i]->getPos() + movement);
+		lightCube[i]->setPos(lightCube[i]->getPos() + movement);
 	}
 
 	//awesomeface->setPos(awesomeface->getPos() + movement);
 
 	boxPos += movement;
+	lightCubePos += movement;
+	
 
 	//std::cout << "x: " << movement.x << " - y: " << movement.y << " - z: " << movement.z<< std::endl;
 
