@@ -20,6 +20,7 @@ private:
 	engine::shape* lightBox;
 	engine::light* lightSource;
 	engine::shape* cube;
+	engine::shape* cube2;
 
 	engine::camera* actualCam;
 	engine::firstPersonCamera* firstPersonCam;

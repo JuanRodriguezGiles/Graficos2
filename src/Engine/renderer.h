@@ -30,6 +30,7 @@ namespace engine
 		void setAmbientLight(float ambient);
 		void setClearColor(glm::vec4 color);
 		void setViewMatrix(glm::mat4 viewMatrix);
+		void setViewPosition(glm::vec3 viewPos);
 		void setProjectionMatrix(glm::mat4 projectionMatrix);
 		window* getCurrentWindow();
 

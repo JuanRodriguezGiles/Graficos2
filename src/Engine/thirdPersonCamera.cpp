@@ -43,5 +43,6 @@ namespace engine
 		viewMatrix = glm::lookAt(startingPosition, lookPosition, upVector);
 
 		setViewMatrix();
+		setCameraPosToRenderer();
 	}
 }

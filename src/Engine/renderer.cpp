@@ -157,6 +157,11 @@ namespace engine
 	{
 		this->viewMatrix = viewMatrix;
 	}
+	void renderer::setViewPosition(glm::vec3 viewPos)
+	{
+		unsigned int viewPosLoc = glGetUniformLocation(shaderPro.ID, "viewPos");
+		glUniform3fv(viewPosLoc, 1, glm::value_ptr(viewPos));
+	}
 	void renderer::setProjectionMatrix(glm::mat4 projectionMatrix)
 	{
 		this->projectionMatrix = projectionMatrix;

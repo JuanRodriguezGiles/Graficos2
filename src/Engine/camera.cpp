@@ -31,6 +31,7 @@ namespace engine
 
 		viewMatrix = glm::lookAt(pos, look, up);
 		currentRenderer->setViewMatrix(viewMatrix);
+		setCameraPosToRenderer();
 	}
 
 	void camera::moveCamera(glm::vec3 movePosition)
@@ -128,5 +129,9 @@ namespace engine
 	void camera::setViewMatrix()
 	{
 		currentRenderer->setViewMatrix(viewMatrix);
+	}
+	void camera::setCameraPosToRenderer()
+	{
+		currentRenderer->setViewPosition(pos);
 	}
 }

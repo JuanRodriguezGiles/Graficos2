@@ -14,6 +14,7 @@ game::game()
 
 	lightBox = nullptr;
 	cube = nullptr;
+	cube2 = nullptr;
 
 	lightSource = nullptr;
 }
@@ -34,6 +35,7 @@ void game::draw()
 
 	lightBox->draw();
 	cube->draw();
+	cube2->draw();
 
 	lightSource->draw();
 }
@@ -221,6 +223,13 @@ void game::init()
 	cube = new engine::shape(currentRenderer, engine::CUBE, true);
 	cube->setPos(glm::vec3(-20, 5, -5));
 	cube->setScale(glm::vec3(5, 5, 5));
+	cube->setColor(glm::vec4(1.0f));
+
+	cube2 = new engine::shape(currentRenderer, engine::CUBE, true);
+	cube2->setPos(glm::vec3(-25, 5, -5));
+	cube2->setScale(glm::vec3(5, 5, 5));
+	cube2->setColor(glm::vec4(1.0f));
+
 
 	changeClearColor(glm::vec4(0, 0, 0, 0));
 }
@@ -243,5 +252,6 @@ void game::deInit()
 	delete floor;
 
 	delete cube;
+	delete cube2;
 	delete lightBox;
 }
