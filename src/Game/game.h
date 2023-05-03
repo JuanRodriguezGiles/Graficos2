@@ -1,8 +1,6 @@
 #pragma once
 #include "Engine/baseGame.h"
 
-const int colorsArraySize = 8;
-
 class game : public engine::baseGame
 {
 public:
@@ -14,20 +12,14 @@ public:
 	void deInit() override;
 
 private:
-
 	engine::sprite* floor;
-	engine::sprite* container[6];
-	engine::shape* lightBox;
-	engine::light* lightSource;
-	engine::shape* cube;
-	engine::shape* cube2;
+	engine::shape* cubeowo;
+	engine::shape* cubeowo2;
+	engine::light* cubeowoLight;
 
 	engine::camera* actualCam;
 	engine::firstPersonCamera* firstPersonCam;
 	engine::thirdPersonCamera* thirdPersonCam;
 
-	float cameraSpeed = 30.f;
-	glm::vec3 boxPos = glm::vec3(0, 0, 0);
-	glm::vec3 lightCubePos = glm::vec3(0, 0, 0);
-
+	const float cameraSpeed = 30.f;
 };
