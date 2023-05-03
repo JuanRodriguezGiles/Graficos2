@@ -3,6 +3,7 @@
 #include "entity2D.h"
 #include <vector>
 #include "atlasConfig.h"
+#include "animation.h"
 
 namespace engine
 {

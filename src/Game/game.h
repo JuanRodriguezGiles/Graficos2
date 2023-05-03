@@ -17,8 +17,9 @@ private:
 
 	engine::sprite* floor;
 	engine::sprite* container[6];
-	engine::shape* lightCube[6];
+	engine::shape* lightBox;
 	engine::light* lightSource;
+	engine::shape* cube;
 
 	engine::camera* actualCam;
 	engine::firstPersonCamera* firstPersonCam;

@@ -12,10 +12,8 @@ game::game()
 	floor = nullptr;
 	actualCam = nullptr;
 
-	for (short i = 0; i < 6; i++)
-	{
-		lightCube[i] = nullptr;
-	}
+	lightBox = nullptr;
+	cube = nullptr;
 
 	lightSource = nullptr;
 }
@@ -34,10 +32,8 @@ void game::draw()
 	//awesomeface->draw();
 	floor->draw();
 
-	for (short i = 0; i < 6; i++)
-	{
-		lightCube[i]->draw();
-	}
+	lightBox->draw();
+	cube->draw();
 
 	lightSource->draw();
 }
@@ -79,9 +75,10 @@ void game::update()
 	for (short i = 0; i < boxFaces; i++)
 	{
 		//container[i]->setPos(container[i]->getPos() + movement);
-		lightCube[i]->setPos(lightCube[i]->getPos() + movement);
+		//lightCube[i]->setPos(lightCube[i]->getPos() + movement);
 	}
-
+	cube->setPos(cube->getPos() + movement);
+	lightSource->setPos(lightBox->getPos());
 	//awesomeface->setPos(awesomeface->getPos() + movement);
 
 	boxPos += movement;
@@ -177,10 +174,15 @@ void game::init()
 		container[i] = new engine::sprite(currentRenderer, "../res/assets/textures/maxwell.png", true, true);
 		container[i]->setScale(glm::vec3(10, 10, 10));
 
-		lightCube[i] = new engine::shape(currentRenderer, 4, false);
+		/*lightCube[i] = new engine::shape(currentRenderer, 4, false);
 		lightCube[i]->setScale(glm::vec3(5, 5, 5));
-		lightCube[i]->setColor(glm::vec4(0, 0, .5, .5));
+		lightCube[i]->setColor(glm::vec4(0, 0, .5, .5));*/
 	}
+
+	lightBox = new engine::shape(currentRenderer, engine::CUBE, false);
+	lightBox->setScale(glm::vec3(5, 5, 5));
+	lightBox->setColor(glm::vec4(1.0));
+	lightBox->setPos(glm::vec3(12, 5, -5));
 
 	container[0]->setPos(glm::vec3(0, 0, 5));
 	container[0]->setRot(glm::vec3(0, 0, 0));
@@ -210,30 +212,15 @@ void game::init()
 	floor->setPos(glm::vec3(0,-5,0));
 
 
+	lightCubePos = glm::vec3(-20, 5, -5);
 
-	lightCubePos = glm::vec3(12, 5, -5);
-
-
-	lightCube[0]->setPos(glm::vec3(0, 0, 2.5f) + lightCubePos);
-	lightCube[0]->setRot(glm::vec3(0, 0, 0));
-
-	lightCube[1]->setPos(glm::vec3(2.5f, 0, 0) + lightCubePos);
-	lightCube[1]->setRot(glm::vec3(0, glm::radians(90.0f), 0));
-
-	lightCube[2]->setPos(glm::vec3(0, 0, -2.5f) + lightCubePos);
-	lightCube[2]->setRot(glm::vec3(0, glm::radians(180.0f), 0));
-
-	lightCube[3]->setPos(glm::vec3(-2.5f, 0, 0) + lightCubePos);
-	lightCube[3]->setRot(glm::vec3(0, glm::radians(-90.0f), 0));
-
-	lightCube[4]->setPos(glm::vec3(0, 2.5f, 0) + lightCubePos);
-	lightCube[4]->setRot(glm::vec3(glm::radians(-90.0f), 0, 0));
-
-	lightCube[5]->setPos(glm::vec3(0, -2.5f, 0) + lightCubePos);
-	lightCube[5]->setRot(glm::vec3(glm::radians(90.0f), 0, 0));
-
+	
 	lightSource = new engine::light(currentRenderer);
 	lightSource->setColor(glm::vec4(1,1, 1, 1));
+
+	cube = new engine::shape(currentRenderer, engine::CUBE, true);
+	cube->setPos(glm::vec3(-20, 5, -5));
+	cube->setScale(glm::vec3(5, 5, 5));
 
 	changeClearColor(glm::vec4(0, 0, 0, 0));
 }
@@ -247,7 +234,6 @@ void game::deInit()
 	{
 		container[i]->deinit();
 		delete container[i];
-		delete lightCube[i];
 	}
 
 	//awesomeface->deinit();
@@ -255,4 +241,7 @@ void game::deInit()
 
 	floor->deinit();
 	delete floor;
+
+	delete cube;
+	delete lightBox;
 }
