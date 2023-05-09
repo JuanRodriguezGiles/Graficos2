@@ -15,6 +15,7 @@ private:
 	engine::sprite* floor;
 	engine::shape* cubeowo;
 	engine::shape* cubeowo2;
+	engine::shape* cubeowo3;
 	engine::light* cubeowoLight;
 
 	engine::camera* actualCam;

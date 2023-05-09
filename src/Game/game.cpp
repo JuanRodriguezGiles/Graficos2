@@ -7,6 +7,7 @@ game::game()
 	floor = nullptr;
 	cubeowo = nullptr;
 	cubeowo2 = nullptr;
+	cubeowo3 = nullptr;
 	cubeowoLight = nullptr;
 }
 
@@ -15,8 +16,11 @@ game::~game() = default;
 void game::draw()
 {
 	floor->draw();
+
 	cubeowo->draw();
 	cubeowo2->draw();
+	cubeowo3->draw();
+
 	cubeowoLight->draw();
 }
 
@@ -97,20 +101,25 @@ void game::init()
 	thirdPersonCam = new engine::thirdPersonCamera(currentRenderer, camPos, camView, camUp, engine::PROJECTION::PERSPECTIVE);
 	actualCam = firstPersonCam;
 
-	floor = new engine::sprite(currentRenderer, "../res/assets/textures/StoneFloorTexture.png", true, true);
+	floor = new engine::sprite(currentRenderer, "../res/assets/textures/StoneFloorTexture.png", true, true, engine::MATERIAL::CYAN_PLASTIC);
 	floor->setScale(glm::vec3(500, 500, 1));
 	floor->setRot(glm::vec3(glm::radians(-90.0f), 0, 0));
 	floor->setPos(glm::vec3(0,-5,0));
 
-	cubeowo = new engine::shape(currentRenderer, engine::CUBE, true);
+	cubeowo = new engine::shape(currentRenderer, engine::SHAPE::CUBE, true, engine::MATERIAL::YELLOW_RUBBER);
 	cubeowo->setPos(0, 5, 0);
 	cubeowo->setScale(5, 5, 5);
 	cubeowo->setColor(glm::vec4(1.0f));
 
-	cubeowo2 = new engine::shape(currentRenderer, engine::CUBE, true);
+	cubeowo2 = new engine::shape(currentRenderer, engine::SHAPE::CUBE, true, engine::MATERIAL::BRONZE);
 	cubeowo2->setPos(10, 5, 0);
 	cubeowo2->setScale(5, 5, 5);
 	cubeowo2->setColor(glm::vec4(1.0f));
+
+	cubeowo3 = new engine::shape(currentRenderer, engine::SHAPE::CUBE, true, engine::MATERIAL::BRONZE);
+	cubeowo3->setPos(20, 5, 0);
+	cubeowo3->setScale(5, 5, 5);
+	cubeowo3->setColor(glm::vec4(1.0f));
 
 	cubeowoLight = new engine::light(currentRenderer);
 	cubeowoLight->setColor(glm::vec4(1.0f));
@@ -128,5 +137,6 @@ void game::deInit()
 
 	delete cubeowo;
 	delete cubeowo2;
+	delete cubeowo3;
 	delete cubeowoLight;
 }

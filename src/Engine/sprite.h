@@ -4,6 +4,7 @@
 #include <vector>
 #include "atlasConfig.h"
 #include "animation.h"
+#include "renderer.h"
 
 namespace engine
 {
@@ -14,7 +15,7 @@ namespace engine
 	{
 	public:
 		sprite();
-		sprite(renderer* render, const char* filePathImage, bool invertImage, bool affectedByLight);
+		sprite(renderer* render, const char* filePathImage, bool invertImage, bool affectedByLight, MATERIAL material);
 		~sprite();
 		void draw() override;
 		void modifyBaseTextureCoords(atlasCutConfig config);
@@ -44,5 +45,6 @@ namespace engine
 		void bindBaseUVCoords();
 		textureData* baseTexture;
 		std::vector<animation*> animations;
+		MATERIAL material;
 	};
 }

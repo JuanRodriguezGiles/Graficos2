@@ -20,7 +20,7 @@ namespace engine
 		baseUVCoords[2] = { 0.0f, 0.0f };
 		baseUVCoords[3] = { 0.0f, 1.0f };
 	}
-	sprite::sprite(renderer* render, const char* filePathImage, bool invertImage, bool affectedByLight)
+	sprite::sprite(renderer* render, const char* filePathImage, bool invertImage, bool affectedByLight, MATERIAL material)
 	{
 		VAO = 0;
 		VBO = 0;
@@ -28,6 +28,7 @@ namespace engine
 		_vertices = 0;
 		_renderer = render;
 		this->affectedByLight = affectedByLight;
+		this->material = material;
 
 		baseUVCoords[0] = { 1.0f, 1.0f };
 		baseUVCoords[1] = { 1.0f, 0.0f };
@@ -45,7 +46,7 @@ namespace engine
 		unsigned int texture = getCurrentTextureIDToDraw();
 		glBindTexture(GL_TEXTURE_2D, texture);
 		//setShader(texture);
-		_renderer->setShaderInfo(color, true, affectedByLight, texture);
+		_renderer->setShaderInfo(color, true, affectedByLight, texture, material);
 		_renderer->drawRequest(model, VAO, _vertices);
 	}
 	void sprite::modifyBaseTextureCoords(atlasCutConfig config)

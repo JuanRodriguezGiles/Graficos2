@@ -4,9 +4,17 @@
 
 namespace engine
 {
+	struct Light {
+		glm::vec3 position;
+
+		glm::vec3 ambient;
+		glm::vec3 diffuse;
+		glm::vec3 specular;
+	};
+
 	struct textureData;
 	class animation;
-	class renderer;
+	class rederer;
 
 	class ENGINE_API light : public entity
 	{
@@ -18,5 +26,6 @@ namespace engine
 		void deinit();
 	private:
 		unsigned int VAO;
+		Light values;
 	};
 }

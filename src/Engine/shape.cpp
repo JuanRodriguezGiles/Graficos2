@@ -6,7 +6,7 @@
 
 namespace engine
 {
-	shape::shape(renderer* render, SHAPE shape, bool affectedByLight)
+	shape::shape(renderer* render, SHAPE shape, bool affectedByLight, MATERIAL material)
 	{
 		VAO = 0;
 		VBO = 0;
@@ -14,24 +14,25 @@ namespace engine
 		_vertices = 0;
 		_renderer = render;
 		this->affectedByLight = affectedByLight;
+		this->material = material;
 
 		switch (shape)
 		{
-		case engine::TRIANGLE:
+		case SHAPE::TRIANGLE:
 		{
 			_renderer->createBaseBuffer(VAO, VBO, EBO);
 			_renderer->bindBaseBufferRequest(VAO, VBO, EBO, GL::triangVertex, sizeof(GL::triangVertex), GL::triangIndexes, sizeof(GL::triangIndexes));
 			_vertices = GL::triangIndexTam;
 		}
 		break;
-		case engine::QUAD:
+		case SHAPE::QUAD:
 		{
 			_renderer->createBaseBuffer(VAO, VBO, EBO);
 			_renderer->bindBaseBufferRequest(VAO, VBO, EBO, GL::quadVertex, sizeof(GL::quadVertex), GL::quadIndexes, sizeof(GL::quadIndexes));
 			_vertices = GL::quadIndexTam;
 		}
 		break;
-		case engine::CUBE:
+		case SHAPE::CUBE:
 		{
 			_renderer->createBaseBuffer(VAO, VBO, EBO);
 			_renderer->bindBaseBufferRequest(VAO, VBO, EBO, GL::cubeVertex, sizeof(GL::cubeVertex), GL::cubeIndexes, sizeof(GL::cubeIndexes));
@@ -65,6 +66,7 @@ namespace engine
 		_renderer->bindExtraBuffer(bufferPosUVs, UVs, sizeof(UVs), GL_DYNAMIC_DRAW);
 		glVertexAttribPointer(3, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
 		glEnableVertexAttribArray(3);
+		setColor(glm::vec4(1));
 	}
 
 	shape::~shape()
@@ -78,7 +80,7 @@ namespace engine
 	void shape::draw()
 	{
 		_renderer->shaderPro.use();
-		_renderer->setShaderInfo(color, false, affectedByLight, 0);
+		_renderer->setShaderInfo(color, false, affectedByLight, 0, material);
 		_renderer->drawRequest(model, VAO, _vertices);
 	}
 
