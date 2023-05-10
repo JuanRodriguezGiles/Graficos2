@@ -12,7 +12,7 @@ namespace engine
 		_id = id;
 		_walkable = walkable;
 
-		setTexture(render, filePathImage, invertImage);
+		setTexture(render, filePathImage, filePathImage, invertImage);
 	}
 	tile::~tile() 
 	{

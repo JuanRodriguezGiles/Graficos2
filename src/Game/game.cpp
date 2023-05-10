@@ -5,10 +5,13 @@ game::game()
 {
 	actualCam = nullptr;
 	floor = nullptr;
+
 	cubeowo = nullptr;
 	cubeowo2 = nullptr;
 	cubeowo3 = nullptr;
-	cubeowoLight = nullptr;
+	cubeowo4 = nullptr;
+
+	light = nullptr;
 }
 
 game::~game() = default;
@@ -20,8 +23,9 @@ void game::draw()
 	cubeowo->draw();
 	cubeowo2->draw();
 	cubeowo3->draw();
+	cubeowo4->draw();
 
-	cubeowoLight->draw();
+	light->draw();
 }
 
 void game::update()
@@ -59,7 +63,7 @@ void game::update()
 	}
 
 	cubeowo->setPos(cubeowo->getPos() + movement);
-	cubeowoLight->setPos(cubeowoLight->getPos() + movement);
+	light->setPos(light->getPos() + movement);
 
 #pragma region CAMERA
 	const float cameraMovementAmount = engine::time::getDeltaTime() * cameraSpeed;
@@ -101,7 +105,7 @@ void game::init()
 	thirdPersonCam = new engine::thirdPersonCamera(currentRenderer, camPos, camView, camUp, engine::PROJECTION::PERSPECTIVE);
 	actualCam = firstPersonCam;
 
-	floor = new engine::sprite(currentRenderer, "../res/assets/textures/StoneFloorTexture.png", true, true, engine::MATERIAL::CYAN_PLASTIC);
+	floor = new engine::sprite(currentRenderer, "../res/assets/textures/StoneFloorTexture.png", "../res/assets/textures/StoneFloorTexture.png", true, true, engine::MATERIAL::CYAN_PLASTIC);
 	floor->setScale(glm::vec3(500, 500, 1));
 	floor->setRot(glm::vec3(glm::radians(-90.0f), 0, 0));
 	floor->setPos(glm::vec3(0,-5,0));
@@ -121,8 +125,13 @@ void game::init()
 	cubeowo3->setScale(5, 5, 5);
 	cubeowo3->setColor(glm::vec4(1.0f));
 
-	cubeowoLight = new engine::light(currentRenderer);
-	cubeowoLight->setColor(glm::vec4(1.0f));
+	cubeowo4 = new engine::sprite(currentRenderer, "../res/assets/textures/box.png", "../res/assets/textures/box_spec.png", true, true, engine::MATERIAL::PEARL);
+	cubeowo4->setPos(glm::vec3(0, 7.5f, 10));
+	cubeowo4->setScale(glm::vec3(10, 10, 10));
+	cubeowo4->setRot(glm::vec3(glm::radians(-90.0f), 0, 0));
+
+	light = new engine::light(currentRenderer);
+	light->setColor(glm::vec4(1.0f));
 
 	changeClearColor(glm::vec4(0, 0, 0, 0));
 }
@@ -138,5 +147,5 @@ void game::deInit()
 	delete cubeowo;
 	delete cubeowo2;
 	delete cubeowo3;
-	delete cubeowoLight;
+	delete light;
 }

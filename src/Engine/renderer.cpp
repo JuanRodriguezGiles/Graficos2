@@ -49,7 +49,7 @@ namespace engine
 	{
 		ambientLight = ambient;
 	}
-	void renderer::setShaderInfo(glm::vec4 color, bool usesTexture, bool affectedByLight, unsigned int texture, MATERIAL material)
+	void renderer::setShaderInfo(glm::vec4 color, bool usesTexture, bool affectedByLight, unsigned int textures[], MATERIAL material)
 	{
 		glm::vec3 newColor = glm::vec3(color.r, color.g, color.b);
 		unsigned int colorLoc = glGetUniformLocation(shaderPro.ID, "color");
@@ -67,23 +67,39 @@ namespace engine
 		unsigned int usesTexLoc = glGetUniformLocation(shaderPro.ID, "usesTex");
 		glUniform1i(usesTexLoc, usesTexture);
 
-		if (usesTexture)
-		{
-			unsigned int textureLoc = glGetUniformLocation(shaderPro.ID, "ourTexture");
-			glUniform1f(textureLoc, (GLfloat)texture);
-		}
-
 		if (affectedByLight)
 		{
 			Material materialValue = GetMaterialData(material);
-			unsigned int materialLoc = glGetUniformLocation(shaderPro.ID, "material.ambient");
-			glUniform3fv(materialLoc, 1, glm::value_ptr(materialValue.ambient));
+			unsigned int materialLoc;
 
-			materialLoc = glGetUniformLocation(shaderPro.ID, "material.diffuse");
-			glUniform3fv(materialLoc, 1, glm::value_ptr(materialValue.diffuse));
+			if (usesTexture)
+			{
+				int diffuse = 0;
+				int specular = 1;
 
-			materialLoc = glGetUniformLocation(shaderPro.ID, "material.specular");
-			glUniform3fv(materialLoc, 1, glm::value_ptr(materialValue.specular));
+				unsigned int textureLoc = glGetUniformLocation(shaderPro.ID, "ourTexture");
+				glUniform1f(textureLoc, (GLfloat)textures[0]);
+
+				materialLoc = glGetUniformLocation(shaderPro.ID, "material.diffuse");
+				glUniform1i(materialLoc, diffuse);
+
+				glActiveTexture(GL_TEXTURE0);
+				glBindTexture(GL_TEXTURE_2D, textures[0]);
+
+				materialLoc = glGetUniformLocation(shaderPro.ID, "material.specular");
+				glUniform1i(materialLoc, specular);
+
+				glActiveTexture(GL_TEXTURE1);
+				glBindTexture(GL_TEXTURE_2D, textures[1]);
+			}
+			else
+			{
+				materialLoc = glGetUniformLocation(shaderPro.ID, "material.diffuse");
+				glUniform1i(materialLoc, materialValue.diffuse);
+
+				materialLoc = glGetUniformLocation(shaderPro.ID, "material.specular");
+				glUniform1i(materialLoc, materialValue.specular);
+			}
 
 			materialLoc = glGetUniformLocation(shaderPro.ID, "material.shininess");
 			glUniform1fv(materialLoc, 1, &(materialValue.shininess));
@@ -203,28 +219,28 @@ namespace engine
 		switch (material)
 		{
 		case MATERIAL::EMERALD:
-			mat = Material(glm::vec3(0.0215f, 0.0215f, 0.0215f), glm::vec3(0.07568f, 0.61424f, 0.07568f), glm::vec3(0.633f, 0.727811f, 0.633f), 0.6f * 100);
+			mat = Material(glm::vec3(0.0215f, 0.0215f, 0.0215f), 0, 0, 0.6f * 100);
 			break;
 		case MATERIAL::PEARL:
-			mat = Material(glm::vec3(0.25f, 0.20725f, 0.20725f), glm::vec3(1, 0.829f, 0.829f), glm::vec3(0.296648f, 0.296648f, 0.296648f), 0.088f * 100);
+			mat = Material(glm::vec3(0.25f, 0.20725f, 0.20725f), 0, 0, 0.088f * 100);
 			break;
 		case MATERIAL::BRONZE:
-			mat = Material(glm::vec3(0.2125f, 0.1275f, 0.054f), glm::vec3(0.714f, 0.4284f, 0.18144f), glm::vec3(0.393548f, 0.271906f, 0.166721f), 0.2f * 100);
+			mat = Material(glm::vec3(0.2125f, 0.1275f, 0.054f), 0, 0, 0.2f * 100);
 			break;
 		case MATERIAL::GOLD:
-			mat = Material(glm::vec3(0.24725f, 0.1995f, 0.0745f), glm::vec3(0.75164f, 0.60648f, 0.22648f), glm::vec3(0.628281f, 0.555802f, 0.366065f), 0.4f * 100);
+			mat = Material(glm::vec3(0.24725f, 0.1995f, 0.0745f), 0, 0, 0.4f * 100);
 			break;
 		case MATERIAL::CYAN_PLASTIC:
-			mat = Material(glm::vec3(0.0f, 0.1f, 0.06f), glm::vec3(0.0f, 0.50980392f, 0.50980392f), glm::vec3(0.50196078f, 0.50196078f, 0.50196078f), .25f * 10);
+			mat = Material(glm::vec3(0.0f, 0.1f, 0.06f), 0, 0, .25f * 10);
 			break;
 		case MATERIAL::RED_PLASTIC:
-			mat = Material(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.5f, 0.5f, 0.0f), glm::vec3(0.60f, 0.60f, 0.50f), .25f * 10);
+			mat = Material(glm::vec3(0.0f, 0.0f, 0.0f), 0, 0, .25f * 10);
 			break;
 		case MATERIAL::GREEN_RUBBER:
-			mat = Material(glm::vec3(0.0f, 0.5f, 0.0f), glm::vec3(0.4f, 0.5f, 0.4f), glm::vec3(0.04f, 0.7f, 0.04f), .078125f * 50);
+			mat = Material(glm::vec3(0.0f, 0.5f, 0.0f), 0, 0, .078125f * 50);
 			break;
 		case MATERIAL::YELLOW_RUBBER:
-			mat = Material(glm::vec3(0.05f, 0.05f, 0.0f), glm::vec3(0.5f, 0.5f, 0.4f), glm::vec3(0.7f, 0.7f, 0.04f), .078125f * 50);
+			mat = Material(glm::vec3(0.05f, 0.05f, 0.0f), 0, 0, .078125f * 50);
 			break;
 		default:
 			break;

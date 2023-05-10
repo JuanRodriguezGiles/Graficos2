@@ -23,11 +23,11 @@ namespace engine
 
 	struct Material {
 		glm::vec3 ambient;
-		glm::vec3 diffuse;
-		glm::vec3 specular;
+		int diffuse;
+		int specular;
 		float shininess;
 
-		Material(glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular, float shininess)
+		Material(glm::vec3 ambient, int diffuse, int specular, float shininess)
 		{
 			this->ambient = ambient;
 			this->diffuse = diffuse;
@@ -52,7 +52,7 @@ namespace engine
 		void createExtraBuffer(unsigned int& buffer, int size);
 		void bindBaseBufferRequest(unsigned int VAO, unsigned int VBO, unsigned int EBO, float* vertices, unsigned int sizeOfVertices, unsigned int* indices, unsigned int sizeOfIndices);
 		void bindExtraBuffer(unsigned int buffer, float* data, unsigned int sizeOfData, unsigned int bufferType);
-		void setShaderInfo(glm::vec4 color, bool usesTexture, bool affectedByLight, unsigned int texture, MATERIAL material);
+		void setShaderInfo(glm::vec4 color, bool usesTexture, bool affectedByLight, unsigned int textures[], MATERIAL material);
 		void drawRequest(glm::mat4 model, unsigned int VAO, unsigned int vertices);
 		void processLight(glm::vec3 lightColor, glm::vec3 lightPos, Light light);
 		void deleteBaseBuffer(unsigned int& VAO, unsigned int& VBO, unsigned int& EBO);

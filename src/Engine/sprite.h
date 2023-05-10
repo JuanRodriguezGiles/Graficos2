@@ -15,7 +15,7 @@ namespace engine
 	{
 	public:
 		sprite();
-		sprite(renderer* render, const char* filePathImage, bool invertImage, bool affectedByLight, MATERIAL material);
+		sprite(renderer* render, const char* diffuseMapPath, const char* specularMapPath, bool invertImage, bool affectedByLight, MATERIAL material);
 		~sprite();
 		void draw() override;
 		void modifyBaseTextureCoords(atlasCutConfig config);
@@ -33,17 +33,19 @@ namespace engine
 		void setAnimationTimeBetweenFrames(int animationID, float time);
 		void setAnimationFullTime(int animationID, float time);
 		void setTextureCoordinates(glm::vec2 coord1, glm::vec2 coord2, glm::vec2 coord3, glm::vec2 coord4);
-		void setTexture(renderer* render, const char* filePathImage, bool invertImage);
+		void setTexture(renderer* render, const char* diffuseMapPath, const char* specularMapPath, bool invertImage);
 		void deinit();
 	private:
 		//void setShader(unsigned int texture);
 		unsigned int getCurrentTextureIDToDraw();
 		unsigned int bufferPosUVs = 0;
+		unsigned int lightingMaps[2];
 		int lastCoordIndex = 0;
 		glm::vec2 baseUVCoords[4];
 		void bindCustomUVCoords(int i);
 		void bindBaseUVCoords();
-		textureData* baseTexture;
+		textureData* diffuseMap;
+		textureData* specularMap;
 		std::vector<animation*> animations;
 		MATERIAL material;
 	};

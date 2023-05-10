@@ -13,10 +13,13 @@ public:
 
 private:
 	engine::sprite* floor;
+
 	engine::shape* cubeowo;
 	engine::shape* cubeowo2;
 	engine::shape* cubeowo3;
-	engine::light* cubeowoLight;
+	engine::sprite* cubeowo4;
+
+	engine::light* light;
 
 	engine::camera* actualCam;
 	engine::firstPersonCamera* firstPersonCam;

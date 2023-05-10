@@ -20,7 +20,7 @@ namespace engine
 		baseUVCoords[2] = { 0.0f, 0.0f };
 		baseUVCoords[3] = { 0.0f, 1.0f };
 	}
-	sprite::sprite(renderer* render, const char* filePathImage, bool invertImage, bool affectedByLight, MATERIAL material)
+	sprite::sprite(renderer* render, const char* diffuseMapPath, const char* specularMapPath, bool invertImage, bool affectedByLight, MATERIAL material)
 	{
 		VAO = 0;
 		VBO = 0;
@@ -35,7 +35,7 @@ namespace engine
 		baseUVCoords[2] = { 0.0f, 0.0f };
 		baseUVCoords[3] = { 0.0f, 1.0f };
 
-		setTexture(render, filePathImage, invertImage);
+		setTexture(render, diffuseMapPath, specularMapPath, invertImage);
 	}
 	sprite::~sprite()
 	{
@@ -44,9 +44,13 @@ namespace engine
 	{
 		_renderer->shaderPro.use();
 		unsigned int texture = getCurrentTextureIDToDraw();
+
+		lightingMaps[0] = diffuseMap->ID;
+		lightingMaps[1] = specularMap->ID;
+
 		glBindTexture(GL_TEXTURE_2D, texture);
 		//setShader(texture);
-		_renderer->setShaderInfo(color, true, affectedByLight, texture, material);
+		_renderer->setShaderInfo(color, true, affectedByLight, lightingMaps, material);
 		_renderer->drawRequest(model, VAO, _vertices);
 	}
 	void sprite::modifyBaseTextureCoords(atlasCutConfig config)
@@ -60,18 +64,18 @@ namespace engine
 		}
 		else
 		{
-			spriteWidth = (int)(baseTexture->width / config.columns);
-			spriteHeight = (int)(baseTexture->height / config.rows);
+			spriteWidth = (int)(diffuseMap->width / config.columns);
+			spriteHeight = (int)(diffuseMap->height / config.rows);
 		}
 
-		baseUVCoords[0].x = (spriteWidth + (spriteWidth * config.offsetX)) / baseTexture->width;		// top right
-		baseUVCoords[0].y = (spriteHeight * config.offsetY) / baseTexture->height;						// top right
-		baseUVCoords[1].x = (spriteWidth + (spriteWidth * config.offsetX)) / baseTexture->width; 		// bottom right
-		baseUVCoords[1].y = (spriteHeight + (spriteHeight * config.offsetY)) / baseTexture->height;		// bottom right
-		baseUVCoords[2].x = (spriteWidth * config.offsetX) / baseTexture->width;						// bottom left
-		baseUVCoords[2].y = (spriteHeight + (spriteHeight * config.offsetY)) / baseTexture->height;		// bottom left
-		baseUVCoords[3].x = (spriteWidth * config.offsetX) / baseTexture->width;						// top left 
-		baseUVCoords[3].y = (spriteHeight * config.offsetY) / baseTexture->height;						// top left 
+		baseUVCoords[0].x = (spriteWidth + (spriteWidth * config.offsetX)) / diffuseMap->width;		// top right
+		baseUVCoords[0].y = (spriteHeight * config.offsetY) / diffuseMap->height;						// top right
+		baseUVCoords[1].x = (spriteWidth + (spriteWidth * config.offsetX)) / diffuseMap->width; 		// bottom right
+		baseUVCoords[1].y = (spriteHeight + (spriteHeight * config.offsetY)) / diffuseMap->height;		// bottom right
+		baseUVCoords[2].x = (spriteWidth * config.offsetX) / diffuseMap->width;						// bottom left
+		baseUVCoords[2].y = (spriteHeight + (spriteHeight * config.offsetY)) / diffuseMap->height;		// bottom left
+		baseUVCoords[3].x = (spriteWidth * config.offsetX) / diffuseMap->width;						// top left 
+		baseUVCoords[3].y = (spriteHeight * config.offsetY) / diffuseMap->height;						// top left 
 
 		float UVs[8] =
 		{
@@ -110,7 +114,7 @@ namespace engine
 		}
 		if (animations.size() > 0) bindCustomUVCoords(lastCoordIndex);
 		else bindBaseUVCoords();
-		return baseTexture->ID;
+		return diffuseMap->ID;
 	}
 	void sprite::bindCustomUVCoords(int i)
 	{
@@ -152,7 +156,7 @@ namespace engine
 	int sprite::createAnimation(atlasCutConfig config)
 	{
 		animation* anim = new animation();
-		anim->setAnimation(baseTexture, config);
+		anim->setAnimation(diffuseMap, config);
 		animations.push_back(anim);
 		return animations.size() - 1;
 	}
@@ -215,7 +219,7 @@ namespace engine
 		baseUVCoords[2] = coord3;
 		baseUVCoords[3] = coord4;
 	}
-	void sprite::setTexture(renderer* render, const char* filePathImage, bool invertImage)
+	void sprite::setTexture(renderer* render, const char* diffuseMapPath, const char* specularMapPath, bool invertImage)
 	{
 		_renderer = render;
 		float vertex[36] =
@@ -254,14 +258,15 @@ namespace engine
 		glVertexAttribPointer(3, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
 		glEnableVertexAttribArray(3);
 
-		baseTexture = new textureData(textureImporter::loadTexture(filePathImage, invertImage));
+		diffuseMap = new textureData(textureImporter::loadTexture(diffuseMapPath, invertImage));
+		specularMap = new textureData(textureImporter::loadTexture(specularMapPath, invertImage));
 	}
 	void sprite::deinit()
 	{
 		_renderer->deleteBaseBuffer(VAO, VBO, EBO);
 		_renderer->deleteExtraBuffer(bufferPosUVs, 1);
-		glDeleteTextures(1, &baseTexture->ID);
-		delete baseTexture;
+		glDeleteTextures(1, &diffuseMap->ID);
+		delete diffuseMap;
 		for (unsigned int i = 0; i < animations.size(); i++)
 		{
 			delete animations[i];

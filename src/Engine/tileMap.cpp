@@ -158,7 +158,7 @@ namespace engine
 				engine::tile newTile;
 
 				newTile.setId(_id);
-				newTile.setTexture(currentRender, imagePath.c_str(), false);
+				newTile.setTexture(currentRender, imagePath.c_str(), imagePath.c_str(), false);
 				newTile.setScale(glm::vec3(tileWidth, tileHeight,1.0f));
 
 				newTile.setTextureCoordinates(glm::vec2((tileX + tileWidth) / imageWidth, tileY / imageHeight), // top right
