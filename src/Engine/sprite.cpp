@@ -20,7 +20,7 @@ namespace engine
 		baseUVCoords[2] = { 0.0f, 0.0f };
 		baseUVCoords[3] = { 0.0f, 1.0f };
 	}
-	sprite::sprite(renderer* render, const char* diffuseMapPath, const char* specularMapPath, bool invertImage, bool affectedByLight, MATERIAL material)
+	sprite::sprite(renderer* render, const char* diffuseMapPath, const char* specularMapPath, bool invertImage, MATERIAL material)
 	{
 		VAO = 0;
 		VBO = 0;
@@ -49,8 +49,8 @@ namespace engine
 		lightingMaps[1] = specularMap->ID;
 
 		glBindTexture(GL_TEXTURE_2D, texture);
-		//setShader(texture);
-		_renderer->setShaderInfo(color, true, affectedByLight, lightingMaps, material);
+
+		_renderer->setShaderInfo(color, lightingMaps, material);
 		_renderer->drawRequest(model, VAO, _vertices);
 	}
 	void sprite::modifyBaseTextureCoords(atlasCutConfig config)

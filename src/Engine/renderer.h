@@ -52,14 +52,15 @@ namespace engine
 		void createExtraBuffer(unsigned int& buffer, int size);
 		void bindBaseBufferRequest(unsigned int VAO, unsigned int VBO, unsigned int EBO, float* vertices, unsigned int sizeOfVertices, unsigned int* indices, unsigned int sizeOfIndices);
 		void bindExtraBuffer(unsigned int buffer, float* data, unsigned int sizeOfData, unsigned int bufferType);
-		void setShaderInfo(glm::vec4 color, bool usesTexture, bool affectedByLight, unsigned int textures[], MATERIAL material);
+		void setShaderInfo(glm::vec4 color, unsigned int textures[], MATERIAL material);
 		void drawRequest(glm::mat4 model, unsigned int VAO, unsigned int vertices);
-		void processLight(glm::vec3 lightColor, glm::vec3 lightPos, Light light);
+		void processLight(glm::vec3 lightColor, glm::vec3 lightPos);
+		void processDirectionalLight(glm::vec3 direction, Light light);
+		void processPointLight(float constant, float linear, float quadratic, Light light, int index);
 		void deleteBaseBuffer(unsigned int& VAO, unsigned int& VBO, unsigned int& EBO);
 		void deleteExtraBuffer(unsigned int& buffer, int size);
 		void startDraw();
 		void endDraw();
-		void setAmbientLight(float ambient);
 		void setClearColor(glm::vec4 color);
 		void setViewMatrix(glm::mat4 viewMatrix);
 		void setViewPosition(glm::vec3 viewPos);

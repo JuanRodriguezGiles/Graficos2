@@ -5,8 +5,6 @@
 namespace engine
 {
 	struct Light {
-		glm::vec3 position;
-
 		glm::vec3 ambient;
 		glm::vec3 diffuse;
 		glm::vec3 specular;
@@ -22,9 +20,10 @@ namespace engine
 		light();
 		light(renderer* render);
 		~light();
+		virtual void setInitialValues() = 0;
+		virtual void processIndividualValues() = 0;
 		void draw();
-		void deinit();
-	private:
+	protected:
 		unsigned int VAO;
 		Light values;
 	};

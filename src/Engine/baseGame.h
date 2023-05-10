@@ -13,7 +13,8 @@
 #include "thirdPersonCamera.h"
 #include "camera.h"
 #include "tileMap.h"
-#include "light.h"
+#include "pointLight.h"
+#include "directionalLight.h"
 
 namespace engine
 {

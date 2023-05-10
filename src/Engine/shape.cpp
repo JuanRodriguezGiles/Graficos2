@@ -1,4 +1,5 @@
 #include "shape.h"
+#include "textureImporter.h"
 #include "renderer.h"
 #include "glew.h"
 #include "glfw3.h"
@@ -6,7 +7,7 @@
 
 namespace engine
 {
-	shape::shape(renderer* render, SHAPE shape, bool affectedByLight, MATERIAL material)
+	shape::shape(renderer* render, SHAPE shape, MATERIAL material)
 	{
 		VAO = 0;
 		VBO = 0;
@@ -57,46 +58,38 @@ namespace engine
 
 		float UVs[8] =
 		{
+			1.0f, 1.0f,
+			1.0f, 0.0f,
 			0.0f, 0.0f,
-			0.0f, 0.0f,
-			0.0f, 0.0f,
-			0.0f, 0.0f
+			0.0f, 1.0f
+
 		};
 		_renderer->createExtraBuffer(bufferPosUVs, 1);
 		_renderer->bindExtraBuffer(bufferPosUVs, UVs, sizeof(UVs), GL_DYNAMIC_DRAW);
 		glVertexAttribPointer(3, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
 		glEnableVertexAttribArray(3);
 		setColor(glm::vec4(1));
+
+		texture = new textureData(textureImporter::loadTexture("../res/assets/textures/defaultMaterial.png", false));
 	}
 
 	shape::~shape()
 	{
 		_renderer->deleteBaseBuffer(VAO, VBO, EBO);
 		_renderer->deleteExtraBuffer(bufferPosUVs, 1);
-
 		_renderer->deleteBaseBuffer(VAO, VBO, EBO);
+		glDeleteTextures(1, &texture->ID);
+		delete texture;
 	}
 
 	void shape::draw()
 	{
+		glBindTexture(GL_TEXTURE_2D, texture->ID);
+
+		unsigned int textures[] = { texture->ID, texture->ID };
+
 		_renderer->shaderPro.use();
-		_renderer->setShaderInfo(color, false, affectedByLight, 0, material);
+		_renderer->setShaderInfo(color, textures, material);
 		_renderer->drawRequest(model, VAO, _vertices);
 	}
-
-	//void shape::setShader()
-	//{
-	//	glm::vec3 newColor = glm::vec3(color.r, color.g, color.b);
-	//	unsigned int colorLoc = glGetUniformLocation(_renderer->shaderPro.ID, "color");
-	//	glUniform3fv(colorLoc, 1, glm::value_ptr(newColor));
-	//
-	//	unsigned int alphaLoc = glGetUniformLocation(_renderer->shaderPro.ID, "a");
-	//	glUniform1fv(alphaLoc, 1, &(color.a));
-	//
-	//	unsigned int affectedByLightLoc = glGetUniformLocation(_renderer->shaderPro.ID, "affectedByLight");
-	//	glUniform1i(affectedByLightLoc, affectedByLight);
-	//
-	//	unsigned int usesTextureLoc = glGetUniformLocation(_renderer->shaderPro.ID, "usesTexture");
-	//	glUniform1i(usesTextureLoc, false);
-	//}
 }

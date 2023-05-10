@@ -19,7 +19,8 @@ private:
 	engine::shape* cubeowo3;
 	engine::sprite* cubeowo4;
 
-	engine::light* light;
+	engine::pointLight* pointLight[4];
+	engine::directionalLight* directionalLight;
 
 	engine::camera* actualCam;
 	engine::firstPersonCamera* firstPersonCam;

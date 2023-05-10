@@ -1,5 +1,5 @@
 #include "renderer.h"
-
+#include <string>
 #include "glew.h"
 #include "glfw3.h"
 
@@ -45,11 +45,8 @@ namespace engine
 		//Double buffer, swap front and back buffers from the window (back buffer hold next frame)
 		glfwSwapBuffers(currentWindow->getGLFWwindow());
 	}
-	void renderer::setAmbientLight(float ambient)
-	{
-		ambientLight = ambient;
-	}
-	void renderer::setShaderInfo(glm::vec4 color, bool usesTexture, bool affectedByLight, unsigned int textures[], MATERIAL material)
+	
+	void renderer::setShaderInfo(glm::vec4 color, unsigned int textures[], MATERIAL material)
 	{
 		glm::vec3 newColor = glm::vec3(color.r, color.g, color.b);
 		unsigned int colorLoc = glGetUniformLocation(shaderPro.ID, "color");
@@ -58,52 +55,28 @@ namespace engine
 		unsigned int alphaLoc = glGetUniformLocation(shaderPro.ID, "a");
 		glUniform1fv(alphaLoc, 1, &(color.a));
 
-		unsigned int usesTextureLoc = glGetUniformLocation(shaderPro.ID, "usesTexture");
-		glUniform1i(usesTextureLoc, usesTexture);
+		Material materialValue = GetMaterialData(material);
 
-		unsigned int affectedByLightLoc = glGetUniformLocation(shaderPro.ID, "affectedByLight");
-		glUniform1i(affectedByLightLoc, affectedByLight);
+		int diffuse = 0;
+		int specular = 1;
 
-		unsigned int usesTexLoc = glGetUniformLocation(shaderPro.ID, "usesTex");
-		glUniform1i(usesTexLoc, usesTexture);
+		unsigned int textureLoc = glGetUniformLocation(shaderPro.ID, "ourTexture");
+		glUniform1f(textureLoc, (GLfloat)textures[0]);
 
-		if (affectedByLight)
-		{
-			Material materialValue = GetMaterialData(material);
-			unsigned int materialLoc;
+		unsigned int materialLoc = glGetUniformLocation(shaderPro.ID, "material.diffuse");
+		glUniform1i(materialLoc, diffuse);
 
-			if (usesTexture)
-			{
-				int diffuse = 0;
-				int specular = 1;
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, textures[0]);
 
-				unsigned int textureLoc = glGetUniformLocation(shaderPro.ID, "ourTexture");
-				glUniform1f(textureLoc, (GLfloat)textures[0]);
+		materialLoc = glGetUniformLocation(shaderPro.ID, "material.specular");
+		glUniform1i(materialLoc, specular);
 
-				materialLoc = glGetUniformLocation(shaderPro.ID, "material.diffuse");
-				glUniform1i(materialLoc, diffuse);
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_2D, textures[1]);
 
-				glActiveTexture(GL_TEXTURE0);
-				glBindTexture(GL_TEXTURE_2D, textures[0]);
-
-				materialLoc = glGetUniformLocation(shaderPro.ID, "material.specular");
-				glUniform1i(materialLoc, specular);
-
-				glActiveTexture(GL_TEXTURE1);
-				glBindTexture(GL_TEXTURE_2D, textures[1]);
-			}
-			else
-			{
-				materialLoc = glGetUniformLocation(shaderPro.ID, "material.diffuse");
-				glUniform1i(materialLoc, materialValue.diffuse);
-
-				materialLoc = glGetUniformLocation(shaderPro.ID, "material.specular");
-				glUniform1i(materialLoc, materialValue.specular);
-			}
-
-			materialLoc = glGetUniformLocation(shaderPro.ID, "material.shininess");
-			glUniform1fv(materialLoc, 1, &(materialValue.shininess));
-		}
+		materialLoc = glGetUniformLocation(shaderPro.ID, "material.shininess");
+		glUniform1fv(materialLoc, 1, &(materialValue.shininess));
 	}
 	void renderer::drawRequest(glm::mat4 modelMatrix, unsigned int VAO, unsigned int vertices)
 	{
@@ -127,26 +100,83 @@ namespace engine
 		//render geometric primitives by specifying a list of indices that reference vertex data stored in VBO
 		glDrawElements(GL_TRIANGLES, vertices, GL_UNSIGNED_INT, 0);
 	}
-	void renderer::processLight(glm::vec3 lightColor, glm::vec3 lightPos, Light light)
+	void renderer::processLight(glm::vec3 lightColor, glm::vec3 lightPos)
 	{
 		unsigned int lightColorLoc = glGetUniformLocation(shaderPro.ID, "lightColor");
 		glUniform3fv(lightColorLoc, 1, glm::value_ptr(lightColor));
 
-		unsigned int ambientStrengthLoc = glGetUniformLocation(shaderPro.ID, "ambientStrength");
-		glUniform1fv(ambientStrengthLoc, 1, &(ambientLight));
+		unsigned int ambientStengthLoc = glGetUniformLocation(shaderPro.ID, "ambientStrength");
+		glUniform1fv(ambientStengthLoc, 1, &(ambientLight));
 
 		unsigned int lightPosLoc = glGetUniformLocation(shaderPro.ID, "lightPos");
 		glUniform3fv(lightPosLoc, 1, glm::value_ptr(lightPos));
+	}
+	void renderer::processDirectionalLight(glm::vec3 direction, Light light)
+	{
+		unsigned int lightDirLoc = glGetUniformLocation(shaderPro.ID, "dirLight.direction");
+		glUniform3fv(lightDirLoc, 1, glm::value_ptr(direction));
 
-
-		unsigned int lightAmbientLoc = glGetUniformLocation(shaderPro.ID, "light.ambient");
+		unsigned int lightAmbientLoc = glGetUniformLocation(shaderPro.ID, "dirLight.ambient");
 		glUniform3fv(lightAmbientLoc, 1, glm::value_ptr(light.ambient));
 
-		unsigned int lighDiffusetLoc = glGetUniformLocation(shaderPro.ID, "light.diffuse");
+		unsigned int lighDiffusetLoc = glGetUniformLocation(shaderPro.ID, "dirLight.diffuse");
 		glUniform3fv(lighDiffusetLoc, 1, glm::value_ptr(light.diffuse));
 
-		unsigned int lightSpecularLoc = glGetUniformLocation(shaderPro.ID, "light.specular");
+		unsigned int lightSpecularLoc = glGetUniformLocation(shaderPro.ID, "dirLight.specular");
 		glUniform3fv(lightSpecularLoc, 1, glm::value_ptr(light.specular));
+	}
+	void renderer::processPointLight(float constant, float linear, float quadratic, Light light, int index)
+	{
+		unsigned int lightAmbientLoc;
+		unsigned int lighDiffusetLoc;
+		unsigned int lightSpecularLoc;
+		unsigned int lightConstantLoc;
+		unsigned int lightLinearLoc;
+		unsigned int lightQuadraticLoc;
+
+		switch (index)
+		{
+		case 0:
+			lightAmbientLoc = glGetUniformLocation(shaderPro.ID, "pointLights[0].ambient");
+			lighDiffusetLoc = glGetUniformLocation(shaderPro.ID, "pointLights[0].diffuse");
+			lightSpecularLoc = glGetUniformLocation(shaderPro.ID, "pointLights[0].specular");
+			lightConstantLoc = glGetUniformLocation(shaderPro.ID, "pointLights[0].constant");
+			lightLinearLoc = glGetUniformLocation(shaderPro.ID, "pointLights[0].linear");
+			lightQuadraticLoc = glGetUniformLocation(shaderPro.ID, "pointLights[0].quadratic");
+			break;
+		case 1:
+			lightAmbientLoc = glGetUniformLocation(shaderPro.ID, "pointLights[1].ambient");
+			lighDiffusetLoc = glGetUniformLocation(shaderPro.ID, "pointLights[1].diffuse");
+			lightSpecularLoc = glGetUniformLocation(shaderPro.ID, "pointLights[1].specular");
+			lightConstantLoc = glGetUniformLocation(shaderPro.ID, "pointLights[1].constant");
+			lightLinearLoc = glGetUniformLocation(shaderPro.ID, "pointLights[1].linear");
+			lightQuadraticLoc = glGetUniformLocation(shaderPro.ID, "pointLights[1].quadratic");
+			break;
+		case 2:
+			lightAmbientLoc = glGetUniformLocation(shaderPro.ID, "pointLights[2].ambient");
+			lighDiffusetLoc = glGetUniformLocation(shaderPro.ID, "pointLights[2].diffuse");
+			lightSpecularLoc = glGetUniformLocation(shaderPro.ID, "pointLights[2].specular");
+			lightConstantLoc = glGetUniformLocation(shaderPro.ID, "pointLights[2].constant");
+			lightLinearLoc = glGetUniformLocation(shaderPro.ID, "pointLights[2].linear");
+			lightQuadraticLoc = glGetUniformLocation(shaderPro.ID, "pointLights[2].quadratic");
+			break;
+		case 3:
+			lightAmbientLoc = glGetUniformLocation(shaderPro.ID, "pointLights[3].ambient");
+			lighDiffusetLoc = glGetUniformLocation(shaderPro.ID, "pointLights[3].diffuse");
+			lightSpecularLoc = glGetUniformLocation(shaderPro.ID, "pointLights[3].specular");
+			lightConstantLoc = glGetUniformLocation(shaderPro.ID, "pointLights[3].constant");
+			lightLinearLoc = glGetUniformLocation(shaderPro.ID, "pointLights[3].linear");
+			lightQuadraticLoc = glGetUniformLocation(shaderPro.ID, "pointLights[3].quadratic");
+			break;
+		}
+
+		//pointLights
+		glUniform3fv(lightAmbientLoc, 1, glm::value_ptr(light.ambient));
+		glUniform3fv(lighDiffusetLoc, 1, glm::value_ptr(light.diffuse));
+		glUniform3fv(lightSpecularLoc, 1, glm::value_ptr(light.specular));
+		glUniform1fv(lightConstantLoc, 1, &constant);
+		glUniform1fv(lightLinearLoc, 1, &linear);
+		glUniform1fv(lightQuadraticLoc, 1, &quadratic);
 	}
 	void renderer::createBaseBuffer(unsigned int& VAO, unsigned int& VBO, unsigned int& EBO)
 	{

@@ -24,6 +24,7 @@
     <ClInclude Include="..\src\Engine\baseGame.h" />
     <ClInclude Include="..\src\Engine\camera.h" />
     <ClInclude Include="..\src\Engine\collisionManager.h" />
+    <ClInclude Include="..\src\Engine\directionalLight.h" />
     <ClInclude Include="..\src\Engine\entity.h" />
     <ClInclude Include="..\src\Engine\entity2D.h" />
     <ClInclude Include="..\src\Engine\exports.h" />
@@ -31,6 +32,7 @@
     <ClInclude Include="..\src\Engine\input.h" />
     <ClInclude Include="..\src\Engine\keycodes.h" />
     <ClInclude Include="..\src\Engine\light.h" />
+    <ClInclude Include="..\src\Engine\pointLight.h" />
     <ClInclude Include="..\src\Engine\renderer.h" />
     <ClInclude Include="..\src\Engine\shader.h" />
     <ClInclude Include="..\src\Engine\shape.h" />
@@ -50,11 +52,13 @@
     <ClCompile Include="..\src\Engine\baseGame.cpp" />
     <ClCompile Include="..\src\Engine\camera.cpp" />
     <ClCompile Include="..\src\Engine\collisionManager.cpp" />
+    <ClCompile Include="..\src\Engine\directionalLight.cpp" />
     <ClCompile Include="..\src\Engine\entity.cpp" />
     <ClCompile Include="..\src\Engine\entity2D.cpp" />
     <ClCompile Include="..\src\Engine\firstPersonCamera.cpp" />
     <ClCompile Include="..\src\Engine\input.cpp" />
     <ClCompile Include="..\src\Engine\light.cpp" />
+    <ClCompile Include="..\src\Engine\pointLight.cpp" />
     <ClCompile Include="..\src\Engine\renderer.cpp" />
     <ClCompile Include="..\src\Engine\shader.cpp" />
     <ClCompile Include="..\src\Engine\shape.cpp" />

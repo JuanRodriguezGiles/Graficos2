@@ -33,6 +33,8 @@ namespace engine
 		values.ambient = glm::vec3(0.2f);
 		values.diffuse = glm::vec3(0.5f);
 		values.specular = glm::vec3(1);
+
+		setInitialValues();
 	}
 	light::~light()
 	{
@@ -41,10 +43,7 @@ namespace engine
 	{
 		_renderer->shaderPro.use();
 		_renderer->processLight(color, v3pos, values);
-	}
-	void light::deinit()
-	{
 
-
+		processIndividualValues();
 	}
 }

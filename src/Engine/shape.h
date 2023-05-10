@@ -10,11 +10,12 @@ namespace engine
 	class ENGINE_API shape : public entity2D
 	{
 	public:
-		shape(renderer* render, SHAPE shape, bool affectedByLight, MATERIAL material);
+		shape(renderer* render, SHAPE shape, MATERIAL material);
 		~shape();
 		void draw() override;
 	private:
 		unsigned int bufferPosUVs = 0;
 		MATERIAL material;
+		textureData* texture;
 	};
 }

@@ -15,7 +15,7 @@ namespace engine
 	{
 	public:
 		sprite();
-		sprite(renderer* render, const char* diffuseMapPath, const char* specularMapPath, bool invertImage, bool affectedByLight, MATERIAL material);
+		sprite(renderer* render, const char* diffuseMapPath, const char* specularMapPath, bool invertImage, MATERIAL material);
 		~sprite();
 		void draw() override;
 		void modifyBaseTextureCoords(atlasCutConfig config);
