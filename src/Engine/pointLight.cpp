@@ -5,16 +5,35 @@ namespace engine
 {
 	pointLight::pointLight()
 	{
-		index = lightsAmount;
 
-		if (lightsAmount == 4)
-		{
-			lightsAmount = 0;
-		}
-		else
-		{
-			lightsAmount++;
-		}
+	}
+	pointLight::pointLight(renderer* render, int index)
+	{
+		this->index = index;
+
+		VAO = 0;
+		_renderer = render;
+
+		model = glm::mat4(1.0f);
+		translate = glm::mat4(1.0f);
+		rotateX = glm::mat4(1.0f);
+		rotateY = glm::mat4(1.0f);
+		rotateZ = glm::mat4(1.0f);
+		scale = glm::mat4(1.0f);
+
+		v3pos = glm::vec3(0.0f);
+		v3rot = glm::vec3(0.0f);
+		v3scale = glm::vec3(1.0f);
+
+		updateModelMatrix();
+
+		setColor(glm::vec4(1.0f));
+
+		values.ambient = glm::vec3(0.2f);
+		values.diffuse = glm::vec3(0.5f);
+		values.specular = glm::vec3(1);
+
+		setInitialValues();
 	}
 	pointLight::~pointLight()
 	{
@@ -31,6 +50,7 @@ namespace engine
 	}
 	void pointLight::processIndividualValues()
 	{
-		_renderer->processPointLight(constant, linear, quadratic, values, index);
+		values.color = { getColor().r, getColor().g, getColor().b };
+		_renderer->processPointLight(constant, linear, quadratic, getPos(), values, index);
 	}
 }

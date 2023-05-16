@@ -56,7 +56,8 @@ namespace engine
 		void drawRequest(glm::mat4 model, unsigned int VAO, unsigned int vertices);
 		void processLight(glm::vec3 lightColor, glm::vec3 lightPos);
 		void processDirectionalLight(glm::vec3 direction, Light light);
-		void processPointLight(float constant, float linear, float quadratic, Light light, int index);
+		void processPointLight(float constant, float linear, float quadratic, glm::vec3 position, Light light, int index);
+		void processSpotLight(glm::vec3 direction, float constant, float linear, float quadratic, glm::vec3 position, Light light, float cutOff, float outerCutOff);
 		void deleteBaseBuffer(unsigned int& VAO, unsigned int& VBO, unsigned int& EBO);
 		void deleteExtraBuffer(unsigned int& buffer, int size);
 		void startDraw();

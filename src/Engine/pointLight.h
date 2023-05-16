@@ -7,6 +7,7 @@ namespace engine
 	{
 	public:
 		pointLight();
+		pointLight(renderer* render, int index);
 		~pointLight();
 		void setInitialValues() override;
 		void processIndividualValues() override;

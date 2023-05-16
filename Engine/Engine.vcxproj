@@ -36,6 +36,7 @@
     <ClInclude Include="..\src\Engine\renderer.h" />
     <ClInclude Include="..\src\Engine\shader.h" />
     <ClInclude Include="..\src\Engine\shape.h" />
+    <ClInclude Include="..\src\Engine\spotLight.h" />
     <ClInclude Include="..\src\Engine\sprite.h" />
     <ClInclude Include="..\src\Engine\stb_image.h" />
     <ClInclude Include="..\src\Engine\textureImporter.h" />
@@ -62,6 +63,7 @@
     <ClCompile Include="..\src\Engine\renderer.cpp" />
     <ClCompile Include="..\src\Engine\shader.cpp" />
     <ClCompile Include="..\src\Engine\shape.cpp" />
+    <ClCompile Include="..\src\Engine\spotLight.cpp" />
     <ClCompile Include="..\src\Engine\sprite.cpp" />
     <ClCompile Include="..\src\Engine\stb_image.cpp" />
     <ClCompile Include="..\src\Engine\textureImporter.cpp" />

@@ -11,8 +11,12 @@ game::game()
 	cubeowo3 = nullptr;
 	cubeowo4 = nullptr;
 
-	//pointLight = nullptr;
+	for (int i = 0; i < 4; i++)
+	{
+		pointLight[i] = nullptr;
+	}
 	directionalLight = nullptr;
+	spotLight = nullptr;
 }
 
 game::~game() = default;
@@ -25,9 +29,13 @@ void game::draw()
 	cubeowo2->draw();
 	cubeowo3->draw();
 	cubeowo4->draw();
-
 	
-	//pointLight->draw();
+	for (int i = 0; i < 4; i++)
+	{
+		pointLight[i]->draw();
+	}
+
+	spotLight->draw();
 	directionalLight->draw();
 }
 
@@ -98,7 +106,7 @@ void game::update()
 
 void game::init()
 {
-	const glm::vec3 camPos = { 20, 10, 30 };
+	const glm::vec3 camPos = { 0, 3, 2 };
 	const glm::vec3 camView = { 0, 0, 0 };
 	const glm::vec3 camUp = { 0, 1, 0 };
 
@@ -107,29 +115,46 @@ void game::init()
 	actualCam = firstPersonCam;
 
 	floor = new engine::sprite(currentRenderer, "../res/assets/textures/StoneFloorTexture.png", "../res/assets/textures/StoneFloorTexture.png",  true, engine::MATERIAL::CYAN_PLASTIC);
-	floor->setScale(glm::vec3(500, 500, 1));
+	floor->setScale(glm::vec3(10, 10, 1));
 	floor->setRot(glm::vec3(glm::radians(-90.0f), 0, 0));
-	floor->setPos(glm::vec3(0,-5,0));
+	floor->setPos(glm::vec3(0,0,0));
 
 	cubeowo = new engine::shape(currentRenderer, engine::SHAPE::CUBE, engine::MATERIAL::YELLOW_RUBBER);
 	cubeowo->setPos(0, 5, 0);
-	cubeowo->setScale(5, 5, 5);
+	cubeowo->setScale(2, 2, 2);
 	cubeowo->setColor(glm::vec4(1.0f));
 
 	cubeowo2 = new engine::shape(currentRenderer, engine::SHAPE::CUBE, engine::MATERIAL::BRONZE);
 	cubeowo2->setPos(10, 5, 0);
-	cubeowo2->setScale(5, 5, 5);
+	cubeowo2->setScale(2, 2, 2);
 	cubeowo2->setColor(glm::vec4(1.0f));
 
 	cubeowo3 = new engine::shape(currentRenderer, engine::SHAPE::CUBE, engine::MATERIAL::BRONZE);
 	cubeowo3->setPos(20, 5, 0);
-	cubeowo3->setScale(5, 5, 5);
+	cubeowo3->setScale(2, 2, 2);
 	cubeowo3->setColor(glm::vec4(1.0f));
 
 	cubeowo4 = new engine::sprite(currentRenderer, "../res/assets/textures/box.png", "../res/assets/textures/box_spec.png", true, engine::MATERIAL::PEARL);
 	cubeowo4->setPos(glm::vec3(0, 7.5f, 10));
 	cubeowo4->setScale(glm::vec3(10, 10, 10));
 	cubeowo4->setRot(glm::vec3(glm::radians(-90.0f), 0, 0));
+
+	for (int i = 0; i < 4; i++)
+	{
+		pointLight[i] = new engine::pointLight(currentRenderer, i);
+		pointLight[i]->setColor(glm::vec4(1, 1, 1, 1));
+		pointLight[i]->setPos(glm::vec3(-4 + 2 * i, 1, -3));
+	}
+
+	pointLight[0]->setColor(glm::vec4(1, 0, 0, 1));
+	pointLight[1]->setColor(glm::vec4(0, 1, 0, 1));
+	pointLight[2]->setColor(glm::vec4(0, 0, 1, 1));
+	pointLight[3]->setColor(glm::vec4(1, 1, 1, 1));
+
+	directionalLight = new engine::directionalLight(currentRenderer);
+
+	spotLight = new engine::spotLight(currentRenderer);
+	spotLight->setPos({ 0,5,3 });
 
 	changeClearColor(glm::vec4(0, 0, 0, 0));
 }
@@ -146,6 +171,13 @@ void game::deInit()
 	delete cubeowo2;
 	delete cubeowo3;
 
-	delete pointLight;
+	cubeowo4->deinit();
+	delete cubeowo4;
+
+	for (int i = 0; i < 4; i++)
+	{
+		delete pointLight[i];
+	}
+
 	delete directionalLight;
 }

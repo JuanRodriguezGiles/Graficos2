@@ -6,10 +6,8 @@
 #include "glm/gtc/type_ptr.hpp"
 #include "atlasConfig.h"
 
-
 namespace engine
 {
-
 	struct textureData;
 
 	class ENGINE_API animation

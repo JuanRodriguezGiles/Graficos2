@@ -12,6 +12,8 @@ public:
 	void deInit() override;
 
 private:
+	engine::entity* selectedEntity;
+
 	engine::sprite* floor;
 
 	engine::shape* cubeowo;
@@ -21,10 +23,12 @@ private:
 
 	engine::pointLight* pointLight[4];
 	engine::directionalLight* directionalLight;
+	engine::spotLight* spotLight;
 
 	engine::camera* actualCam;
 	engine::firstPersonCamera* firstPersonCam;
 	engine::thirdPersonCamera* thirdPersonCam;
 
-	const float cameraSpeed = 30.f;
+	const float cameraSpeed = 2;
+	glm::vec3 entityPos = glm::vec3(0, 0, 0);
 };
