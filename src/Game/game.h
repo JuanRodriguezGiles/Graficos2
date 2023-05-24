@@ -12,7 +12,7 @@ public:
 	void deInit() override;
 
 private:
-	engine::entity* selectedEntity;
+	engine::entity* currentObject;
 
 	engine::sprite* floor;
 
@@ -30,5 +30,5 @@ private:
 	engine::thirdPersonCamera* thirdPersonCam;
 
 	const float cameraSpeed = 2;
-	glm::vec3 entityPos = glm::vec3(0, 0, 0);
+	glm::vec3 currentObjectPos = glm::vec3(0, 0, 0);
 };

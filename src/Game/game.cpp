@@ -17,6 +17,8 @@ game::game()
 	}
 	directionalLight = nullptr;
 	spotLight = nullptr;
+
+	currentObject = nullptr;
 }
 
 game::~game() = default;
@@ -41,38 +43,116 @@ void game::draw()
 
 void game::update()
 {
+	glm::vec3 rotation = glm::vec3(0, 0, 0);
 	glm::vec3 movement = glm::vec3(0, 0, 0);
 
 	glm::vec3 front = glm::normalize(actualCam->getFront() - actualCam->getPos());
 	front.y = 0;
 
 	const glm::vec3 up = glm::normalize(actualCam->getUp());
-	const float boxSpeed = 1;
+	const float moveSpeed = 0.1f;
+	const float rotationSpeed = 0.1f;
 
 	if (isKeyPressed(ENGINE_KEY_ESCAPE))
 	{
 		close();
 	}
 
+#pragma region OBJECT SELECTION
+	if (isKeyPressed(ENGINE_KEY_0))
+	{
+		currentObject = pointLight[0];
+	}
+	else if (isKeyPressed(ENGINE_KEY_1))
+	{
+		currentObject = pointLight[1];
+	}
+	else if (isKeyPressed(ENGINE_KEY_2))
+	{
+		currentObject = pointLight[2];
+	}
+	else if (isKeyPressed(ENGINE_KEY_3))
+	{
+		currentObject = pointLight[3];
+	}
+	else if (isKeyPressed(ENGINE_KEY_4))
+	{
+		currentObject = spotLight;
+	}
+	else if (isKeyPressed(ENGINE_KEY_5))
+	{
+		currentObject = directionalLight;
+	}
+	else if (isKeyPressed(ENGINE_KEY_6))
+	{
+		currentObject = cubeowo;
+	}
+#pragma endregion
+
+#pragma region MOVEMENT
 	if (isKeyPressed(ENGINE_KEY_UP))
 	{
-		movement += front * boxSpeed;
+		movement += front * moveSpeed;
 	}
 	else if (isKeyPressed(ENGINE_KEY_DOWN))
 	{
-		movement -= front * boxSpeed;
+		movement -= front * moveSpeed;
 	}
 	
 	if (isKeyPressed(ENGINE_KEY_LEFT))
 	{
-		movement -= glm::normalize(glm::cross(front, up));
+		movement -= glm::normalize(glm::cross(front, up)) * moveSpeed;
 	}
 	else if (isKeyPressed(ENGINE_KEY_RIGHT))
 	{
-		movement += glm::normalize(glm::cross(front, up));
+		movement += glm::normalize(glm::cross(front, up)) * moveSpeed;
 	}
 
-	cubeowo->setPos(cubeowo->getPos() + movement);
+	//cubeowo->setPos(cubeowo->getPos() + movement);
+#pragma endregion
+
+#pragma region ROTATION
+	if (isKeyPressed(ENGINE_KEY_I))
+	{
+		if (rotation.y > 0)
+		{
+			rotation.y -= engine::time::getDeltaTime() * rotationSpeed;
+
+			rotation.y = rotation.y < 0 ? 0 : rotation.y;
+		}
+	}
+	else if (isKeyPressed(ENGINE_KEY_O))
+	{
+		if (rotation.y < 360)
+		{
+			rotation.y += engine::time::getDeltaTime() * rotationSpeed;
+
+			rotation.y = rotation.y > 360 ? 360 : rotation.y;
+		}
+	}
+
+	if (isKeyPressed(ENGINE_KEY_K))
+	{
+		if (rotation.x > 0)
+		{
+			rotation.x -= engine::time::getDeltaTime() * rotationSpeed;
+
+			rotation.x = rotation.x < 0 ? 0 : rotation.x;
+		}
+	}
+	else if (isKeyPressed(ENGINE_KEY_L))
+	{
+		if (rotation.x < 360)
+		{
+			rotation.x += engine::time::getDeltaTime() * rotationSpeed;
+
+			rotation.x = rotation.x > 360 ? 360 : rotation.x;
+		}
+	}
+#pragma endregion
+
+	currentObjectPos += movement;
+	currentObject->setPos(currentObjectPos);
 
 #pragma region CAMERA
 	const float cameraMovementAmount = engine::time::getDeltaTime() * cameraSpeed;
@@ -157,6 +237,8 @@ void game::init()
 	spotLight->setPos({ 0,5,3 });
 
 	changeClearColor(glm::vec4(0, 0, 0, 0));
+
+	currentObject = cubeowo;
 }
 
 void game::deInit()
