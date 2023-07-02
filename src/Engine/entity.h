@@ -1,8 +1,14 @@
-#pragma once
+#ifndef ENTITY
+#define ENTITY
+
+
+
+
+#include <GLM/glm.hpp>
+#include "GLM/gtc/matrix_transform.hpp"
+#include "GLM/gtc/type_ptr.hpp"
 #include "exports.h"
-#include "glm/glm.hpp"
-#include "glm/gtc/matrix_transform.hpp"
-#include "glm/gtc/type_ptr.hpp"
+
 
 namespace engine
 {
@@ -24,7 +30,7 @@ namespace engine
 		void invertX();
 		void invertY();
 		void invertZ();
-		
+
 		glm::vec4 getColor();
 		glm::vec3 getPos();
 		glm::vec3 getRot();
@@ -50,7 +56,7 @@ namespace engine
 		glm::vec4 color;
 
 		unsigned int VAO, VBO, EBO, _vertices;
-		
+
 		void updateModelMatrix();
 	private:
 		void setRotX(float x);
@@ -58,3 +64,4 @@ namespace engine
 		void setRotZ(float z);
 	};
 }
+#endif // !ENTITY

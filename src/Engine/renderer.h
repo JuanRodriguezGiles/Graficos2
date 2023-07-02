@@ -2,10 +2,9 @@
 #include "exports.h"
 #include "window.h"
 #include "shader.h"
-#include "glm/glm.hpp"
-#include "glm/gtc/matrix_transform.hpp"
-#include "glm/gtc/type_ptr.hpp"
+#include <vector>
 #include "light.h"
+#include "Mesh.h"
 
 namespace engine
 {
@@ -54,9 +53,11 @@ namespace engine
 		void bindExtraBuffer(unsigned int buffer, float* data, unsigned int sizeOfData, unsigned int bufferType);
 		void setShaderInfo(glm::vec4 color, unsigned int textures[], MATERIAL material);
 		void drawRequest(glm::mat4 model, unsigned int VAO, unsigned int vertices);
+		void setMVP(glm::mat4 modelMatrix);
+		void drawMesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<Texture> textures, unsigned int VAO);
 		void processLight(glm::vec3 lightColor, glm::vec3 lightPos);
 		void processDirectionalLight(glm::vec3 direction, Light light);
-		void processPointLight(float constant, float linear, float quadratic, glm::vec3 position, Light light, int index);
+		void processPointLight(float constant, float linear, float quadratic, glm::vec3 position, Light light);
 		void processSpotLight(glm::vec3 direction, float constant, float linear, float quadratic, glm::vec3 position, Light light, float cutOff, float outerCutOff);
 		void deleteBaseBuffer(unsigned int& VAO, unsigned int& VBO, unsigned int& EBO);
 		void deleteExtraBuffer(unsigned int& buffer, int size);
@@ -68,12 +69,16 @@ namespace engine
 		void setProjectionMatrix(glm::mat4 projectionMatrix);
 		window* getCurrentWindow();
 
-		Shader shaderPro = Shader("../src/Engine/Shaders/TextureVertex.shader", "../src/Engine/Shaders/TextureFragment.shader");
+		glm::mat4 GetProjMatrix();
+		glm::mat4 GetViewMatrix();
+
+		Shader shader = Shader("../src/Engine/Shaders/TextureVertex.shader", "../src/Engine/Shaders/TextureFragment.shader");//Shader("../src/Motor/Shaders/TextureVertex.shader", "../src/Motor/Shaders/TextureFragment.shader");
 
 	private:
 		Material GetMaterialData(MATERIAL material);
 		float lastTime = 0;
 		float ambientLight = 0.1f;
+		int pointLightIndex = 0;
 		window* currentWindow;
 		glm::vec4 clearColor;
 		glm::mat4 viewMatrix;

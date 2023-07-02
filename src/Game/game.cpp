@@ -1,117 +1,118 @@
 #include "game.h"
-#include <iostream>
 
 game::game()
 {
-	actualCam = nullptr;
-	floor = nullptr;
-
-	cubeowo = nullptr;
-	cubeowo2 = nullptr;
-	cubeowo3 = nullptr;
-	cubeowo4 = nullptr;
-
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < POINT_LIGHTS; i++)
 	{
 		pointLight[i] = nullptr;
+		pointLightBox[i] = nullptr;
 	}
+
 	directionalLight = nullptr;
 	spotLight = nullptr;
+	spotLightBox = nullptr;
 
-	currentObject = nullptr;
+
+	backpackModel = nullptr;
+
+	actualCam = nullptr;
 }
 
-game::~game() = default;
+game::~game()
+{
+
+}
 
 void game::draw()
 {
-	floor->draw();
-
-	cubeowo->draw();
-	cubeowo2->draw();
-	cubeowo3->draw();
-	cubeowo4->draw();
-	
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < POINT_LIGHTS; i++)
 	{
 		pointLight[i]->draw();
+		pointLightBox[i]->draw();
 	}
 
 	spotLight->draw();
+	spotLightBox->draw();
+
+	
 	directionalLight->draw();
+	
+
+	backpackModel->draw();
+
+	floor->draw();
 }
 
 void game::update()
 {
-	glm::vec3 rotation = glm::vec3(0, 0, 0);
-	glm::vec3 movement = glm::vec3(0, 0, 0);
-
-	glm::vec3 front = glm::normalize(actualCam->getFront() - actualCam->getPos());
-	front.y = 0;
-
-	const glm::vec3 up = glm::normalize(actualCam->getUp());
-	const float moveSpeed = 0.1f;
-	const float rotationSpeed = 0.1f;
-
-	if (isKeyPressed(ENGINE_KEY_ESCAPE))
-	{
-		close();
-	}
-
-#pragma region OBJECT SELECTION
 	if (isKeyPressed(ENGINE_KEY_0))
 	{
-		currentObject = pointLight[0];
+		entityPos = pointLight[0]->getPos();
+		selectedEntity = pointLight[0];
 	}
 	else if (isKeyPressed(ENGINE_KEY_1))
 	{
-		currentObject = pointLight[1];
+		entityPos = pointLight[1]->getPos();
+		selectedEntity = pointLight[1];
 	}
 	else if (isKeyPressed(ENGINE_KEY_2))
 	{
-		currentObject = pointLight[2];
+		entityPos = pointLight[2]->getPos();
+		selectedEntity = pointLight[2];
 	}
 	else if (isKeyPressed(ENGINE_KEY_3))
 	{
-		currentObject = pointLight[3];
+		entityPos = pointLight[3]->getPos();
+		selectedEntity = pointLight[3];
 	}
 	else if (isKeyPressed(ENGINE_KEY_4))
 	{
-		currentObject = spotLight;
+		entityPos = spotLight->getPos();
+		selectedEntity = spotLight;
 	}
 	else if (isKeyPressed(ENGINE_KEY_5))
 	{
-		currentObject = directionalLight;
+		entityPos = backpackModel->getPos();
+		selectedEntity = backpackModel;
 	}
-	else if (isKeyPressed(ENGINE_KEY_6))
-	{
-		currentObject = cubeowo;
-	}
-#pragma endregion
 
-#pragma region MOVEMENT
+	glm::vec3 rotation = selectedEntity->getRot();
+	glm::vec3 movement = glm::vec3(0, 0, 0);
+	glm::vec3 front = glm::vec3(0, 0, -1);
+	glm::vec3 up = glm::vec3(0, 1, 0);
+
+	float movementSpeed = 0.01f;
+	float rotationSpeed = 1.0f;
+
+	front.y = 0;
+
 	if (isKeyPressed(ENGINE_KEY_UP))
 	{
-		movement += front * moveSpeed;
+		movement += front * movementSpeed;
 	}
 	else if (isKeyPressed(ENGINE_KEY_DOWN))
 	{
-		movement -= front * moveSpeed;
+		movement -= front * movementSpeed;
 	}
-	
+
 	if (isKeyPressed(ENGINE_KEY_LEFT))
 	{
-		movement -= glm::normalize(glm::cross(front, up)) * moveSpeed;
+		movement -= glm::vec3(1, 0, 0) * movementSpeed;
 	}
 	else if (isKeyPressed(ENGINE_KEY_RIGHT))
 	{
-		movement += glm::normalize(glm::cross(front, up)) * moveSpeed;
+		movement += glm::vec3(1, 0, 0) * movementSpeed;
 	}
 
-	//cubeowo->setPos(cubeowo->getPos() + movement);
-#pragma endregion
+	if (isKeyPressed(ENGINE_KEY_Q))
+	{
+		movement += up * movementSpeed;
+	}
+	else if (isKeyPressed(ENGINE_KEY_E))
+	{
+		movement -= up * movementSpeed;
+	}
 
-#pragma region ROTATION
 	if (isKeyPressed(ENGINE_KEY_I))
 	{
 		if (rotation.y > 0)
@@ -149,13 +150,21 @@ void game::update()
 			rotation.x = rotation.x > 360 ? 360 : rotation.x;
 		}
 	}
-#pragma endregion
 
-	currentObjectPos += movement;
-	currentObject->setPos(currentObjectPos);
+	entityPos += movement;
+	
+	selectedEntity->setPos(entityPos);
+	selectedEntity->setRot(rotation);
 
-#pragma region CAMERA
-	const float cameraMovementAmount = engine::time::getDeltaTime() * cameraSpeed;
+
+	for (int i = 0; i < POINT_LIGHTS; i++)
+	{
+		pointLightBox[i]->setPos(pointLight[i]->getPos());
+	}
+
+	spotLightBox->setPos(spotLight->getPos());
+
+	float cameraMovementAmount = engine::time::getDeltaTime() * cameraSpeed;
 
 	if (isKeyPressed(ENGINE_KEY_W))
 	{
@@ -179,51 +188,42 @@ void game::update()
 
 	if (actualCam == thirdPersonCam)
 	{
-		thirdPersonCam->updateTargetPos(cubeowo->getPos());
+		thirdPersonCam->updateTargetPos(backpackModel->getPos());
 	}
-#pragma endregion
 }
 
 void game::init()
 {
-	const glm::vec3 camPos = { 0, 3, 2 };
-	const glm::vec3 camView = { 0, 0, 0 };
-	const glm::vec3 camUp = { 0, 1, 0 };
-
+	glm::vec3 camPos = { 0, 3, 2 };
+	glm::vec3 camView = { 0, -1, 0 };
+	glm::vec3 camUp = { 0, 1, 0 };
 	firstPersonCam = new engine::firstPersonCamera(currentRenderer, camPos, camView, camUp, engine::PROJECTION::PERSPECTIVE);
 	thirdPersonCam = new engine::thirdPersonCamera(currentRenderer, camPos, camView, camUp, engine::PROJECTION::PERSPECTIVE);
-	actualCam = firstPersonCam;
+	actualCam = thirdPersonCam;
 
-	floor = new engine::sprite(currentRenderer, "../res/assets/textures/StoneFloorTexture.png", "../res/assets/textures/StoneFloorTexture.png",  true, engine::MATERIAL::CYAN_PLASTIC);
+	currentRenderer->shader.use();
+	glm::mat4 model = glm::mat4(1.0f);
+	model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); 
+	model = glm::scale4(model, glm::vec3(10.0f, 10.0f, 10.0f));	
+	currentRenderer->shader.setMat4("model", model);
+
+	backpackModel = new engine::entity3D(currentRenderer, "../res/assets/backpack/backpack.obj");
+	backpackModel->setRot(glm::vec3(glm::radians(-90.0f), 0, 0));
+
+	floor = new engine::sprite(currentRenderer, "../res/assets/textures/StoneFloorTexture.png", "../res/assets/textures/StoneFloorTexture.png", true, engine::MATERIAL::YELLOW_RUBBER);
 	floor->setScale(glm::vec3(10, 10, 1));
 	floor->setRot(glm::vec3(glm::radians(-90.0f), 0, 0));
-	floor->setPos(glm::vec3(0,0,0));
+	floor->setPos(glm::vec3(0, 0, 0));
 
-	cubeowo = new engine::shape(currentRenderer, engine::SHAPE::CUBE, engine::MATERIAL::YELLOW_RUBBER);
-	cubeowo->setPos(0, 5, 0);
-	cubeowo->setScale(2, 2, 2);
-	cubeowo->setColor(glm::vec4(1.0f));
-
-	cubeowo2 = new engine::shape(currentRenderer, engine::SHAPE::CUBE, engine::MATERIAL::BRONZE);
-	cubeowo2->setPos(10, 5, 0);
-	cubeowo2->setScale(2, 2, 2);
-	cubeowo2->setColor(glm::vec4(1.0f));
-
-	cubeowo3 = new engine::shape(currentRenderer, engine::SHAPE::CUBE, engine::MATERIAL::BRONZE);
-	cubeowo3->setPos(20, 5, 0);
-	cubeowo3->setScale(2, 2, 2);
-	cubeowo3->setColor(glm::vec4(1.0f));
-
-	cubeowo4 = new engine::sprite(currentRenderer, "../res/assets/textures/box.png", "../res/assets/textures/box_spec.png", true, engine::MATERIAL::PEARL);
-	cubeowo4->setPos(glm::vec3(0, 7.5f, 10));
-	cubeowo4->setScale(glm::vec3(10, 10, 10));
-	cubeowo4->setRot(glm::vec3(glm::radians(-90.0f), 0, 0));
-
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < POINT_LIGHTS; i++)
 	{
-		pointLight[i] = new engine::pointLight(currentRenderer, i);
+		pointLight[i] = new engine::pointLight(currentRenderer);
 		pointLight[i]->setColor(glm::vec4(1, 1, 1, 1));
 		pointLight[i]->setPos(glm::vec3(-4 + 2 * i, 1, -3));
+
+		pointLightBox[i] = new engine::shape(currentRenderer, engine::SHAPE::CUBE, static_cast<engine::MATERIAL>(i));
+		pointLightBox[i]->setScale(glm::vec3(0.5f, 0.5f, 0.5f));
+		pointLightBox[i]->setPos(pointLight[i]->getPos());
 	}
 
 	pointLight[0]->setColor(glm::vec4(1, 0, 0, 1));
@@ -235,10 +235,11 @@ void game::init()
 
 	spotLight = new engine::spotLight(currentRenderer);
 	spotLight->setPos({ 0,5,3 });
+	spotLightBox = new engine::shape(currentRenderer, engine::SHAPE::CUBE, engine::MATERIAL::CYAN_PLASTIC);
+	spotLightBox->setScale(glm::vec3(0.5f, 0.5f, 0.5f));
+	spotLightBox->setPos(spotLight->getPos());
 
-	changeClearColor(glm::vec4(0, 0, 0, 0));
-
-	currentObject = cubeowo;
+	selectedEntity = spotLight;
 }
 
 void game::deInit()
@@ -246,20 +247,15 @@ void game::deInit()
 	delete firstPersonCam;
 	delete thirdPersonCam;
 
-	floor->deinit();
-	delete floor;
-
-	delete cubeowo;
-	delete cubeowo2;
-	delete cubeowo3;
-
-	cubeowo4->deinit();
-	delete cubeowo4;
-
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < POINT_LIGHTS; i++)
 	{
 		delete pointLight[i];
+		delete pointLightBox[i];
 	}
 
 	delete directionalLight;
+
+	delete spotLight;
+	delete spotLightBox;
+	delete backpackModel;
 }

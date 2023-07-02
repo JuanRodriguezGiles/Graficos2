@@ -36,7 +36,7 @@ namespace engine
 
 		for (auto const& d1 : dynamicCollisionList) {
 			for (auto const& d2 : dynamicCollisionList) {
-				if(d1 != d2)
+				if (d1 != d2)
 				{
 					float overlapX = 0;
 					float overlapY = 0;
@@ -55,7 +55,7 @@ namespace engine
 				float overlapX = 0;
 				float overlapY = 0;
 				collisionType currentCollision = d->checkCollision(*s, overlapX, overlapY);
-				if(currentCollision != collisionType::none)
+				if (currentCollision != collisionType::none)
 				{
 					d->applyCollisionRestrictions(currentCollision, overlapX, overlapY, false);
 				}

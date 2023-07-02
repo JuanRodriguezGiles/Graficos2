@@ -8,7 +8,7 @@ namespace engine
 {
 	enum class PROJECTION { ORTHO, PERSPECTIVE };
 	enum class MOVEMENT_TYPE { FPS, THIRD_PERSON };
-	enum class MOVEMENT_DIRECTION { FRONT, BACK, RIGHT, LEFT};
+	enum class MOVEMENT_DIRECTION { FRONT, BACK, RIGHT, LEFT };
 	class renderer;
 
 	class ENGINE_API camera
@@ -25,6 +25,8 @@ namespace engine
 		glm::vec3 getFront();
 		glm::vec3 getUp();
 		glm::vec3 getPos();
+		//void setCameraType(MOVEMENT_TYPE movementType);
+		//MOVEMENT_TYPE getCameraType();
 		~camera();
 	protected:
 		void setProjectionMatrix();
@@ -37,7 +39,20 @@ namespace engine
 		glm::vec3 look; //a donde esta mirando
 		glm::vec3 up; //el up de la camara
 		renderer* currentRenderer;
+		//MOVEMENT_TYPE movementType;
 		float yaw;
 		float pitch;
 	};
+
+	//EJE X PITCH
+	//EJE Y YAW
+	//EJE Z ROLL
+
+	// Camara en primera persona (FPS) y en tercera persona (Over the shoulder)
+
+	//local - mundo - vista - perspectiva
+
+	// Tarea
+	// 1) hacer camara funcional
+	// 2) fps y 3ra persona
 }

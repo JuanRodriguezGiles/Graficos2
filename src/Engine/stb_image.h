@@ -2059,7 +2059,7 @@ stbi_inline static int stbi__jpeg_huff_decode(stbi__jpeg* j, stbi__huffman* h)
 
     // look at the top FAST_BITS and determine what symbol ID it is,
     // if the code is <= FAST_BITS
-    c = (j->code_buffer >> (32 - FAST_BITS))& ((1 << FAST_BITS) - 1);
+    c = (j->code_buffer >> (32 - FAST_BITS)) & ((1 << FAST_BITS) - 1);
     k = h->fast[c];
     if (k < 255) {
         int s = h->size[k];
@@ -2090,8 +2090,8 @@ stbi_inline static int stbi__jpeg_huff_decode(stbi__jpeg* j, stbi__huffman* h)
         return -1;
 
     // convert the huffman code to the symbol id
-    c = ((j->code_buffer >> (32 - k))& stbi__bmask[k]) + h->delta[k];
-    STBI_ASSERT((((j->code_buffer) >> (32 - h->size[c]))& stbi__bmask[h->size[c]]) == h->code[c]);
+    c = ((j->code_buffer >> (32 - k)) & stbi__bmask[k]) + h->delta[k];
+    STBI_ASSERT((((j->code_buffer) >> (32 - h->size[c])) & stbi__bmask[h->size[c]]) == h->code[c]);
 
     // convert the id to a symbol
     j->code_bits -= k;
@@ -2181,7 +2181,7 @@ static int stbi__jpeg_decode_block(stbi__jpeg* j, short data[64], stbi__huffman*
         unsigned int zig;
         int c, r, s;
         if (j->code_bits < 16) stbi__grow_buffer_unsafe(j);
-        c = (j->code_buffer >> (32 - FAST_BITS))& ((1 << FAST_BITS) - 1);
+        c = (j->code_buffer >> (32 - FAST_BITS)) & ((1 << FAST_BITS) - 1);
         r = fac[c];
         if (r) { // fast-AC path
             k += (r >> 4) & 15; // run
@@ -2190,7 +2190,7 @@ static int stbi__jpeg_decode_block(stbi__jpeg* j, short data[64], stbi__huffman*
             j->code_bits -= s;
             // decode into unzigzag'd location
             zig = stbi__jpeg_dezigzag[k++];
-            data[zig] = (short)((r >> 8)* dequant[zig]);
+            data[zig] = (short)((r >> 8) * dequant[zig]);
         }
         else {
             int rs = stbi__jpeg_huff_decode(j, hac);
@@ -2259,7 +2259,7 @@ static int stbi__jpeg_decode_block_prog_ac(stbi__jpeg* j, short data[64], stbi__
             unsigned int zig;
             int c, r, s;
             if (j->code_bits < 16) stbi__grow_buffer_unsafe(j);
-            c = (j->code_buffer >> (32 - FAST_BITS))& ((1 << FAST_BITS) - 1);
+            c = (j->code_buffer >> (32 - FAST_BITS)) & ((1 << FAST_BITS) - 1);
             r = fac[c];
             if (r) { // fast-AC path
                 k += (r >> 4) & 15; // run
@@ -2267,7 +2267,7 @@ static int stbi__jpeg_decode_block_prog_ac(stbi__jpeg* j, short data[64], stbi__
                 j->code_buffer <<= s;
                 j->code_bits -= s;
                 zig = stbi__jpeg_dezigzag[k++];
-                data[zig] = (short)((r >> 8)* (1 << shift));
+                data[zig] = (short)((r >> 8) * (1 << shift));
             }
             else {
                 int rs = stbi__jpeg_huff_decode(j, hac);
@@ -4348,7 +4348,7 @@ static int stbi__parse_uncompressed_block(stbi__zbuf* a)
     int len, nlen, k;
     if (a->num_bits & 7)
         stbi__zreceive(a, a->num_bits & 7); // discard
-     // drain the bit-packed data into header
+    // drain the bit-packed data into header
     k = 0;
     while (a->num_bits > 0) {
         header[k++] = (stbi_uc)(a->code_buffer & 255); // suppress MSVC run-time check
@@ -4850,7 +4850,7 @@ static int stbi__create_png_image(stbi__png* a, stbi_uc* image_data, stbi__uint3
         x = (a->s->img_x - xorig[p] + xspc[p] - 1) / xspc[p];
         y = (a->s->img_y - yorig[p] + yspc[p] - 1) / yspc[p];
         if (x && y) {
-            stbi__uint32 img_len = ((((a->s->img_n * x * depth) + 7) >> 3) + 1)* y;
+            stbi__uint32 img_len = ((((a->s->img_n * x * depth) + 7) >> 3) + 1) * y;
             if (!stbi__create_png_image_raw(a, image_data, image_data_len, out_n, x, y, depth, color)) {
                 STBI_FREE(final);
                 return 0;
@@ -5555,7 +5555,7 @@ static void* stbi__bmp_load(stbi__context* s, int* x, int* y, int* comp, int req
     else
         target = s->img_n; // if they want monochrome, we'll post-convert
 
-     // sanity-check size
+    // sanity-check size
     if (!stbi__mad3sizes_valid(target, s->img_x, s->img_y, 0))
         return stbi__errpuc("too large", "Corrupt BMP");
 
@@ -5826,8 +5826,8 @@ static void stbi__tga_read_rgb16(stbi__context* s, stbi_uc* out)
     stbi__uint16 px = (stbi__uint16)stbi__get16le(s);
     stbi__uint16 fiveBitMask = 31;
     // we have 3 channels with 5bits each
-    int r = (px >> 10)& fiveBitMask;
-    int g = (px >> 5)& fiveBitMask;
+    int r = (px >> 10) & fiveBitMask;
+    int g = (px >> 5) & fiveBitMask;
     int b = px & fiveBitMask;
     // Note that this saves the data in RGB(A) order, so it doesn't need to be swapped later
     out[0] = (stbi_uc)((r * 255) / 31);

@@ -1,13 +1,14 @@
-#pragma once
+#ifndef BASE_GAME
+#define BASE_GAME
+
 #include "exports.h"
 #include "keycodes.h"
 #include "time.h"
-#include "glm/glm.hpp"
-#include "glm/gtc/matrix_transform.hpp"
-#include "glm/gtc/type_ptr.hpp"
+
 
 #include "shape.h"
 #include "sprite.h"
+#include "entity3D.h"
 #include "camera.h"
 #include "firstPersonCamera.h"
 #include "thirdPersonCamera.h"
@@ -16,10 +17,10 @@
 #include "pointLight.h"
 #include "directionalLight.h"
 #include "spotLight.h"
+#include "Model.h"
 
 namespace engine
 {
-
 	class window;
 	class renderer;
 	class input;
@@ -29,7 +30,7 @@ namespace engine
 	{
 	public:
 		baseGame();
-		virtual ~baseGame();
+		~baseGame();
 		// ~ ENGINE ~ Initializes the engine loops, being init(), update(), draw(), deInit(). 
 		void play(int windowSizeX, int windowSizeY, const char* windowName);
 
@@ -40,8 +41,6 @@ namespace engine
 		virtual void init() = 0;
 
 		virtual void deInit() = 0;
-
-		void close();
 
 		// Input
 		// ~ ENGINE ~  Returns true every frame the engine key is pressed. 
@@ -79,9 +78,11 @@ namespace engine
 		bool hasCollider(entity2D* entity);
 		// ~ ENGINE ~  Set's the call for the collision checking. 
 		void updateCollisions(engine::tileMap* tileMap);
+		Shader getShader();
+		void debugSetShaderForModel();
 	protected:
 		renderer* currentRenderer;
-		
+
 	private:
 		bool init_Internal(int windowSizeX, int windowSizeY, const char* windowName);
 		void deinit_Internal();
@@ -92,3 +93,4 @@ namespace engine
 		bool windowExitEvent();
 	};
 }
+#endif // !BASE_GAME

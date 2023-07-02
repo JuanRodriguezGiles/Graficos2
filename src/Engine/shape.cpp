@@ -1,8 +1,9 @@
 #include "shape.h"
 #include "textureImporter.h"
 #include "renderer.h"
-#include "glew.h"
-#include "glfw3.h"
+
+#include "GLEW/glew.h"
+#include "GLFW/glfw3.h"
 #include "vertexs.h"
 
 namespace engine
@@ -88,7 +89,7 @@ namespace engine
 
 		unsigned int textures[] = { texture->ID, texture->ID };
 
-		_renderer->shaderPro.use();
+		_renderer->shader.use();
 		_renderer->setShaderInfo(color, textures, material);
 		_renderer->drawRequest(model, VAO, _vertices);
 	}

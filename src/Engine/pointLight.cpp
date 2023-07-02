@@ -7,9 +7,17 @@ namespace engine
 	{
 
 	}
-	pointLight::pointLight(renderer* render, int index)
+	pointLight::pointLight(renderer* render)
 	{
-		this->index = index;
+		//
+		//if (lightsAmount == 4)
+		//{
+		//	lightsAmount = 0;
+		//}
+		//else
+		//{
+		//	lightsAmount++;
+		//}
 
 		VAO = 0;
 		_renderer = render;
@@ -40,7 +48,7 @@ namespace engine
 	}
 	void pointLight::setInitialValues()
 	{
-		values.ambient = { 0.05f, 0.05f, 0.05f };
+		values.ambient = { 0.5f, 0.5f, 0.5f };
 		values.diffuse = { 0.4f, 0.4f, 0.4f };
 		values.specular = { 0.5f, 0.5f, 0.5f };
 
@@ -51,6 +59,6 @@ namespace engine
 	void pointLight::processIndividualValues()
 	{
 		values.color = { getColor().r, getColor().g, getColor().b };
-		_renderer->processPointLight(constant, linear, quadratic, getPos(), values, index);
+		_renderer->processPointLight(constant, linear, quadratic, getPos(), values);
 	}
 }

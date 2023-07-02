@@ -27,11 +27,15 @@
     <ClInclude Include="..\src\Engine\directionalLight.h" />
     <ClInclude Include="..\src\Engine\entity.h" />
     <ClInclude Include="..\src\Engine\entity2D.h" />
+    <ClInclude Include="..\src\Engine\entity3D.h" />
     <ClInclude Include="..\src\Engine\exports.h" />
     <ClInclude Include="..\src\Engine\firstPersonCamera.h" />
     <ClInclude Include="..\src\Engine\input.h" />
     <ClInclude Include="..\src\Engine\keycodes.h" />
     <ClInclude Include="..\src\Engine\light.h" />
+    <ClInclude Include="..\src\Engine\Mesh.h" />
+    <ClInclude Include="..\src\Engine\Model.h" />
+    <ClInclude Include="..\src\Engine\modelImporter.h" />
     <ClInclude Include="..\src\Engine\pointLight.h" />
     <ClInclude Include="..\src\Engine\renderer.h" />
     <ClInclude Include="..\src\Engine\shader.h" />
@@ -56,9 +60,13 @@
     <ClCompile Include="..\src\Engine\directionalLight.cpp" />
     <ClCompile Include="..\src\Engine\entity.cpp" />
     <ClCompile Include="..\src\Engine\entity2D.cpp" />
+    <ClCompile Include="..\src\Engine\entity3D.cpp" />
     <ClCompile Include="..\src\Engine\firstPersonCamera.cpp" />
     <ClCompile Include="..\src\Engine\input.cpp" />
     <ClCompile Include="..\src\Engine\light.cpp" />
+    <ClCompile Include="..\src\Engine\Mesh.cpp" />
+    <ClCompile Include="..\src\Engine\Model.cpp" />
+    <ClCompile Include="..\src\Engine\modelImporter.cpp" />
     <ClCompile Include="..\src\Engine\pointLight.cpp" />
     <ClCompile Include="..\src\Engine\renderer.cpp" />
     <ClCompile Include="..\src\Engine\shader.cpp" />
@@ -75,8 +83,6 @@
     <ClCompile Include="..\src\Engine\window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\src\Engine\Shaders\SolidFragment.shader" />
-    <None Include="..\src\Engine\Shaders\SolidVertex.shader" />
     <None Include="..\src\Engine\Shaders\TextureFragment.shader" />
     <None Include="..\src\Engine\Shaders\TextureVertex.shader" />
   </ItemGroup>
@@ -102,13 +108,13 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -156,15 +162,15 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>DEBUG;ENGINE_EXPORTS;GLEW_STATIC;_MBCS;</PreprocessorDefinitions>
+      <PreprocessorDefinitions>DEBUG;ENGINE_EXPORTS;GLEW_STATIC;_MBCS;_WINDLL;WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)lib\glm;$(SolutionDir)lib\GLFW\include;$(SolutionDir)lib\GLEW\include;$(SolutionDir)src;$(SolutionDir)lib\assimp\include\assimp</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)include;$(SolutionDir)src</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)lib\GLFW\lib;$(SolutionDir)lib\GLEW\lib;$(SolutionDir)lib\assimp\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glew32s.lib;glfw3.lib;opengl32.lib;User32.lib;Gdi32.lib;Shell32.lib;assimp-vc143-mtd.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Lib\$(Platform)\ASSIMP;$(SolutionDir)Lib\$(Platform)\GLFW;$(SolutionDir)Lib\$(Platform)\GLEW</AdditionalLibraryDirectories>
+      <AdditionalDependencies>assimp-vc143-mtd.lib;glew32s.lib;glfw3.lib;opengl32.lib;User32.lib;Gdi32.lib;Shell32.lib;%(AdditionalDependencis)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>/DEFAULTLIB:LIBCMT;/DEFAULTLIB:MSVCRT;</IgnoreSpecificDefaultLibraries>
     </Link>
     <PostBuildEvent>
@@ -175,17 +181,21 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>GLEW_STATIC;_MBCS;</PreprocessorDefinitions>
+      <PreprocessorDefinitions>DEBUG;ENGINE_EXPORTS;GLEW_STATIC;_MBCS;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)lib\GLFW\include;$(SolutionDir)lib\GLEW\include;$(SolutionDir)src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)include;$(SolutionDir)src</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)lib\GLFW\lib;$(SolutionDir)lib\GLEW\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glew32s.lib;glfw3.lib;opengl32.lib;User32.lib;Gdi32.lib;Shell32.lib;</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Lib\$(Platform)\ASSIMP;$(SolutionDir)Lib\$(Platform)\GLFW;$(SolutionDir)Lib\$(Platform)\GLEW</AdditionalLibraryDirectories>
+      <AdditionalDependencies>assimp-vc143-mtd.lib;glew32s.lib;glfw3.lib;opengl32.lib;User32.lib;Gdi32.lib;Shell32.lib;%(AdditionalDependencis)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>/DEFAULTLIB:LIBCMT;/DEFAULTLIB:MSVCRT;</IgnoreSpecificDefaultLibraries>
     </Link>
+    <PostBuildEvent>
+      <Command>XCOPY "$(SolutionDir)bin\Engine\$(Platform)\$(Configuration)\Engine.dll" "$(SolutionDir)bin\Game\$(Platform)\$(Configuration)\" /e /h /y /s
+XCOPY "$(SolutionDir)Lib\$(Platform)\ASSIMP\assimp-vc143-mtd.dll" "$(SolutionDir)bin\Game\$(Platform)\$(Configuration)\" /e /h /y /s</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -195,7 +205,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>ENGINE_EXPORTS;GLEW_STATIC;_MBCS;</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)lib\glm;$(SolutionDir)lib\GLFW\include;$(SolutionDir)lib\GLEW\include;$(SolutionDir)src;$(SolutionDir)lib\assimp\include\assimp</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)lib\glm;$(SolutionDir)lib\GLFW\include;$(SolutionDir)lib\GLEW\include;$(SolutionDir)src;$(SolutionDir)lib\assimp\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -203,7 +213,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)lib\GLFW\lib;$(SolutionDir)lib\GLEW\lib;$(SolutionDir)lib\assimp\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glew32s.lib;glfw3.lib;opengl32.lib;User32.lib;Gdi32.lib;Shell32.lib;assimp-vc143-mtd.lib</AdditionalDependencies>
+      <AdditionalDependencies>glew32s.lib;glfw3.lib;opengl32.lib;User32.lib;Gdi32.lib;Shell32.lib;assimpd.lib;zlibstaticd.lib</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>/DEFAULTLIB:LIBCMT;/DEFAULTLIB:MSVCRT;</IgnoreSpecificDefaultLibraries>
     </Link>
     <PostBuildEvent>
@@ -225,8 +235,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)lib\GLFW\lib;$(SolutionDir)lib\GLEW\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glew32s.lib;glfw3.lib;opengl32.lib;User32.lib;Gdi32.lib;Shell32.lib;</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)lib\GLFW\lib;$(SolutionDir)lib\GLEW\lib;$(SolutionDir)lib\assimp\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glew32s.lib;glfw3.lib;opengl32.lib;User32.lib;Gdi32.lib;Shell32.lib;assimpd.lib;zlibstaticd.lib</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>/DEFAULTLIB:LIBCMT;/DEFAULTLIB:MSVCRT;</IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>

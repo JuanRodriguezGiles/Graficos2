@@ -1,5 +1,6 @@
 #include "input.h"
-#include "glfw3.h"
+//#include "glfw3.h"
+#include "GLFW/glfw3.h"
 #include "window.h"
 #include <algorithm>
 
@@ -41,7 +42,7 @@ namespace engine
 	bool input::isKeyDown(int keycode, window* window)
 	{
 		std::list<int>::iterator it = find(currentKeysDown.begin(), currentKeysDown.end(), keycode);
-		if(it != currentKeysDown.end())
+		if (it != currentKeysDown.end())
 		{
 			currentKeysDown.remove(keycode);
 			return true;
@@ -62,11 +63,11 @@ namespace engine
 	}
 	void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
 	{
-		if(action == GLFW_PRESS)
+		if (action == GLFW_PRESS)
 		{
 			currentKeysDown.push_front(key);
 		}
-		else if(action == GLFW_RELEASE)
+		else if (action == GLFW_RELEASE)
 		{
 			currentKeysDown.remove(key);
 		}

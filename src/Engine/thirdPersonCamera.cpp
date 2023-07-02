@@ -6,7 +6,7 @@ namespace engine
 	{
 		localPos = glm::vec3(0, 0, 0);
 		targetPos = glm::vec3(0, 0, 0);
-		distance = 50;
+		distance = 25;
 
 		this->currentRenderer = currentRenderer;
 		//movementType = MOVEMENT_TYPE::THIRD_PERSON;

@@ -1,7 +1,9 @@
 #include "baseGame.h"
 
-#include "glew.h"
-#include "glfw3.h"
+#include "GLEW/glew.h"
+#include "GLFW/glfw3.h"
+//#include "glew.h"
+//#include "glfw3.h"
 #include "window.h"
 #include "renderer.h"
 #include "input.h"
@@ -62,7 +64,7 @@ namespace engine
     }
     void baseGame::play(int windowSizeX, int windowSizeY, const char* windowName)
     {
-        if(init_Internal(windowSizeX, windowSizeY, windowName))
+        if (init_Internal(windowSizeX, windowSizeY, windowName))
         {
             init();
             while (!windowExitEvent())
@@ -87,11 +89,6 @@ namespace engine
     bool baseGame::windowExitEvent()
     {
         return glfwWindowShouldClose(currentWindow->getGLFWwindow());
-    }
-
-    void baseGame::close()
-    {
-        glfwSetWindowShouldClose(currentWindow->getGLFWwindow(), true);
     }
 
     bool baseGame::isKeyPressed(int keycode)
@@ -145,6 +142,17 @@ namespace engine
     void baseGame::updateCollisions(engine::tileMap* tileMap)
     {
         currentCollisionManager->updateCollisionsInTileMap(tileMap);
+    }
+    Shader baseGame::getShader()
+    {
+        return currentRenderer->shader;
+    }
+    void baseGame::debugSetShaderForModel()
+    {
+        currentRenderer->shader.use();
+        glm::mat4 model = glm::mat4(1.0f);
+        model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
+        model = glm::scale4(model, glm::vec3(1.0f, 1.0f, 1.0f));
     }
     float baseGame::lerp(float v0, float v1, float t)
     {

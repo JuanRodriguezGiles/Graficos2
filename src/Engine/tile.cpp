@@ -14,10 +14,10 @@ namespace engine
 
 		setTexture(render, filePathImage, filePathImage, invertImage);
 	}
-	tile::~tile() 
+	tile::~tile()
 	{
 	}
-	bool tile::isWalkable() 
+	bool tile::isWalkable()
 	{
 		if (!_walkable)
 			return false;
@@ -26,17 +26,17 @@ namespace engine
 			return true;
 	}
 
-	void tile::walkability(bool bWalkable) 
+	void tile::walkability(bool bWalkable)
 	{
 		_walkable = bWalkable;
 	}
 
-	unsigned int tile::getId() 
+	unsigned int tile::getId()
 	{
 		return _id;
 	}
 
-	void tile::setId(unsigned int id) 
+	void tile::setId(unsigned int id)
 	{
 		_id = id;
 	}

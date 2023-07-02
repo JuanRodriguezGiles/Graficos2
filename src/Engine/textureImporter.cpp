@@ -1,27 +1,69 @@
 #include "textureImporter.h"
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
-#include "glew.h"
-#include "glfw3.h"
-#include <iostream>
+
+#include "GLEW/glew.h"
+#include "GLFW/glfw3.h"
 
 namespace engine
 {
+	unsigned int textureImporter::TextureFromFile(const char* path, const std::string& directory)
+	{
+		stbi_set_flip_vertically_on_load(true);
+
+		std::string filename = std::string(path);
+		filename = directory + '/' + filename;
+
+		unsigned int textureID;
+		glGenTextures(1, &textureID);
+
+		int width, height, nrComponents;
+		unsigned char* data = stbi_load(filename.c_str(), &width, &height, &nrComponents, 0);
+		if (data)
+		{
+			GLenum format;
+			if (nrComponents == 1)
+				format = GL_RED;
+			else if (nrComponents == 3)
+				format = GL_RGB;
+			else if (nrComponents == 4)
+				format = GL_RGBA;
+
+			glBindTexture(GL_TEXTURE_2D, textureID);
+			glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+			glGenerateMipmap(GL_TEXTURE_2D);
+
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+			stbi_image_free(data);
+		}
+		else
+		{
+			std::cout << "Texture failed to load at path: " << path << std::endl;
+			stbi_image_free(data);
+		}
+
+		return textureID;
+	}
+
 	textureData textureImporter::loadTexture(const char* filepath, bool invertVertical)
 	{
 		unsigned int newTextureID;
 		int textureWidth;
 		int textureHeight;
 		int nrChannels;
-		glGenTextures(1, &newTextureID); //se generan la textura
-		glBindTexture(GL_TEXTURE_2D, newTextureID); //se bindea (se marca como la textura con la que se va a trabajar)
-		
+		glGenTextures(1, &newTextureID);
+		glBindTexture(GL_TEXTURE_2D, newTextureID); 
+
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR); //le esta diciendo ene el caso de que se haga mas chiquita la textura como debería fitrarse (en este caso, se expande nomas)
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-		stbi_set_flip_vertically_on_load(invertVertical); //porque opengl espera las texturas al reves xd
+		stbi_set_flip_vertically_on_load(invertVertical); 
 		unsigned char* data = stbi_load(filepath, &textureWidth, &textureHeight, &nrChannels, 0);
 		if (data)
 		{

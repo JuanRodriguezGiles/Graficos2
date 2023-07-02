@@ -1,4 +1,7 @@
 #pragma once
+#include <string>
+#include <iostream>
+
 namespace engine
 {
 	struct textureData
@@ -12,5 +15,6 @@ namespace engine
 	{
 	public:
 		static textureData loadTexture(const char* filepath, bool invertVertical);
+		static unsigned int TextureFromFile(const char* path, const std::string& directory);
 	};
 }

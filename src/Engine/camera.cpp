@@ -9,9 +9,7 @@ namespace engine
 		yaw = -90.0f;
 		pitch = 0.f;
 	}
-
-	camera::camera(renderer* currentRenderer, glm::vec3 position, glm::vec3 lookPosition, glm::vec3 upVector,
-		PROJECTION projectionType)
+	camera::camera(renderer* currentRenderer, glm::vec3 position, glm::vec3 lookPosition, glm::vec3 upVector, PROJECTION projectionType)
 	{
 		this->currentRenderer = currentRenderer;
 		yaw = -90.0f;
@@ -22,7 +20,6 @@ namespace engine
 		this->currentRenderer->setProjectionMatrix(projectionMatrix);
 		setCameraTransform(position, lookPosition, upVector);
 	}
-
 	void camera::setCameraTransform(glm::vec3 startingPosition, glm::vec3 lookPosition, glm::vec3 upVector)
 	{
 		pos = startingPosition;
@@ -33,13 +30,12 @@ namespace engine
 		currentRenderer->setViewMatrix(viewMatrix);
 		setCameraPosToRenderer();
 	}
-
 	void camera::moveCamera(glm::vec3 movePosition)
 	{
 		pos += movePosition;
 		look += movePosition;
 		setCameraTransform(pos, look, up);
-	}	
+	}
 	void camera::moveCamera(float movementAmount, MOVEMENT_DIRECTION movementDirection)
 	{
 		switch (movementDirection)
@@ -50,8 +46,6 @@ namespace engine
 		case engine::MOVEMENT_DIRECTION::BACK:
 			pos -= movementAmount * glm::normalize(look);
 			break;
-
-			//Right hand rule, resulting vector is perpendicular to look and up vectors
 		case engine::MOVEMENT_DIRECTION::RIGHT:
 			pos += glm::normalize(glm::cross(glm::normalize(look), glm::normalize(up))) * movementAmount;
 			break;
@@ -62,15 +56,11 @@ namespace engine
 			break;
 		}
 
-		//Update camera transform matrix
 		setCameraTransform(pos, look, up);
 	}
-
 	glm::vec3 camera::getDirectionByMovement(glm::vec2 mouseMovement)
 	{
-		//horizontal rotation of the camera around the y-axis
 		yaw += mouseMovement.x;
-		//vertical rotation of the camera around the x-axis
 		pitch += mouseMovement.y;
 
 		if (pitch > 89.0f)
@@ -82,7 +72,7 @@ namespace engine
 		direction.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
 		direction.y = sin(glm::radians(pitch));
 		direction.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
-		
+
 		return direction;
 	}
 	void camera::setView(glm::vec3 lookPosition)
@@ -99,6 +89,7 @@ namespace engine
 			projectionMatrix = glm::ortho(-2.0f, +2.0f, -1.5f, +1.5f, 0.1f, 500.0f);
 			break;
 		case engine::PROJECTION::PERSPECTIVE:
+			//fov - aspect ratio - near != 0 (porque si no genera problemas) - far
 			projectionMatrix = glm::perspective(glm::radians(45.0f), (float)currentRenderer->getCurrentWindow()->getWidth() / (float)currentRenderer->getCurrentWindow()->getHeight(), 0.1f, 500.0f);
 			break;
 		default:
@@ -134,4 +125,5 @@ namespace engine
 	{
 		currentRenderer->setViewPosition(pos);
 	}
+
 }

@@ -1,6 +1,9 @@
 #include "shader.h"
-#include "glew.h"
-#include "glfw3.h"
+#include "GLEW/glew.h"
+#include "GLFW/glfw3.h"
+//#include "glew.h"
+//#include "glfw3.h"
+
 
 namespace engine
 {
@@ -27,7 +30,7 @@ namespace engine
             vertexCode = vShaderStream.str();
             fragmentCode = fShaderStream.str();
         }
-        catch (std::ifstream::failure & e)
+        catch (std::ifstream::failure& e)
         {
             std::cout << "ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ" << std::endl;
         }
@@ -79,6 +82,16 @@ namespace engine
     void Shader::setFloat(const std::string& name, float value) const
     {
         glUniform1f(glGetUniformLocation(ID, name.c_str()), value);
+    }
+    // ------------------------------------------------------------------------
+    void Shader::setVec3(const std::string& name, const glm::vec3& vec3) const
+    {
+        glUniform3fv(glGetUniformLocation(ID, name.c_str()), 1, glm::value_ptr(vec3));
+    }
+    // ------------------------------------------------------------------------
+    void Shader::setMat4(const std::string& name, const glm::mat4& mat) const
+    {
+        glUniformMatrix4fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE, &mat[0][0]);
     }
 
     void Shader::checkCompileErrors(unsigned int shader, std::string type)

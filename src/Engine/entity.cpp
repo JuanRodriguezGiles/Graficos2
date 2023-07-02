@@ -1,5 +1,5 @@
 #include "entity.h"
-#include "renderer.h"
+//#include "renderer.h"
 
 namespace engine
 {
@@ -10,7 +10,7 @@ namespace engine
 		translate = glm::mat4(1.0f);
 		rotateX = glm::mat4(1.0f);
 		rotateY = glm::mat4(1.0f);
-		rotateZ = glm::mat4(1.0f);			
+		rotateZ = glm::mat4(1.0f);
 		scale = glm::mat4(1.0f);
 
 		v3pos = glm::vec3(0.0f);
@@ -88,8 +88,7 @@ namespace engine
 	void entity::setScale(glm::vec3 scale)
 	{
 		v3scale = scale;
-
-		this->scale = glm::scale(glm::mat4(1.0f), v3scale);
+		this->scale = glm::scale4(glm::mat4(1.0f), v3scale);
 		updateModelMatrix();
 	}
 	void entity::setScale(float x, float y, float z)

@@ -19,7 +19,7 @@ namespace engine
 	{
 		this->colManager = colManager;
 	}
-	collisionType entity2D::checkCollision(entity2D& target, float &xOverlap, float &yOverlap)
+	collisionType entity2D::checkCollision(entity2D& target, float& xOverlap, float& yOverlap)
 	{
 		xOverlap = max(0.0f,
 			min(getPos().x + fabs(getScale().x) / 2.0f, target.getPos().x + fabs(target.getScale().x) / 2.0f) -
@@ -82,7 +82,6 @@ namespace engine
 			break;
 		}
 	}
-
 	void entity2D::setLightAffect(bool lightAffects)
 	{
 		affectedByLight = lightAffects;

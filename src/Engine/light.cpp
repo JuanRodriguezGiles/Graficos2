@@ -1,7 +1,5 @@
 #include "light.h"
 #include "renderer.h"
-#include "glew.h"
-#include "glfw3.h"
 
 namespace engine
 {
@@ -33,14 +31,15 @@ namespace engine
 		values.ambient = glm::vec3(0.2f);
 		values.diffuse = glm::vec3(0.5f);
 		values.specular = glm::vec3(1);
+
 	}
 	light::~light()
 	{
 	}
 	void light::draw()
 	{
-		_renderer->shaderPro.use();
-		_renderer->processLight(color, v3pos);
+		_renderer->shader.use();
+		_renderer->processLight( color , v3pos);
 
 		processIndividualValues();
 	}

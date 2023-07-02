@@ -26,7 +26,7 @@ namespace engine
 						{ "Light_Purple", 13 },
 						{ "Light_Yellow", 14 },
 						{ "Bright_White", 15 } };
-	
+
 
 
 	HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -57,30 +57,30 @@ namespace engine
 		return *NoTile;
 	}
 
-	void tileMap::setMapTileId(int layer, unsigned int uiCol, unsigned int uiRow, unsigned int uiId) 
+	void tileMap::setMapTileId(int layer, unsigned int uiCol, unsigned int uiRow, unsigned int uiId)
 	{
 		tileMapGrid[layer][uiCol][uiRow] = tile(uiId);
 	}
 
-	void tileMap::setTile(const engine::tile& rkTile) 
+	void tileMap::setTile(const engine::tile& rkTile)
 	{
 		tiles.push_back(rkTile);
 	}
 
-	void tileMap::setTileDimensions(float _tileWidth, float _tileHeight) 
+	void tileMap::setTileDimensions(float _tileWidth, float _tileHeight)
 	{
 		tileWidth = _tileWidth;
 		tileHeight = _tileHeight;
 	}
 
-	void tileMap::setDimensions(float _width, float _height) 
+	void tileMap::setDimensions(float _width, float _height)
 	{
 		width = _width;
 		height = _height;
 
 		//creo la grilla bidimensional para guardar la posicion de cada tile igual que en el editor
 		engine::tile** tileMap;
-		tileMap = new engine::tile *[height];
+		tileMap = new engine::tile * [height];
 		for (int i = 0; i < height; i++) {
 			tileMap[i] = new engine::tile[width];
 		}
@@ -92,20 +92,20 @@ namespace engine
 		texture = rkTexture;
 	}
 
-	void tileMap::draw() 
+	void tileMap::draw()
 	{
 		//currentRender.setCurrentTexture(texture);
 
 		float mapWidth = -(width * tileWidth) / 2.0f;
 		float mapHeight = (height * tileHeight) / 2.0f;
 
-		for (int i = 0; i < tileMapGrid.size(); i++) 
+		for (int i = 0; i < tileMapGrid.size(); i++)
 		{
-			for (int y = 0; y < height; y++) 
+			for (int y = 0; y < height; y++)
 			{
-				for (int x = 0; x < width; x++) 
+				for (int x = 0; x < width; x++)
 				{
-					if (tileMapGrid[i][y][x].getId() != NULL) 
+					if (tileMapGrid[i][y][x].getId() != NULL)
 					{
 						glm::vec3 pos = glm::vec3(mapWidth + (tileWidth * x), mapHeight - (tileHeight * y), 0);
 						tileMapGrid[i][y][x].setPos(pos);
@@ -159,12 +159,12 @@ namespace engine
 
 				newTile.setId(_id);
 				newTile.setTexture(currentRender, imagePath.c_str(), imagePath.c_str(), false);
-				newTile.setScale(glm::vec3(tileWidth, tileHeight,1.0f));
+				newTile.setScale(glm::vec3(tileWidth, tileHeight, 1.0f));
 
 				newTile.setTextureCoordinates(glm::vec2((tileX + tileWidth) / imageWidth, tileY / imageHeight), // top right
-											  glm::vec2((tileX + tileWidth) / imageWidth, (tileY + tileHeight) / imageHeight),// bottom right
-											  glm::vec2(tileX / imageWidth, (tileY + tileHeight) / imageHeight),// bottom left
-											  glm::vec2(tileX / imageWidth, tileY / imageHeight));// top left
+					glm::vec2((tileX + tileWidth) / imageWidth, (tileY + tileHeight) / imageHeight),// bottom right
+					glm::vec2(tileX / imageWidth, (tileY + tileHeight) / imageHeight),// bottom left
+					glm::vec2(tileX / imageWidth, tileY / imageHeight));// top left
 
 				tileX += tileWidth;
 				setTile(newTile);
@@ -204,7 +204,7 @@ namespace engine
 				engine::tile** tileMap;
 				tileMap = new engine::tile * [height];
 
-				for (int i = 0; i < height; i++) 
+				for (int i = 0; i < height; i++)
 				{
 					tileMap[i] = new engine::tile[width];
 				}
@@ -250,7 +250,7 @@ namespace engine
 		int right_tile = (convertedPosX + object.getScale().x) / tileWidth;
 
 		int top_tile = (convertedPosY / tileHeight) * -1;
-		int bottom_tile = ((convertedPosY - object.getScale().y) / tileHeight) *-1; // Se resta porque el eje Y crece hacia arriba
+		int bottom_tile = ((convertedPosY - object.getScale().y) / tileHeight) * -1; // Se resta porque el eje Y crece hacia arriba
 
 		std::cout << std::endl;
 
@@ -306,19 +306,19 @@ namespace engine
 		//std::cout << "right: "<<right_tile << std::endl;
 		//std::cout << "top: " << top_tile << std::endl;
 		//std::cout << "bottom: "<<bottom_tile << std::endl;
-		
 
-		for (int i = left_tile; i <= right_tile; i++) 
+
+		for (int i = left_tile; i <= right_tile; i++)
 		{
 
-			for (int j = top_tile; j <= bottom_tile; j++) 
+			for (int j = top_tile; j <= bottom_tile; j++)
 			{
 
-				for (int k = 0; k < tileMapGrid.size(); k++) 
+				for (int k = 0; k < tileMapGrid.size(); k++)
 				{
 					//std::cout << "caminable " << "[" << k << "]" << "[" << j << "]" << "[" << i << "] : "<< tileMapGrid[k][j][i].isWalkable(); // true == 1  ; false == 0
 					//cout << true << endl;
-					if (!tileMapGrid[k][j][i].isWalkable()) 
+					if (!tileMapGrid[k][j][i].isWalkable())
 					{
 						float overlapX = 0;
 						float overlapY = 0;

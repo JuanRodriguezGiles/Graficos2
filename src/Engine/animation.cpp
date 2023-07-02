@@ -1,8 +1,9 @@
 #include "animation.h"
-#include "glfw3.h"
+#include "time.h"
+#include "GLFW/glfw3.h"
+//#include "glfw3.h"
 #include "textureImporter.h"
 #include <algorithm>
-#include "time.h"
 
 namespace engine
 {
@@ -28,14 +29,14 @@ namespace engine
 	bool animation::update()
 	{
 		currentTime += time::getDeltaTime() * animationSpeed;
-		if(currentTime > timeBetweenFrames)
+		if (currentTime > timeBetweenFrames)
 		{
 			currentTime -= timeBetweenFrames;
 			currentFrame++;
-			if(currentFrame == framesCoordinates.size())
+			if (currentFrame == framesCoordinates.size())
 			{
 				currentFrame = 0;
-				if(repeat)
+				if (repeat)
 				{
 					play();
 				}
@@ -77,7 +78,7 @@ namespace engine
 		for (int i = 0; i < rows; i++)
 		{
 			for (int j = 0; j < columns; j++)
-			{			
+			{
 				glm::vec2* newCoord = new glm::vec2[4];
 				newCoord[0].x = (spriteWidth + (spriteWidth * j)) / texture->width;			// top right
 				newCoord[0].y = (spriteHeight * i) / texture->height;						// top right
@@ -96,7 +97,7 @@ namespace engine
 		texture = animationAtlasData;
 		int spriteWidth = 0;
 		int spriteHeight = 0;
-		if(config.useSize)
+		if (config.useSize)
 		{
 			spriteWidth = config.spriteWidth;
 			spriteHeight = config.spriteHeight;
@@ -110,7 +111,7 @@ namespace engine
 		int x = config.offsetX;
 		for (int i = config.offsetY; i < config.rows; i++)
 		{
-			while(x < config.columns)
+			while (x < config.columns)
 			{
 				glm::vec2* newCoord = new glm::vec2[4];
 				newCoord[0].x = (spriteWidth + (spriteWidth * x)) / texture->width;			// top right
