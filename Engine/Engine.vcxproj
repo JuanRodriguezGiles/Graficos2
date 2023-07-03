@@ -27,7 +27,6 @@
     <ClInclude Include="..\src\Engine\directionalLight.h" />
     <ClInclude Include="..\src\Engine\entity.h" />
     <ClInclude Include="..\src\Engine\entity2D.h" />
-    <ClInclude Include="..\src\Engine\entity3D.h" />
     <ClInclude Include="..\src\Engine\exports.h" />
     <ClInclude Include="..\src\Engine\firstPersonCamera.h" />
     <ClInclude Include="..\src\Engine\input.h" />
@@ -36,6 +35,7 @@
     <ClInclude Include="..\src\Engine\Mesh.h" />
     <ClInclude Include="..\src\Engine\Model.h" />
     <ClInclude Include="..\src\Engine\modelImporter.h" />
+    <ClInclude Include="..\src\Engine\node.h" />
     <ClInclude Include="..\src\Engine\pointLight.h" />
     <ClInclude Include="..\src\Engine\renderer.h" />
     <ClInclude Include="..\src\Engine\shader.h" />
@@ -60,13 +60,13 @@
     <ClCompile Include="..\src\Engine\directionalLight.cpp" />
     <ClCompile Include="..\src\Engine\entity.cpp" />
     <ClCompile Include="..\src\Engine\entity2D.cpp" />
-    <ClCompile Include="..\src\Engine\entity3D.cpp" />
     <ClCompile Include="..\src\Engine\firstPersonCamera.cpp" />
     <ClCompile Include="..\src\Engine\input.cpp" />
     <ClCompile Include="..\src\Engine\light.cpp" />
     <ClCompile Include="..\src\Engine\Mesh.cpp" />
     <ClCompile Include="..\src\Engine\Model.cpp" />
     <ClCompile Include="..\src\Engine\modelImporter.cpp" />
+    <ClCompile Include="..\src\Engine\node.cpp" />
     <ClCompile Include="..\src\Engine\pointLight.cpp" />
     <ClCompile Include="..\src\Engine\renderer.cpp" />
     <ClCompile Include="..\src\Engine\shader.cpp" />

@@ -1,4 +1,6 @@
-#pragma once
+#ifndef MODELIMPORTER_H
+#define MODELIMPORTER_H
+
 #include "Model.h"
 #include "renderer.h"
 #include <list>
@@ -11,6 +13,7 @@ namespace engine
 	public:
 		modelImporter();
 		~modelImporter();
-		static vector<Mesh> loadModel(std::string path);
+		static node* chargeBaseNodeInfo(std::string path);
 	};
 }
+#endif

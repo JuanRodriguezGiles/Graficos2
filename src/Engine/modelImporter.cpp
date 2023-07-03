@@ -10,10 +10,10 @@ namespace engine
 	{
 	}
 
-	vector<Mesh> modelImporter::loadModel(std::string path)
+	node* modelImporter::chargeBaseNodeInfo(std::string path)
 	{
 		Model* newModel = new engine::Model(path);
 
-		return newModel->GetMeshes();
+		return newModel->GetBaseNode();
 	}
 }

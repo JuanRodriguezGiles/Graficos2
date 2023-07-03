@@ -73,6 +73,9 @@
     <Filter Include="Window">
       <UniqueIdentifier>{f52e7b8e-30b1-4198-9358-c6ecc62b49b9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Node">
+      <UniqueIdentifier>{a44f5f26-f889-453c-b5f4-9e2d0a016aba}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\Engine\animation.cpp">
@@ -109,9 +112,6 @@
       <Filter>Entity</Filter>
     </ClCompile>
     <ClCompile Include="..\src\Engine\entity2D.cpp">
-      <Filter>Entity</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\Engine\entity3D.cpp">
       <Filter>Entity</Filter>
     </ClCompile>
     <ClCompile Include="..\src\Engine\input.cpp">
@@ -159,6 +159,9 @@
     <ClCompile Include="..\src\Engine\tinyxml2.cpp">
       <Filter>Tile</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\Engine\node.cpp">
+      <Filter>Node</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\Engine\animation.h">
@@ -198,9 +201,6 @@
       <Filter>Entity</Filter>
     </ClInclude>
     <ClInclude Include="..\src\Engine\entity2D.h">
-      <Filter>Entity</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Engine\entity3D.h">
       <Filter>Entity</Filter>
     </ClInclude>
     <ClInclude Include="..\src\Engine\exports.h">
@@ -256,6 +256,9 @@
     </ClInclude>
     <ClInclude Include="..\src\Engine\window.h">
       <Filter>Window</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Engine\node.h">
+      <Filter>Node</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

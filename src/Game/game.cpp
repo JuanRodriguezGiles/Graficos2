@@ -1,5 +1,7 @@
 #include "game.h"
 
+#include "Engine/modelImporter.h"
+
 game::game()
 {
 	for (int i = 0; i < POINT_LIGHTS; i++)
@@ -207,7 +209,8 @@ void game::init()
 	model = glm::scale4(model, glm::vec3(10.0f, 10.0f, 10.0f));	
 	currentRenderer->shader.setMat4("model", model);
 
-	backpackModel = new engine::entity3D(currentRenderer, "../res/assets/backpack/backpack.obj");
+	backpackModel = engine::modelImporter::chargeBaseNodeInfo((string)"../res/assets/backpack/backpack.obj");
+	backpackModel->setRenderer(currentRenderer);
 	backpackModel->setRot(glm::vec3(glm::radians(-90.0f), 0, 0));
 
 	floor = new engine::sprite(currentRenderer, "../res/assets/textures/StoneFloorTexture.png", "../res/assets/textures/StoneFloorTexture.png", true, engine::MATERIAL::YELLOW_RUBBER);
@@ -257,5 +260,7 @@ void game::deInit()
 
 	delete spotLight;
 	delete spotLightBox;
+
+	backpackModel->deinit();
 	delete backpackModel;
 }

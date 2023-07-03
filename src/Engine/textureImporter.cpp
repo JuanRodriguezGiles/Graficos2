@@ -9,7 +9,7 @@ namespace engine
 {
 	unsigned int textureImporter::TextureFromFile(const char* path, const std::string& directory)
 	{
-		stbi_set_flip_vertically_on_load(true);
+		stbi_set_flip_vertically_on_load(false);
 
 		std::string filename = std::string(path);
 		filename = directory + '/' + filename;

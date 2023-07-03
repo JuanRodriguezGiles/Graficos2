@@ -7,6 +7,7 @@ namespace engine
 {
 	void Model::Draw(Shader& shader, glm::mat4 modelMatrix, glm::mat4 viewMatrix, glm::mat4 projectionMatrix)
 	{
+
 		unsigned int modelLoc = glGetUniformLocation(shader.ID, "model");
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(modelMatrix));
 
@@ -31,21 +32,42 @@ namespace engine
 		}
 		directory = path.substr(0, path.find_last_of('/'));
 
-		processNode(scene->mRootNode, scene);
+		baseNode = new node();
+		processNode(scene->mRootNode, scene, baseNode);
+		baseNode->setParent(NULL);
 	}
-	void Model::processNode(aiNode* node, const aiScene* scene)
+	void Model::processNode(aiNode* node, const aiScene* scene, engine::node* myNode)
 	{
 		// process all the node's meshes (if any)
+		vector<Mesh> nodeMeshes;
+
 		for (unsigned int i = 0; i < node->mNumMeshes; i++)
 		{
 			aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-			meshes.push_back(processMesh(mesh, scene));
+			Mesh newMesh = processMesh(mesh, scene);
+			meshes.push_back(newMesh);
+			nodeMeshes.push_back(newMesh);
 		}
+
+		myNode->setMeshes(nodeMeshes);
+		myNode->setName(node->mName.C_Str());
+		//engine::node* myNode = new engine::node();
+
 		// then do the same for each of its children
+		vector<engine::node*> childrenNodes;
+		childrenNodes.clear();
+
 		for (unsigned int i = 0; i < node->mNumChildren; i++)
 		{
-			processNode(node->mChildren[i], scene);
+			engine::node* myNodeChild = new engine::node();
+			processNode(node->mChildren[i], scene, myNodeChild);
+
+			myNodeChild->setParent(myNode);
+			childrenNodes.push_back(myNodeChild);
 		}
+
+		if (childrenNodes.size() > 0)
+			myNode->setChildren(childrenNodes);
 	}
 	Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 	{
@@ -69,7 +91,7 @@ namespace engine
 			vector.z = mesh->mNormals[i].z;
 			vertex.Normal = vector;
 
-			if (mesh->mTextureCoords[0]) //does the mesh contain texture coordinates?
+			if (mesh->mTextureCoords[0]) // does the mesh contain texture coordinates?
 			{
 				glm::vec2 vec;
 				vec.x = mesh->mTextureCoords[0][i].x;
@@ -83,6 +105,8 @@ namespace engine
 		}
 
 		// process indices
+
+
 		for (unsigned int i = 0; i < mesh->mNumFaces; i++)
 		{
 			aiFace face = mesh->mFaces[i];

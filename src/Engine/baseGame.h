@@ -4,11 +4,12 @@
 #include "exports.h"
 #include "keycodes.h"
 #include "time.h"
-
+//#include "glm/glm.hpp"
+//#include "glm/gtc/matrix_transform.hpp"
+//#include "glm/gtc/type_ptr.hpp"
 
 #include "shape.h"
 #include "sprite.h"
-#include "entity3D.h"
 #include "camera.h"
 #include "firstPersonCamera.h"
 #include "thirdPersonCamera.h"
