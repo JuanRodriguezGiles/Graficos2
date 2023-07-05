@@ -6,12 +6,11 @@ namespace engine
 	{
 		localPos = glm::vec3(0, 0, 0);
 		targetPos = glm::vec3(0, 0, 0);
-		distance = 25;
+		distance = 50;
 
 		this->currentRenderer = currentRenderer;
-		//movementType = MOVEMENT_TYPE::THIRD_PERSON;
 
-		setProjetion(projectionType);
+		setProjection(projectionType);
 
 		setProjectionMatrix();
 		setCameraTransform(position, lookPosition, upVector);
@@ -44,5 +43,6 @@ namespace engine
 
 		setViewMatrix();
 		setCameraPosToRenderer();
+		updateCameraVectors();
 	}
 }

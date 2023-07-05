@@ -1,7 +1,8 @@
 #include "shape.h"
 #include "textureImporter.h"
 #include "renderer.h"
-
+//#include "glew.h"
+//#include "glfw3.h"
 #include "GLEW/glew.h"
 #include "GLFW/glfw3.h"
 #include "vertexs.h"
@@ -91,6 +92,17 @@ namespace engine
 
 		_renderer->shader.use();
 		_renderer->setShaderInfo(color, textures, material);
-		_renderer->drawRequest(model, VAO, _vertices);
+		_renderer->drawRequest(worldModel, VAO, _vertices);
+	}
+
+	void shape::draw(glm::mat4 worldModel)
+	{
+		glBindTexture(GL_TEXTURE_2D, texture->ID);
+
+		unsigned int textures[] = { texture->ID, texture->ID };
+
+		_renderer->shader.use();
+		_renderer->setShaderInfo(color, textures, material);
+		_renderer->drawRequest(worldModel, VAO, _vertices);
 	}
 }

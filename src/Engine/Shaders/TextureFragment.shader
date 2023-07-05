@@ -96,7 +96,7 @@ void main()
     if (spotLightInitialized)
         result += CalcSpotLight(spotLight, norm, FragPos, viewDir);
 
-    FragColor = vec4(result, 1.0);
+    FragColor = vec4(result * color, 1.0);
     //FragColor = texture(material.diffuse1, TexCoord);
 }
 

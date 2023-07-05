@@ -6,7 +6,7 @@ namespace engine
 	{
 		this->currentRenderer = currentRenderer;
 
-		setProjetion(projectionType);
+		setProjection(projectionType);
 
 		setProjectionMatrix();
 		setCameraTransform(position, lookPosition, upVector);
@@ -34,5 +34,6 @@ namespace engine
 		viewMatrix = glm::lookAt(startingPosition, pos + lookPosition, upVector);
 		setViewMatrix();
 		setCameraPosToRenderer();
+		updateCameraVectors();
 	}
 }

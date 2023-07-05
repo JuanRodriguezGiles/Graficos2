@@ -1,6 +1,7 @@
 #ifndef BASE_GAME
 #define BASE_GAME
 
+
 #include "exports.h"
 #include "keycodes.h"
 #include "time.h"
@@ -19,6 +20,7 @@
 #include "directionalLight.h"
 #include "spotLight.h"
 #include "Model.h"
+#include "occlusionCulling.h"
 
 namespace engine
 {

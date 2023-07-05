@@ -1,4 +1,6 @@
-#pragma once
+#ifndef CAMERA_H
+#define CAMERA_H
+
 #include "exports.h"
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
@@ -21,38 +23,42 @@ namespace engine
 		void moveCamera(glm::vec3 movePosition);
 		void moveCamera(float movementAmount, MOVEMENT_DIRECTION movementDirection);
 		void setView(glm::vec3 lookPosition);
-		void setProjetion(PROJECTION projectionType);
+		void setProjection(PROJECTION projectionType);
 		glm::vec3 getFront();
+		glm::vec3 getRight();
 		glm::vec3 getUp();
 		glm::vec3 getPos();
-		//void setCameraType(MOVEMENT_TYPE movementType);
-		//MOVEMENT_TYPE getCameraType();
+		float getFOV();
+		float getNear();
+		float getFar();
+		float getAspect();
 		~camera();
 	protected:
 		void setProjectionMatrix();
 		void setViewMatrix();
 		void setCameraPosToRenderer();
+		void updateCameraVectors();
 		glm::vec3 getDirectionByMovement(glm::vec2 mouseMovement);
 		glm::mat4 viewMatrix;
 		glm::mat4 projectionMatrix;
-		glm::vec3 pos; //donde esta parada
-		glm::vec3 look; //a donde esta mirando
-		glm::vec3 up; //el up de la camara
+		glm::vec3 pos; //where its standing
+		glm::vec3 look; //where its looking
+		glm::vec3 up; //up vector
+		glm::vec3 Front;
+		glm::vec3 Right;
+		glm::vec3 Up;
 		renderer* currentRenderer;
-		//MOVEMENT_TYPE movementType;
+
 		float yaw;
 		float pitch;
+		float fov;
+		float aspect;
+		float near;
+		float far;
 	};
 
-	//EJE X PITCH
-	//EJE Y YAW
-	//EJE Z ROLL
-
-	// Camara en primera persona (FPS) y en tercera persona (Over the shoulder)
-
-	//local - mundo - vista - perspectiva
-
-	// Tarea
-	// 1) hacer camara funcional
-	// 2) fps y 3ra persona
+	//X PITCH
+	//Y YAW
+	//Z ROLL
 }
+#endif

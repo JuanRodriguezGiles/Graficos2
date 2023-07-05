@@ -15,7 +15,8 @@ game::game()
 	spotLightBox = nullptr;
 
 
-	backpackModel = nullptr;
+	model3d = nullptr;
+	model3d2 = nullptr;
 
 	actualCam = nullptr;
 }
@@ -40,13 +41,16 @@ void game::draw()
 	directionalLight->draw();
 	
 
-	backpackModel->draw();
+	model3d->draw();
+	model3d2->draw();
 
 	floor->draw();
 }
 
 void game::update()
 {
+	engine::OcclusionCulling::Update();
+
 	if (isKeyPressed(ENGINE_KEY_0))
 	{
 		entityPos = pointLight[0]->getPos();
@@ -74,8 +78,8 @@ void game::update()
 	}
 	else if (isKeyPressed(ENGINE_KEY_5))
 	{
-		entityPos = backpackModel->getPos();
-		selectedEntity = backpackModel;
+		entityPos = model3d->getPos();
+		selectedEntity = model3d;
 	}
 
 	glm::vec3 rotation = selectedEntity->getRot();
@@ -158,6 +162,9 @@ void game::update()
 	selectedEntity->setPos(entityPos);
 	selectedEntity->setRot(rotation);
 
+	model3d->setTransformations();
+	model3d2->setTransformations();
+
 
 	for (int i = 0; i < POINT_LIGHTS; i++)
 	{
@@ -190,8 +197,13 @@ void game::update()
 
 	if (actualCam == thirdPersonCam)
 	{
-		thirdPersonCam->updateTargetPos(backpackModel->getPos());
+		thirdPersonCam->updateTargetPos(model3d->getPos());
 	}
+
+	/*if(model3d->checkCollision(model3d2))
+	{
+		cout << "colliding" << endl;
+	}*/
 }
 
 void game::init()
@@ -201,17 +213,19 @@ void game::init()
 	glm::vec3 camUp = { 0, 1, 0 };
 	firstPersonCam = new engine::firstPersonCamera(currentRenderer, camPos, camView, camUp, engine::PROJECTION::PERSPECTIVE);
 	thirdPersonCam = new engine::thirdPersonCamera(currentRenderer, camPos, camView, camUp, engine::PROJECTION::PERSPECTIVE);
-	actualCam = thirdPersonCam;
+	actualCam = firstPersonCam;
 
-	currentRenderer->shader.use();
-	glm::mat4 model = glm::mat4(1.0f);
-	model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); 
-	model = glm::scale4(model, glm::vec3(10.0f, 10.0f, 10.0f));	
-	currentRenderer->shader.setMat4("model", model);
+	engine::OcclusionCulling::Init(firstPersonCam);
 
-	backpackModel = engine::modelImporter::chargeBaseNodeInfo((string)"../res/assets/backpack/backpack.obj");
-	backpackModel->setRenderer(currentRenderer);
-	backpackModel->setRot(glm::vec3(glm::radians(-90.0f), 0, 0));
+	model3d = engine::modelImporter::chargeBaseNodeInfo("../res/assets/w/model.obj");
+	model3d->setRenderer(currentRenderer);
+	model3d->setRot(glm::vec3(0, 0, 0));
+	model3d->setScale(glm::vec3(0.25f, 0.25f, 0.25f));
+
+	model3d2 = engine::modelImporter::chargeBaseNodeInfo("../res/assets/w/model.obj");
+	model3d2->setRenderer(currentRenderer);
+	model3d2->setRot(glm::vec3(0, 0, 0));
+	model3d2->setScale(glm::vec3(0.25f, 0.25f, 0.25f));
 
 	floor = new engine::sprite(currentRenderer, "../res/assets/textures/StoneFloorTexture.png", "../res/assets/textures/StoneFloorTexture.png", true, engine::MATERIAL::YELLOW_RUBBER);
 	floor->setScale(glm::vec3(10, 10, 1));
@@ -261,6 +275,6 @@ void game::deInit()
 	delete spotLight;
 	delete spotLightBox;
 
-	backpackModel->deinit();
-	delete backpackModel;
+	model3d->deinit();
+	delete model3d;
 }

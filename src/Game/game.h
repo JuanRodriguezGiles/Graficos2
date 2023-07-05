@@ -21,7 +21,8 @@ private:
 	engine::shape* spotLightBox;
 	
 	engine::entity* selectedEntity;
-	engine::node* backpackModel;
+	engine::node* model3d;
+	engine::node* model3d2;
 
 	engine::camera* actualCam;
 	engine::firstPersonCamera* firstPersonCam;

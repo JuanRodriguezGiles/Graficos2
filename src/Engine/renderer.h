@@ -1,4 +1,5 @@
-#pragma once
+#ifndef RENDER_H
+#define RENDER_H
 #include "exports.h"
 #include "window.h"
 #include "shader.h"
@@ -52,9 +53,9 @@ namespace engine
 		void bindBaseBufferRequest(unsigned int VAO, unsigned int VBO, unsigned int EBO, float* vertices, unsigned int sizeOfVertices, unsigned int* indices, unsigned int sizeOfIndices);
 		void bindExtraBuffer(unsigned int buffer, float* data, unsigned int sizeOfData, unsigned int bufferType);
 		void setShaderInfo(glm::vec4 color, unsigned int textures[], MATERIAL material);
-		void drawRequest(glm::mat4 model, unsigned int VAO, unsigned int vertices);
+		void drawRequest(glm::mat4 worldModel, unsigned int VAO, unsigned int vertices);
 		void setMVP(glm::mat4 modelMatrix);
-		void drawMesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<Texture> textures, unsigned int VAO);
+		void drawMesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<Texture> textures, unsigned int VAO, glm::vec3 color);
 		void processLight(glm::vec3 lightColor, glm::vec3 lightPos);
 		void processDirectionalLight(glm::vec3 direction, Light light);
 		void processPointLight(float constant, float linear, float quadratic, glm::vec3 position, Light light);
@@ -72,7 +73,7 @@ namespace engine
 		glm::mat4 GetProjMatrix();
 		glm::mat4 GetViewMatrix();
 
-		Shader shader = Shader("../src/Engine/Shaders/TextureVertex.shader", "../src/Engine/Shaders/TextureFragment.shader");//Shader("../src/Motor/Shaders/TextureVertex.shader", "../src/Motor/Shaders/TextureFragment.shader");
+		Shader shader = Shader("../src/Engine/Shaders/TextureVertex.shader", "../src/Engine/Shaders/TextureFragment.shader");
 
 	private:
 		Material GetMaterialData(MATERIAL material);
@@ -85,3 +86,4 @@ namespace engine
 		glm::mat4 projectionMatrix;
 	};
 }
+#endif

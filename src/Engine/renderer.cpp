@@ -29,8 +29,9 @@ namespace engine
 		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-
+		//glEnable(GL_CULL_FACE);
+		//glCullFace(GL_FRONT);
+		//glFrontFace(GL_CCW);
 	}
 	renderer::~renderer()
 	{
@@ -104,10 +105,14 @@ namespace engine
 		glBindVertexArray(VAO);
 		glDrawElements(GL_TRIANGLES, vertices, GL_UNSIGNED_INT, 0);
 	}
-	void renderer::drawMesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<Texture> textures, unsigned int VAO)
+	void renderer::drawMesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<Texture> textures, unsigned int VAO, glm::vec3 color)
 	{
 		unsigned int diffuseNr = 1;
 		unsigned int specularNr = 1;
+
+		unsigned int colorLoc = glGetUniformLocation(shader.ID, "color");
+		glUniform3fv(colorLoc, 1, glm::value_ptr(color));
+
 		for (unsigned int i = 0; i < textures.size(); i++)
 		{
 			glActiveTexture(GL_TEXTURE0 + i); // activate proper texture unit before binding

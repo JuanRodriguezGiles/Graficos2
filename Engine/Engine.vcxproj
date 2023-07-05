@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\src\Engine\aabb.h" />
     <ClInclude Include="..\src\Engine\animation.h" />
     <ClInclude Include="..\src\Engine\atlasConfig.h" />
     <ClInclude Include="..\src\Engine\baseGame.h" />
@@ -36,6 +37,8 @@
     <ClInclude Include="..\src\Engine\Model.h" />
     <ClInclude Include="..\src\Engine\modelImporter.h" />
     <ClInclude Include="..\src\Engine\node.h" />
+    <ClInclude Include="..\src\Engine\occlusionCulling.h" />
+    <ClInclude Include="..\src\Engine\Plane.h" />
     <ClInclude Include="..\src\Engine\pointLight.h" />
     <ClInclude Include="..\src\Engine\renderer.h" />
     <ClInclude Include="..\src\Engine\shader.h" />
@@ -53,6 +56,7 @@
     <ClInclude Include="..\src\Engine\window.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\Engine\aabb.cpp" />
     <ClCompile Include="..\src\Engine\animation.cpp" />
     <ClCompile Include="..\src\Engine\baseGame.cpp" />
     <ClCompile Include="..\src\Engine\camera.cpp" />
@@ -67,6 +71,8 @@
     <ClCompile Include="..\src\Engine\Model.cpp" />
     <ClCompile Include="..\src\Engine\modelImporter.cpp" />
     <ClCompile Include="..\src\Engine\node.cpp" />
+    <ClCompile Include="..\src\Engine\occlusionCulling.cpp" />
+    <ClCompile Include="..\src\Engine\Plane.cpp" />
     <ClCompile Include="..\src\Engine\pointLight.cpp" />
     <ClCompile Include="..\src\Engine\renderer.cpp" />
     <ClCompile Include="..\src\Engine\shader.cpp" />

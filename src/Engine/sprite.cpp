@@ -53,7 +53,7 @@ namespace engine
 		//glBindTexture(GL_TEXTURE_2D, texture);
 		//setShader(texture);
 		_renderer->setShaderInfo(color, lightingMaps, material);
-		_renderer->drawRequest(model, VAO, _vertices);
+		_renderer->drawRequest(worldModel, VAO, _vertices);
 	}
 	void sprite::modifyBaseTextureCoords(atlasCutConfig config)
 	{

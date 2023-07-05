@@ -1,5 +1,5 @@
 #pragma once
-#include "light.h";
+#include "light.h"
 
 namespace engine
 {

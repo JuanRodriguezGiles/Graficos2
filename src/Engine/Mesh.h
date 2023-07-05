@@ -1,12 +1,11 @@
-#pragma once
+#ifndef MESH_H
+#define MESH_H
 #include <vector>
 #include <string>
 #include "shader.h"
-//#include "exports.h"
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
-//#include ""
 
 using namespace std;
 
@@ -21,7 +20,7 @@ namespace engine
     struct Texture {
         unsigned int id;
         string type;
-        string path;  // we store the path of the texture to compare with other textures
+        string path; // we store the path of the texture to compare with other textures
     };
 
     class Mesh {
@@ -39,3 +38,5 @@ namespace engine
         void setupMesh();
     };
 }
+
+#endif // MESH_H

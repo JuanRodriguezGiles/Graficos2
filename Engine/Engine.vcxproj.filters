@@ -76,6 +76,15 @@
     <Filter Include="Node">
       <UniqueIdentifier>{a44f5f26-f889-453c-b5f4-9e2d0a016aba}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Aabb">
+      <UniqueIdentifier>{ae4c2e85-8cc8-42e9-8f8e-7daed9557730}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Plane">
+      <UniqueIdentifier>{4e02b19c-1196-4edf-8a48-5d58435e5968}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OcclusionCulling">
+      <UniqueIdentifier>{daf223fc-b040-4490-bef4-e707340100e8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\Engine\animation.cpp">
@@ -161,6 +170,15 @@
     </ClCompile>
     <ClCompile Include="..\src\Engine\node.cpp">
       <Filter>Node</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Engine\aabb.cpp">
+      <Filter>Aabb</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Engine\Plane.cpp">
+      <Filter>Plane</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Engine\occlusionCulling.cpp">
+      <Filter>OcclusionCulling</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -259,6 +277,15 @@
     </ClInclude>
     <ClInclude Include="..\src\Engine\node.h">
       <Filter>Node</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Engine\aabb.h">
+      <Filter>Aabb</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Engine\Plane.h">
+      <Filter>Plane</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Engine\occlusionCulling.h">
+      <Filter>OcclusionCulling</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
