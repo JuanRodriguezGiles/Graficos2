@@ -42,7 +42,6 @@ void game::draw()
 	
 
 	model3d->draw();
-	model3d2->draw();
 
 	floor->draw();
 }
@@ -157,13 +156,31 @@ void game::update()
 		}
 	}
 
+	if(isKeyPressed(ENGINE_KEY_Z))
+	{
+		/*model3d->setScale(model3d->getScale() + glm::vec3(0.25f, 0.25f, 0.25f));
+		model3d->setTransformations();*/
+		glm::vec3 scale = model3d->getChildWithName("Wolf3D_Outfit_Footwear")->getScale();
+		scale += glm::vec3(0.25f, 0.25f, 0.25f);
+		model3d->getChildWithName("Wolf3D_Outfit_Footwear")->setScale(scale);
+		model3d->getChildWithName("Wolf3D_Outfit_Footwear")->setTransformations();
+	}
+	if (isKeyPressed(ENGINE_KEY_X))
+	{
+		model3d->setScale(model3d->getScale() - glm::vec3(0.25f, 0.25f, 0.25f));
+		model3d->setTransformations();
+	}
+
+
 	entityPos += movement;
 	
 	selectedEntity->setPos(entityPos);
 	selectedEntity->setRot(rotation);
 
-	model3d->setTransformations();
-	model3d2->setTransformations();
+	if (movement != glm::vec3(0, 0, 0))
+	{
+		model3d->setTransformations();
+	}
 
 
 	for (int i = 0; i < POINT_LIGHTS; i++)
@@ -217,15 +234,17 @@ void game::init()
 
 	engine::OcclusionCulling::Init(firstPersonCam);
 
-	model3d = engine::modelImporter::chargeBaseNodeInfo("../res/assets/w/model.obj");
+	model3d = engine::modelImporter::loadBaseNodeInfo("../res/assets/w/model.obj");
 	model3d->setRenderer(currentRenderer);
 	model3d->setRot(glm::vec3(0, 0, 0));
-	model3d->setScale(glm::vec3(0.25f, 0.25f, 0.25f));
+	model3d->setPos(glm::vec3(0, 0, 0));
+	model3d->setScale(glm::vec3(1, 1, 1));
+	model3d->setTransformations();
 
-	model3d2 = engine::modelImporter::chargeBaseNodeInfo("../res/assets/w/model.obj");
+	/*model3d2 = engine::modelImporter::loadBaseNodeInfo("../res/assets/w/model.obj");
 	model3d2->setRenderer(currentRenderer);
 	model3d2->setRot(glm::vec3(0, 0, 0));
-	model3d2->setScale(glm::vec3(0.25f, 0.25f, 0.25f));
+	model3d2->setScale(glm::vec3(0.25f, 0.25f, 0.25f));*/
 
 	floor = new engine::sprite(currentRenderer, "../res/assets/textures/StoneFloorTexture.png", "../res/assets/textures/StoneFloorTexture.png", true, engine::MATERIAL::YELLOW_RUBBER);
 	floor->setScale(glm::vec3(10, 10, 1));

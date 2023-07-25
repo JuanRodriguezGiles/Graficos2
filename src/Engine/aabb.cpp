@@ -5,8 +5,6 @@
 
 namespace engine
 {
-	const int lineVertTam = 24;
-
 	aabb::aabb() : volume()
 	{
 		center = glm::vec3();
