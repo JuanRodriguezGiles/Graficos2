@@ -52,33 +52,38 @@ void game::update()
 
 	if (isKeyPressed(ENGINE_KEY_0))
 	{
-		entityPos = pointLight[0]->getPos();
-		selectedEntity = pointLight[0];
+		entityPos = model3d->getChildWithName("Wolf3D_Outfit_Footwear")->getPos();
+		selectedEntity = model3d->getChildWithName("Wolf3D_Outfit_Footwear");
 	}
 	else if (isKeyPressed(ENGINE_KEY_1))
 	{
-		entityPos = pointLight[1]->getPos();
-		selectedEntity = pointLight[1];
+		entityPos = model3d->getChildWithName("Wolf3D_Body")->getPos();
+		selectedEntity = model3d->getChildWithName("Wolf3D_Body");
 	}
 	else if (isKeyPressed(ENGINE_KEY_2))
 	{
-		entityPos = pointLight[2]->getPos();
-		selectedEntity = pointLight[2];
+		entityPos = model3d->getChildWithName("Wolf3D_Head")->getPos();
+		selectedEntity = model3d->getChildWithName("Wolf3D_Head");
 	}
 	else if (isKeyPressed(ENGINE_KEY_3))
 	{
-		entityPos = pointLight[3]->getPos();
-		selectedEntity = pointLight[3];
+		entityPos = model3d->getChildWithName("Wolf3D_Outfit_Bottom")->getPos();
+		selectedEntity = model3d->getChildWithName("Wolf3D_Outfit_Bottom");
 	}
 	else if (isKeyPressed(ENGINE_KEY_4))
 	{
-		entityPos = spotLight->getPos();
-		selectedEntity = spotLight;
+		entityPos = model3d->getChildWithName("Wolf3D_Outfit_Top")->getPos();
+		selectedEntity = model3d->getChildWithName("Wolf3D_Outfit_Top");
 	}
 	else if (isKeyPressed(ENGINE_KEY_5))
 	{
 		entityPos = model3d->getPos();
 		selectedEntity = model3d;
+	}
+	else if (isKeyPressed(ENGINE_KEY_6))
+	{
+		entityPos = spotLight->getPos();
+		selectedEntity = spotLight;
 	}
 
 	glm::vec3 rotation = selectedEntity->getRot();
@@ -158,30 +163,27 @@ void game::update()
 
 	if(isKeyPressed(ENGINE_KEY_Z))
 	{
-		/*model3d->setScale(model3d->getScale() + glm::vec3(0.25f, 0.25f, 0.25f));
-		model3d->setTransformations();*/
-		glm::vec3 scale = model3d->getChildWithName("Wolf3D_Outfit_Footwear")->getScale();
+		glm::vec3 scale = selectedEntity->getScale();
 		scale += glm::vec3(0.25f, 0.25f, 0.25f);
-		model3d->getChildWithName("Wolf3D_Outfit_Footwear")->setScale(scale);
-		model3d->getChildWithName("Wolf3D_Outfit_Footwear")->setTransformations();
+		selectedEntity->setScale(scale);
 	}
 	if (isKeyPressed(ENGINE_KEY_X))
 	{
-		model3d->setScale(model3d->getScale() - glm::vec3(0.25f, 0.25f, 0.25f));
-		model3d->setTransformations();
+		glm::vec3 scale = selectedEntity->getScale();
+		scale -= glm::vec3(0.25f, 0.25f, 0.25f);
+		selectedEntity->setScale(scale);
 	}
-
 
 	entityPos += movement;
 	
 	selectedEntity->setPos(entityPos);
 	selectedEntity->setRot(rotation);
 
-	if (movement != glm::vec3(0, 0, 0))
-	{
-		model3d->setTransformations();
-	}
+	model3d->setTransformations();
 
+	/*model3d->getChildren()[4]->setRot(model3d->getChildren()[4]->getRot() + glm::vec3(0, 0.05, 0));
+	model3d->getChildren()[4]->setTransformations();*/
+	
 
 	for (int i = 0; i < POINT_LIGHTS; i++)
 	{
